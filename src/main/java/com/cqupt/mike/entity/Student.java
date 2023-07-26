@@ -1,10 +1,8 @@
-<<<<<<< HEAD
+
 package com.cqupt.mike.entity;
 
-public class Student {
-}
-=======
-package com.cqupt.mike.entity;
+
+
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -121,4 +119,4 @@ public class Student {
         return sb.toString();
     }
 }
->>>>>>> lyc
+
