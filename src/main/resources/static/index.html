@@ -126,6 +126,67 @@
         .form button:hover {
             background-color: #6d44b8;
         }
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50px;
+            position: relative;
+            padding: 0 20px;
+            font-size: 18px;
+            text-transform: uppercase;
+            border: 0;
+            box-shadow: hsl(259, 96%, 19%) 0px 7px 0px 0px;
+            background-color: hsl(258, 96%, 32%);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 31ms cubic-bezier(.5, .7, .4, 1);
+        }
+
+        button:before {
+            content: attr(alt);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            inset: 0;
+            font-size: 15px;
+            font-weight: bold;
+            color: white;
+            letter-spacing: 4px;
+            opacity: 1;
+        }
+
+        button:active {
+            box-shadow: none;
+            transform: translateY(7px);
+            transition: 35ms cubic-bezier(.5, .7, .4, 1);
+        }
+
+        button:hover:before {
+            transition: all .0s;
+            transform: translateY(100%);
+            opacity: 0;
+        }
+
+        button i {
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            font-style: normal;
+            transition: all 2s ease;
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+
+        button:hover i {
+            transition: all .2s ease;
+            transform: translateY(0px);
+            opacity: 1;
+        }
+
     </style>
 </head>
 <body>
@@ -139,7 +200,11 @@
                     <label for="chk" aria-hidden="true">登 录</label>
                     <input class="input" type="email" name="email" placeholder="Email" required="">
                     <input class="input" type="password" name="pswd" placeholder="Password" required="">
-                    <button>登 录</button>
+                    <!-- <button>登 录</button> -->
+                    <button alt="登录">
+                        <i>登</i>
+                        <i>录</i>
+                    </button>
                 </form>
             </div>
 
@@ -149,7 +214,11 @@
                     <input class="input" type="text" name="txt" placeholder="Username" required="">
                     <input class="input" type="email" name="email" placeholder="Email" required="">
                     <input class="input" type="password" name="pswd" placeholder="Password" required="">
-                    <button>注 册</button>
+                    <!-- <button>注 册</button> -->
+                    <button alt="注册">
+                        <i>注</i>
+                        <i>册</i>
+                    </button>
                 </form>
             </div>
         </div>
