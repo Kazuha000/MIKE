@@ -1,4 +1,4 @@
 package com.cqupt.mike.service;
 
-public interface AdminService {
+public interface TestService {
 }

@@ -1,4 +1,4 @@
 package com.cqupt.mike.dao;
 
-public interface AdminMapper {
+public interface TestMapper {
 }
