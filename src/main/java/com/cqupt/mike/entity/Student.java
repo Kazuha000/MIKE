@@ -9,87 +9,91 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 public class Student {
-    private Long userId;
+    private Integer stId;  //主键，学生id
 
-    private String nickName;
+    private Integer accountNo;  //账号
 
-    private String loginName;
+    private String stName;  //学生姓名
 
-    private String passwordMd5;
+    private String password;  //密码
 
-    private String introduceSign;
+    private Integer sex;  //性别:0-未知/1-男/2-女
 
-    private String address;
+    private String phone;  //电话
 
-    private Byte isDeleted;
+    private String email;  //邮箱
 
-    private Byte lockedFlag;
+    private Integer status;  //状态：0-锁定/1-正常
+
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
+    private Date createTime;  //创建时间
 
-    public Long getUserId() {
-        return userId;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date updateTime;  //更改时间
+
+    public Integer getStId() {
+        return stId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setStId(Integer stId) {
+        this.stId = stId;
     }
 
-    public String getNickName() {
-        return nickName;
+    public Integer getAccountNo() {
+        return accountNo;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName == null ? null : nickName.trim();
+    public void setAccountNo(Integer accountNo) {
+        this.accountNo = accountNo;
     }
 
-    public String getLoginName() {
-        return loginName;
+    public String getStName() {
+        return stName;
     }
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName == null ? null : loginName.trim();
+    public void setStName(String stName) {
+        this.stName = stName;
     }
 
-    public String getPasswordMd5() {
-        return passwordMd5;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordMd5(String passwordMd5) {
-        this.passwordMd5 = passwordMd5 == null ? null : passwordMd5.trim();
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getIntroduceSign() {
-        return introduceSign;
+    public Integer getSex() {
+        return sex;
     }
 
-    public void setIntroduceSign(String introduceSign) {
-        this.introduceSign = introduceSign == null ? null : introduceSign.trim();
+    public void setSex(Integer sex) {
+        this.sex = sex;
     }
 
-    public String getAddress() {
-        return address;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public Byte getIsDeleted() {
-        return isDeleted;
+    public String getEmail() {
+        return email;
     }
 
-    public void setIsDeleted(Byte isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public Byte getLockedFlag() {
-        return lockedFlag;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setLockedFlag(Byte lockedFlag) {
-        this.lockedFlag = lockedFlag;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Date getCreateTime() {
@@ -100,23 +104,28 @@ public class Student {
         this.createTime = createTime;
     }
 
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", userId=").append(userId);
-        sb.append(", nickName=").append(nickName);
-        sb.append(", loginName=").append(loginName);
-        sb.append(", passwordMd5=").append(passwordMd5);
-        sb.append(", introduceSign=").append(introduceSign);
-        sb.append(", address=").append(address);
-        sb.append(", isDeleted=").append(isDeleted);
-        sb.append(", lockedFlag=").append(lockedFlag);
-        sb.append(", createTime=").append(createTime);
-        sb.append("]");
-        return sb.toString();
+        return "Student{" +
+                "stId=" + stId +
+                ", accountNo='" + accountNo + '\'' +
+                ", stName='" + stName + '\'' +
+                ", password='" + password + '\'' +
+                ", sex=" + sex +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }
 
