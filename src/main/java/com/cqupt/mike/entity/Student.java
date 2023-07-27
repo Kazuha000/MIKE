@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
-public class student {
+public class Student {
     private Long userId;
 
     private String nickName;
