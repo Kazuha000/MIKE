@@ -3,8 +3,8 @@ $(function () {
     $('#updateUserNameButton').click(function() {
         $("#updateUserNameButton").attr("disabled",true);
         var loginUser = $('#loginUser').val();
-        var accoundNo = $('#accoundNo').val();
-        if (validUserNameForUpdate(loginUser, accoundNo)) {
+        var accountNo = $('#accountNo').val();
+        if (validUserNameForUpdate(loginUser, accountNo)) {
             //ajax提交数据
             var params = $("#userNameForm").serialize();
             $.ajax({
@@ -16,6 +16,7 @@ $(function () {
                     console.log(r);
                     if (r == 'success') {
                         alert('修改成功');
+                        $('#updateUserName-info').css("display", "none");
                     } else {
                         alert('修改失败');
                     }
@@ -62,21 +63,25 @@ function validUserNameForUpdate(loginUser, accountNo) {
     if (isNull(loginUser) || loginUser.trim().length < 1) {
         $('#updateUserName-info').css("display", "block");
         $('#updateUserName-info').html("请输入用户名！");
+        // alert("请输入用户名")
         return false;
     }
     if (isNull(accountNo) || accountNo.trim().length < 1) {
         $('#updateUserName-info').css("display", "block");
         $('#updateUserName-info').html("账号不能为空！");
+        // alert("账号不能为空")
         return false;
     }
     if (!validUserName(loginUser)) {
         $('#updateUserName-info').css("display", "block");
         $('#updateUserName-info').html("请输入符合规范的用户名！");
+        // alert("请输入符合规范的用户名")
         return false;
     }
     if (!validAccountNo(accountNo)) {
         $('#updateUserName-info').css("display", "block");
         $('#updateUserName-info').html("请输入符合规范的账号！");
+        // alert("请输入符合规范的账号")
         return false;
     }
     return true;
