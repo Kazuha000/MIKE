@@ -73,7 +73,7 @@ function validUserName(userName) {
  */
 function validAccountNo(accountNo) {
     var pattern = /^[0-9]{3,20}$/;
-    if (pattern.test(password.trim())) {
+    if (pattern.test(accountNo.trim())) {
         return (true);
     } else {
         return (false);

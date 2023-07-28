@@ -65,7 +65,7 @@ public class AdminController {
             session.setAttribute("errorMsg", "用户不存在");
             return "admin/login";
         }
-        session.setAttribute("errorMsg", "登陆失败"); //其他登陆未成功的情况
+        session.setAttribute("errorMsg", "登录失败"); //其他登陆未成功的情况
         return "admin/login";
     }
 
@@ -105,16 +105,16 @@ public class AdminController {
 
     @PostMapping("/profile/name") //修改用户名和账号
     @ResponseBody
-    public String nameUpdate(HttpServletRequest request, @RequestParam("loginUserName") String loginUserName,
+    public String nameUpdate(HttpServletRequest request, @RequestParam("loginUser") String loginUser,
                              @RequestParam("accountNo") Integer accountNo) {
-        //判断用户名和账号是否为空
-        if (StringUtils.isEmpty(loginUserName) || accountNo==null) {
+        //判断输入的用户名和账号是否为空
+        if (StringUtils.isEmpty(loginUser) || accountNo==null) {
             return "参数不能为空";
         }
         //从前端获取登陆的管理员用户的id
         Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
         //修改用户名和账号
-        if (adminUserService.updateName(loginUserId, loginUserName, accountNo)) {
+        if (adminUserService.updateName(loginUserId, loginUser, accountNo)) {
             return "success";
         } else {
             return "修改失败";
