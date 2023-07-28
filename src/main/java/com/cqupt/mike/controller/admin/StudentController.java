@@ -43,11 +43,11 @@ public class StudentController {
         if (stId == null || stId < 1 || StringUtils.isEmpty(stName) || StringUtils.isEmpty(password)) {
             return false;
         }
-        Student student =new Student();
-        student.setStId(stId);
-        student.setAccountNo(accountNo);
-        student.setStName(stName);
-        student.setPassword(password);
+        Student student =new Student();//实体封装
+        student.setStId(stId);//主键
+        student.setAccountNo(accountNo);//账号
+        student.setStName(stName);//用户名
+        student.setPassword(password);//密码
         return studentMapper.updStudent(student) > 0;
     }
 

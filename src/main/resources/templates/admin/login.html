@@ -47,7 +47,7 @@
         </div>
         <div class="form-group has-feedback">
           <span class="fa fa-user form-control-feedback"></span>
-          <input type="text" id="userName" name="userName" class="form-control" placeholder="请输入账号"
+          <input type="text" id="adName" name="adName" class="form-control" placeholder="请输入账号"
                  required="true">
         </div>
         <div class="form-group has-feedback">
@@ -57,7 +57,7 @@
         </div>
         <div class="row">
           <div class="col-6">
-            <input type="text" class="form-control" name="verifyCode" placeholder="请输入验证码" required="true">
+            <input type="text" class="form-control" name="verifyCode" id="verifyCode" placeholder="请输入验证码" required="true">
           </div>
           <div class="col-6">
             <img alt="点击图片刷新！" class="pointer" th:src="@{/common/kaptcha}"

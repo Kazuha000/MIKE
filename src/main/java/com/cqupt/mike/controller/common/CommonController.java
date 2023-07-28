@@ -5,9 +5,13 @@ import cn.hutool.captcha.ShearCaptcha;
 import com.cqupt.mike.common.Constants;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import com.wf.captcha.SpecCaptcha;
+import com.wf.captcha.base.Captcha;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 @Controller
 public class CommonController {
@@ -20,13 +24,20 @@ public class CommonController {
         httpServletResponse.setContentType("image/png");
 
 
-        ShearCaptcha shearCaptcha= CaptchaUtil.createShearCaptcha(150, 30, 4, 2);
+        // 三个参数分别为宽、高、位数
+        SpecCaptcha captcha = new SpecCaptcha(150, 40, 4);
+
+        // 设置类型 数字和字母混合
+        captcha.setCharType(Captcha.TYPE_DEFAULT);
+
+        //设置字体
+        captcha.setCharType(Captcha.FONT_9);
 
         // 验证码存入session
-        httpServletRequest.getSession().setAttribute("verifyCode", shearCaptcha);
+        httpServletRequest.getSession().setAttribute("verifyCode", captcha.text().toLowerCase());
 
         // 输出图片流
-        shearCaptcha.write(httpServletResponse.getOutputStream());
+        captcha.out(httpServletResponse.getOutputStream());
     }
 
     @GetMapping("/common/mall/kaptcha")

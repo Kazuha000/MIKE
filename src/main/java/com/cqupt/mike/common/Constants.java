@@ -1,5 +1,5 @@
 package com.cqupt.mike.common;
-
+//常量参数设置
 public class Constants {
     //public final static String FILE_UPLOAD_DIC = "/opt/image/upload/";//上传文件的默认url前缀，根据部署设置自行修改
     public final static String FILE_UPLOAD_DIC ="G:\\java\\workspace\\mallModel\\upload\\";//上传文件的默认url前缀，根据部署设置自行修改
