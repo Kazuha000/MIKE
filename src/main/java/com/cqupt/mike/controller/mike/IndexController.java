@@ -8,9 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 @Controller
 public class IndexController {
-    @GetMapping({"/index", "/", "/index.html"})
+    @GetMapping({"/index", "/", "/index.html"})//MIKE主页跳转
     public String indexPage(HttpServletRequest request) {
-
         return "mike/index";
     }
 }

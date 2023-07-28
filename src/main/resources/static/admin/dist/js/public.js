@@ -51,14 +51,29 @@ function isURL(str_url) {
 }
 
 /**
- * 用户名称验证 4到16位（字母，数字，下划线，减号）
+ * 用户名称验证 2到16位（字母，数字，下划线，减号）
  *
  * @param userName
  * @returns {boolean}
  */
 function validUserName(userName) {
-    var pattern = /^[a-zA-Z0-9_-]{4,16}$/;
+    var pattern = /^[a-zA-Z0-9_-]{2,16}$/;
     if (pattern.test(userName.trim())) {
+        return (true);
+    } else {
+        return (false);
+    }
+}
+
+/**
+ * 账号验证 最少3位，最多20位字母的组合
+ *
+ * @param password
+ * @returns {boolean}
+ */
+function validAccountNo(accountNo) {
+    var pattern = /^[0-9]{3,20}$/;
+    if (pattern.test(password.trim())) {
         return (true);
     } else {
         return (false);
