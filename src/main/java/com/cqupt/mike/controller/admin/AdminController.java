@@ -17,10 +17,6 @@ public class AdminController {
     @Resource
     private AdminUserService adminUserService;
 
-    @GetMapping("/indexAll")
-    public String indexAll() {
-        return "admin/index-all";
-    }
 
     @GetMapping({"","/","index","/index.html"})  //跳转后台管理主页
     public String index() {
