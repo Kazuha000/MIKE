@@ -18,9 +18,9 @@ public class Constants {
 
     public final static int SHOPPING_CART_ITEM_LIMIT_NUMBER = 5;//购物车中单个课程的最大购买数量(可根据自身需求修改)
 
-    public final static String MIKE_VERIFY_CODE_KEY = "mikeVerifyCode";//验证码key
+    public final static String VERIFY_CODE_KEY = "VerifyCode";//验证码key
 
-    public final static String MIKE_USER_SESSION_KEY = "mikeEduUser";//session中user的key
+    public final static String MIKE_STUDENT_SESSION_KEY = "mikeStudent";//session中user的key
 
     public final static int COURSES_SEARCH_PAGE_LIMIT = 10;//搜索分页的默认条数(每页10条)
 

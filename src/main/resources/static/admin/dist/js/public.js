@@ -57,7 +57,7 @@ function isURL(str_url) {
  * @returns {boolean}
  */
 function validUserName(userName) {
-    var pattern = /^[a-zA-Z0-9_-]{2,16}$/;
+    var pattern = /^[a-zA-Z0-9_-]{1,16}$/;
     if (pattern.test(userName.trim())) {
         return (true);
     } else {

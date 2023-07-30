@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 后台系统身份验证拦截器
  */
-@Component
+@Component//添加@Component注解，使其注册到IOC容器中
 public class AdminLoginInterceptor implements HandlerInterceptor {
 
     //在业务处理器处理请求之前被调用。预处理，可以进行编码、安全控制、权限校验等处理。
