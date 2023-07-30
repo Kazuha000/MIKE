@@ -23,7 +23,7 @@ public class Student {
 
     private String email;  //邮箱
 
-    private Integer status;  //状态：0-锁定/1-正常
+    private Integer status;  //状态：0-锁定/1-正常/-1-注销
 
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

@@ -3,7 +3,7 @@
 <mapper namespace="com.cqupt.mike.dao.StudentMapper">
     <resultMap type="com.cqupt.mike.entity.Student" id="StudentResult">
         <result property="stId" column="st_id" jdbcType="INTEGER"/>
-        <result property="accountNo" column="account_no" jdbcType="VARCHAR"/>
+        <result property="accountNo" column="account_no" jdbcType="INTEGER"/>
         <result property="stName" column="st_name" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
         <result property="sex" column="sex" jdbcType="INTEGER"/>
@@ -19,10 +19,65 @@
         order by st_id desc
     </select>
 
-    <insert id="insertStudent" parameterType="com.cqupt.mike.entity.Student">
+    <!--<insert id="insertStudent" parameterType="com.cqupt.mike.entity.Student">
         insert into student
             (account_no,st_name,password)
         values(#{accountNo},#{stName},#{password})
+    </insert>-->
+    <insert id="insertStudent" parameterType="com.cqupt.mike.entity.Student">
+        insert into student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stId != null">
+                st_id,
+            </if>
+            <if test="accountNo != null">
+                account_no,
+            </if>
+            <if test="stName != null">
+                st_name,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stId != null">
+                #{stId,jdbcType=INTEGER},
+            </if>
+            <if test="accountNo != null">
+                #{accountNo,jdbcType=INTEGER},
+            </if>
+            <if test="stName != null">
+                #{stName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
     </insert>
 
     <update id="updStudent" parameterType="com.cqupt.mike.entity.Student">
@@ -35,4 +90,17 @@
     <delete id="delStudent" parameterType="int">
         delete from student where st_id=#{stId}
     </delete>
+
+
+    <select id="selectByLoginName" parameterType="java.lang.String" resultMap="StudentResult">
+        select*
+        from student
+        where st_name = #{stName} and status != -1
+    </select>
+
+    <select id="selectByLoginNameAndPasswd" resultMap="StudentResult">
+        select*
+        from student
+        where st_name = #{stName} and password = #{password} and status != -1
+    </select>
 </mapper>

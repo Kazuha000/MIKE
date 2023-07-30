@@ -3,7 +3,7 @@
 <mapper namespace="com.cqupt.mike.dao.AdminUserMapper">
     <resultMap id="AdminUserResult" type="com.cqupt.mike.entity.AdminUser">
         <result property="adId" column="ad_id" jdbcType="INTEGER"/>
-        <result property="accountNo" column="account_no" jdbcType="VARCHAR"/>
+        <result property="accountNo" column="account_no" jdbcType="INTEGER"/>
         <result property="adName" column="ad_name" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
         <result property="sex" column="sex" jdbcType="INTEGER"/>
