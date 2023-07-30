@@ -98,10 +98,10 @@
         </th:block>
     </div>
 
-    <div id="flash">
+    <!--<div id="flash">
         <h2>新品上线</h2>
         <ul>
-            <!-- 已配置新品则显示配置内容 -->
+            &lt;!&ndash; 已配置新品则显示配置内容 &ndash;&gt;
             <th:block th:unless="${#lists.isEmpty(newGoodses)}">
                 <th:block th:each="newGoods : ${newGoodses}">
                     <li>
@@ -114,7 +114,7 @@
                     </li>
                 </th:block>
             </th:block>
-            <!-- 未配置则显示默认 -->
+            &lt;!&ndash; 未配置则显示默认 &ndash;&gt;
             <th:block th:if="${#lists.isEmpty(newGoodses)}">
                 <li>
                     <a href="##">
@@ -164,7 +164,7 @@
         <h2>为你推荐</h2>
         <a href="##" class="more">查看更多>></a>
         <ul>
-            <!-- 已配置推荐商品则显示配置内容 -->
+            &lt;!&ndash; 已配置推荐商品则显示配置内容 &ndash;&gt;
             <th:block th:unless="${#lists.isEmpty(recommendGoodses)}">
                 <th:block th:each="recommendGoods : ${recommendGoodses}">
                     <li>
@@ -184,7 +184,7 @@
                     </li>
                 </th:block>
             </th:block>
-            <!-- 未配置则显示默认 -->
+            &lt;!&ndash; 未配置则显示默认 &ndash;&gt;
             <th:block th:if="${#lists.isEmpty(recommendGoodses)}">
                 <li>
                     <a href="##">
@@ -338,7 +338,7 @@
                 </li>
             </th:block>
         </ul>
-    </div>
+    </div>-->
 </content>
 <div th:replace="mike/footer::footer-fragment"></div>
 <!-- jQuery -->
