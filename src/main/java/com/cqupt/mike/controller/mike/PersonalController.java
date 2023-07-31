@@ -39,13 +39,17 @@ public class PersonalController {
         return "mike/register";
     }
 
+    /**
+     * 提交登陆
+     * @return
+     */
     @PostMapping("/login")
     @ResponseBody
     public Result login(@RequestParam("loginName") String loginName,
                         @RequestParam("verifyCode") String verifyCode,
                         @RequestParam("password") String password,
                         HttpSession httpSession) {
-        if (StringUtils.isEmpty(loginName)) {
+        if (StringUtils.isEmpty(loginName)) {//判断用户名、密码、验证码是否为空
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_NAME_NULL.getResult());
         }
         if (StringUtils.isEmpty(password)) {
@@ -68,13 +72,18 @@ public class PersonalController {
         return ResultGenerator.genFailResult(loginResult);
     }
 
+    /**
+     * 提交注册
+     * @return
+     */
     @PostMapping("/register")
     @ResponseBody
     public Result register(@RequestParam("loginName") String loginName,
                            @RequestParam("verifyCode") String verifyCode,
                            @RequestParam("password") String password,
                            HttpSession httpSession) {
-        if (StringUtils.isEmpty(loginName)) { //判断用户名、密码、验证码是否为空
+        //判断用户名、密码、验证码是否为空
+        if (StringUtils.isEmpty(loginName)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_NAME_NULL.getResult());
         }
         if (StringUtils.isEmpty(password)) {
@@ -83,11 +92,14 @@ public class PersonalController {
         if (StringUtils.isEmpty(verifyCode)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_NULL.getResult());
         }
-        String kaptchaCode = httpSession.getAttribute(Constants.VERIFY_CODE_KEY) + "";//获取session中验证码的值
-        if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.toLowerCase().equals(kaptchaCode)) {//判断验证码是否正确
+        //获取session中验证码的值
+        String kaptchaCode = httpSession.getAttribute(Constants.VERIFY_CODE_KEY) + "";
+        //判断验证码是否正确
+        if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.toLowerCase().equals(kaptchaCode)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
         }
-        String registerResult = studentService.register(loginName, password);//向service层传入注册信息，注册
+        //向service层传入注册信息，注册
+        String registerResult = studentService.register(loginName, password);
         //若返回信息为登陆成功，则登陆成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(registerResult)) {
             return ResultGenerator.genSuccessResult();
@@ -96,8 +108,14 @@ public class PersonalController {
         return ResultGenerator.genFailResult(registerResult);
     }
 
+    /**
+     * 退出登陆
+     * @param httpSession 缓存的用户登陆信息
+     * @return
+     */
     @GetMapping("/logout")
     public String logout(HttpSession httpSession) {
+        //清空缓存信息
         httpSession.removeAttribute(Constants.MIKE_STUDENT_SESSION_KEY);
         return "mike/login";
     }

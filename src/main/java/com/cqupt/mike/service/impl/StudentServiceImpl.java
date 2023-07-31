@@ -17,7 +17,12 @@ public class StudentServiceImpl implements StudentService {
     @Resource
     private StudentMapper studentMapper;
 
-
+    /**
+     * 注册
+     * @param stName 用户名
+     * @param password 密码
+     * @return
+     */
     @Override
     public String register(String stName, String password) {
         if (studentMapper.selectByLoginName(stName) != null) {  //查询用户是否已存在，若已存在则返回“用户已存在”
@@ -34,6 +39,13 @@ public class StudentServiceImpl implements StudentService {
         return ServiceResultEnum.DB_ERROR.getResult();
     }
 
+    /**
+     *
+     * @param stName 用户名
+     * @param password 密码
+     * @param httpSession session
+     * @return
+     */
     @Override
     public String login(String stName, String password, HttpSession httpSession) {
         Student user = studentMapper.selectByLoginName(stName);
