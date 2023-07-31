@@ -1,5 +1,6 @@
 package com.cqupt.mike.controller;
 
+import com.cqupt.mike.until.MailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
@@ -127,5 +129,15 @@ public class TestController {
     public List<Map<String, Object>> queryAll() {
         List<Map<String, Object>> list = jdbcTemplate.queryForList("select * from jdbc_test");
         return list;
+    }
+
+    //邮箱验证
+    public static void main(String[] args) {
+        try {
+            MailUtils.sendMail("2078501297@qq.com","邮箱验证");
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println();
     }
 }

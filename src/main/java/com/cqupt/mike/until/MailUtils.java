@@ -30,7 +30,8 @@ public class MailUtils {
 		// 创建验证器
 		Authenticator auth = new Authenticator() {
 			public PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication("2078501297", "gczqagbcbxbjgadg");
+//				return new PasswordAuthentication("2078501297", "gczqagbcbxbjgadg");
+				return new PasswordAuthentication("1834543408", "unjemrzliqjucihe");
 			}
 		};
 
@@ -39,11 +40,11 @@ public class MailUtils {
 		// 2.创建一个Message，它相当于是邮件内容
 		Message message = new MimeMessage(session);
 
-		message.setFrom(new InternetAddress("2078501297@qq.com")); // 设置发送者
-
+//		message.setFrom(new InternetAddress("2078501297@qq.com")); // 设置发送者
+		message.setFrom(new InternetAddress("1834543408@qq.com")); // 设置发送者
 		message.setRecipient(RecipientType.TO, new InternetAddress(email)); // 设置发送方式与接收者
 
-		message.setSubject("用户激活");
+		message.setSubject("刘奕辰邮件验证");  //邮件标题
 		// message.setText("这是一封激活邮件，请<a href='#'>点击</a>");
 
 		message.setContent(emailMsg, "text/html;charset=utf-8");
