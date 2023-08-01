@@ -2,7 +2,6 @@ package com.cqupt.mike.dao;
 
 import com.cqupt.mike.entity.Carousel;
 import com.cqupt.mike.until.PageQueryUtil;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,19 +13,13 @@ public interface CarouselMapper {
      */
     int deleteByPrimaryKey(Integer carouselId);
 
-    /**
-     * 保存一条新记录
-     * @param record
-     * @return
-     */
-    int insert(Carousel record);
 
     /**
      * 保存一条新记录
      * @param record
      * @return
      */
-    int insertSelective(Carousel record);
+    int insert(Carousel record);
 
     /**
      * 根据主键查询记录
@@ -40,14 +33,8 @@ public interface CarouselMapper {
      * @param record
      * @return
      */
-    int updateByPrimaryKeySelective(Carousel record);
-
-    /**
-     * 修改记录
-     * @param record
-     * @return
-     */
     int updateByPrimaryKey(Carousel record);
+
 
     /**
      * 查询分页数据
@@ -75,5 +62,5 @@ public interface CarouselMapper {
      * @param number
      * @return
      */
-    List<Carousel> findCarouselsByNum(@Param("number") int number);
+    List<Carousel> findCarouselsByNum(int number);
 }
