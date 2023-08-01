@@ -13,6 +13,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 
+/**
+ * 邮件发送工具类
+ */
 public class MailUtils {
      /*
 		email: 注册用户的邮箱
