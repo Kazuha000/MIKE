@@ -8,7 +8,7 @@ public interface CarouselService {
     /**
      * 查询后台管理系统轮播图分页数据
      *
-     * @param pageUtil
+     * @param pageUtil 分页信息
      * @return
      */
     PageResult getCarouselPage(PageQueryUtil pageUtil);
@@ -16,7 +16,7 @@ public interface CarouselService {
     /**
      * 新增一条轮播图记录
      *
-     * @param carousel
+     * @param carousel  轮播图
      * @return
      */
     String saveCarousel(Carousel carousel);
@@ -24,7 +24,7 @@ public interface CarouselService {
     /**
      * 修改一条轮播图记录
      *
-     * @param carousel
+     * @param carousel 轮播图
      * @return
      */
     String updateCarousel(Carousel carousel);
