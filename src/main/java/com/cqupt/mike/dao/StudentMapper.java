@@ -52,4 +52,5 @@ public interface StudentMapper {
      * @return
      */
     Student selectByLoginNameAndPasswd(@Param("stName") String stName, @Param("password") String password);
+
 }

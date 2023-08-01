@@ -40,6 +40,14 @@ public class PersonalController {
     }
 
     /**
+     * 找回密码界面跳转
+     * @return
+     */
+    @GetMapping({"/findpassword","findpassword.html"})
+    public String findpasswordPage() {return "mike/findpassword";}
+
+
+    /**
      * 提交登陆
      * @return
      */
@@ -81,6 +89,7 @@ public class PersonalController {
     public Result register(@RequestParam("loginName") String loginName,
                            @RequestParam("verifyCode") String verifyCode,
                            @RequestParam("password") String password,
+                           @RequestParam("email") String email,
                            HttpSession httpSession) {
         //判断用户名、密码、验证码是否为空
         if (StringUtils.isEmpty(loginName)) {
@@ -88,6 +97,9 @@ public class PersonalController {
         }
         if (StringUtils.isEmpty(password)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_PASSWORD_NULL.getResult());
+        }
+        if (StringUtils.isEmpty(email)){
+            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_EMAIL_NULL.getResult());
         }
         if (StringUtils.isEmpty(verifyCode)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_NULL.getResult());
@@ -118,5 +130,42 @@ public class PersonalController {
         //清空缓存信息
         httpSession.removeAttribute(Constants.MIKE_STUDENT_SESSION_KEY);
         return "mike/login";
+    }
+
+    /**
+     * 找回密码
+     * @param email
+     * @return
+     */
+    @PostMapping("/findpassword")
+    @ResponseBody
+    public Result findpassword(@RequestParam("loginName") String loginName,
+                               @RequestParam("email") String email,
+                           @RequestParam("verifyCode") String verifyCode,
+                           HttpSession httpSession) {
+        //判断用户名、密码、验证码是否为空
+        if (StringUtils.isEmpty(loginName)) {
+            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_NAME_NULL.getResult());
+        }
+        if (StringUtils.isEmpty(email)){
+            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_EMAIL_NULL.getResult());
+        }
+        if (StringUtils.isEmpty(verifyCode)) {
+            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_NULL.getResult());
+        }
+        //获取session中验证码的值
+        String kaptchaCode = httpSession.getAttribute(Constants.VERIFY_CODE_KEY) + "";
+        //判断验证码是否正确
+        if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.toLowerCase().equals(kaptchaCode)) {
+            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
+        }
+        //向service层传入信息，找回密码
+        String findpasswordResult = studentService.findpassword(loginName, email);
+        //若返回信息为登陆成功，则登陆成功
+        if (ServiceResultEnum.SUCCESS.getResult().equals(findpasswordResult)) {
+            return ResultGenerator.genSuccessResult();
+        }
+        //找回密码失败
+        return ResultGenerator.genFailResult(findpasswordResult);
     }
 }

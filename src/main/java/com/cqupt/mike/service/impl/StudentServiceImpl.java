@@ -19,7 +19,8 @@ public class StudentServiceImpl implements StudentService {
 
     /**
      * 注册
-     * @param stName 用户名
+     *
+     * @param stName   用户名
      * @param password 密码
      * @return
      */
@@ -40,9 +41,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     /**
-     *
-     * @param stName 用户名
-     * @param password 密码
+     * @param stName      用户名
+     * @param password    密码
      * @param httpSession session
      * @return
      */
@@ -50,7 +50,7 @@ public class StudentServiceImpl implements StudentService {
     public String login(String stName, String password, HttpSession httpSession) {
         Student user = studentMapper.selectByLoginName(stName);
         if (user != null && httpSession != null) {
-            if(!user.getPassword().equals(password)){ //判断密码是否正确
+            if (!user.getPassword().equals(password)) { //判断密码是否正确
                 return ServiceResultEnum.LOGIN_ERROR.getResult();
             }
             if (user.getStatus() == 0) {   //判断用户是否已经锁定
@@ -64,6 +64,27 @@ public class StudentServiceImpl implements StudentService {
             MikeStudentVo mikeStudentVo = new MikeStudentVo();
             BeanUtil.copyProperties(user, mikeStudentVo); //复制属性到vo
             httpSession.setAttribute("mikeStudent", mikeStudentVo); //将vo的值传入到session
+            return ServiceResultEnum.SUCCESS.getResult();  //返回成功或失败
+        }
+        return ServiceResultEnum.LOGIN_NAME_ERROR.getResult();
+    }
+
+    /**
+     * @param stName 用户名
+     * @param email  邮箱
+     * @return
+     */
+    public String findpassword(String stName, String email) {
+        Student user = studentMapper.selectByLoginName(stName);
+        if (user != null) {
+            if (!user.getEmail().equals(email)) { //判断邮箱是否正确
+                return ServiceResultEnum.LOGIN_ERROR.getResult();
+            }
+            //用户名太长 影响页面展示
+            if (user.getStName() != null && user.getStName().length() > 5) {//若用户名超过五位，则取前五位
+                String tempstName = user.getStName().substring(0, 5) + "..";
+                user.setStName(tempstName);
+            }
             return ServiceResultEnum.SUCCESS.getResult();  //返回成功或失败
         }
         return ServiceResultEnum.LOGIN_NAME_ERROR.getResult();
