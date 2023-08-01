@@ -1,4 +1,4 @@
-package com.cqupt.mike.util;
+package com.cqupt.mike.until;
 
 import java.util.Properties;
 
