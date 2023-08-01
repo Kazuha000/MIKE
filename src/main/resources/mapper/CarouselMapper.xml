@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="ltd.newbee.mall.dao.CarouselMapper">
-    <resultMap id="BaseResultMap" type="ltd.newbee.mall.entity.Carousel">
-        <id column="carousel_id" jdbcType="INTEGER" property="carouselId"/>
+<mapper namespace="com.cqupt.mike.dao.CarouselMapper">
+    <resultMap id="BaseResultMap" type="com.cqupt.mike.entity.Carousel">
+        <result column="carousel_id" jdbcType="INTEGER" property="carouselId"/>
         <result column="carousel_url" jdbcType="VARCHAR" property="carouselUrl"/>
         <result column="redirect_url" jdbcType="VARCHAR" property="redirectUrl"/>
         <result column="carousel_rank" jdbcType="INTEGER" property="carouselRank"/>
@@ -12,13 +12,13 @@
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="update_user" jdbcType="INTEGER" property="updateUser"/>
     </resultMap>
-    <sql id="Base_Column_List">
+    <!--<sql id="Base_Column_List">
         carousel_id, carousel_url, redirect_url, carousel_rank, is_deleted, create_time,
     create_user, update_time, update_user
-    </sql>
+    </sql>-->
     <select id="findCarouselList" parameterType="Map" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
+        select *
+<!--        <include refid="Base_Column_List"/>-->
         from carousel
         where is_deleted = 0
         order by carousel_rank desc
@@ -26,29 +26,34 @@
             limit #{start},#{limit}
         </if>
     </select>
+
     <select id="getTotalCarousels" parameterType="Map" resultType="int">
         select count(*) from carousel
         where is_deleted = 0
     </select>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
+        select *
+<!--        <include refid="Base_Column_List"/>-->
         from carousel
         where carousel_id = #{carouselId,jdbcType=INTEGER}
     </select>
+
     <select id="findCarouselsByNum" parameterType="int" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
+        select *
+      <!--  <include refid="Base_Column_List"/>-->
         from carousel
         where is_deleted = 0
         order by carousel_rank desc
         limit #{number}
     </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from carousel
         where carousel_id = #{carouselId,jdbcType=INTEGER}
     </delete>
-    <insert id="insert" parameterType="ltd.newbee.mall.entity.Carousel">
+
+   <!-- <insert id="insert" parameterType="ltd.newbee.mall.entity.Carousel">
         insert into carousel (carousel_id, carousel_url, redirect_url,
                                              carousel_rank, is_deleted, create_time,
                                              create_user, update_time, update_user
@@ -57,8 +62,8 @@
                 #{carouselRank,jdbcType=INTEGER}, #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP},
                 #{createUser,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=INTEGER}
                )
-    </insert>
-    <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.Carousel">
+    </insert>-->
+    <insert id="insertSelective" parameterType="com.cqupt.mike.entity.Carousel">
         insert into carousel
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="carouselId != null">
@@ -119,7 +124,8 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="ltd.newbee.mall.entity.Carousel">
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.cqupt.mike.entity.Carousel">
         update carousel
         <set>
             <if test="carouselUrl != null">
@@ -149,7 +155,8 @@
         </set>
         where carousel_id = #{carouselId,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.Carousel">
+
+   <!-- <update id="updateByPrimaryKey" parameterType="com.cqupt.mike.entity.Carousel">
         update carousel
         set carousel_url = #{carouselUrl,jdbcType=VARCHAR},
             redirect_url = #{redirectUrl,jdbcType=VARCHAR},
@@ -160,7 +167,8 @@
             update_time = #{updateTime,jdbcType=TIMESTAMP},
             update_user = #{updateUser,jdbcType=INTEGER}
         where carousel_id = #{carouselId,jdbcType=INTEGER}
-    </update>
+    </update>-->
+
     <update id="deleteBatch">
         update carousel
         set is_deleted=1,update_time=now() where carousel_id in
