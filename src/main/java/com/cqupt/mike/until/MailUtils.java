@@ -13,6 +13,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 
+
 public class MailUtils {
      /*
 		email: 注册用户的邮箱
@@ -21,10 +22,13 @@ public class MailUtils {
 	public static void sendMail(String email, String emailMsg)
 			throws AddressException, MessagingException {
 		// 1.创建一个程序与邮件服务器会话对象 Session
-
+		//创建用于连接邮件服务器的参数配置
 		Properties props = new Properties();
+		//设置发件人的SMTP服务器地址
 		props.setProperty("mail.transport.protocol", "SMTP");
+		//设置邮件服务器主机名
 		props.setProperty("mail.host", "smtp.qq.com");
+		//设置需要验证
 		props.setProperty("mail.smtp.auth", "true");// 指定验证为true
 
 		// 创建验证器
@@ -34,9 +38,8 @@ public class MailUtils {
 				return new PasswordAuthentication("1834543408", "unjemrzliqjucihe");
 			}
 		};
-
+		//设置环境信息
 		Session session = Session.getInstance(props, auth);
-
 		// 2.创建一个Message，它相当于是邮件内容
 		Message message = new MimeMessage(session);
 
@@ -46,8 +49,7 @@ public class MailUtils {
 
 		message.setSubject("刘奕辰邮件验证");  //邮件标题
 		// message.setText("这是一封激活邮件，请<a href='#'>点击</a>");
-
-		message.setContent(emailMsg, "text/html;charset=utf-8");
+		message.setContent( "您正在找回密码，验证码为：" +emailMsg +"\n只有一次输入机会，请正确输入！如非本人操作，请忽略。", "text/html;charset=utf-8");
 
 		// 3.创建 Transport用于将邮件发送
 

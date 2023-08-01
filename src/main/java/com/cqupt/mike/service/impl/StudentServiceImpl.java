@@ -78,12 +78,7 @@ public class StudentServiceImpl implements StudentService {
         Student user = studentMapper.selectByLoginName(stName);
         if (user != null) {
             if (!user.getEmail().equals(email)) { //判断邮箱是否正确
-                return ServiceResultEnum.LOGIN_ERROR.getResult();
-            }
-            //用户名太长 影响页面展示
-            if (user.getStName() != null && user.getStName().length() > 5) {//若用户名超过五位，则取前五位
-                String tempstName = user.getStName().substring(0, 5) + "..";
-                user.setStName(tempstName);
+                return ServiceResultEnum.EMIAL_ERROR.getResult();
             }
             return ServiceResultEnum.SUCCESS.getResult();  //返回成功或失败
         }

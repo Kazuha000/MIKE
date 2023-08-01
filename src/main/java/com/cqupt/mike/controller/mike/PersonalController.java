@@ -13,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Random;
+
 //学生用户的登陆注册退出
 @Controller
 public class PersonalController {
@@ -45,6 +49,14 @@ public class PersonalController {
      */
     @GetMapping({"/findpassword","findpassword.html"})
     public String findpasswordPage() {return "mike/findpassword";}
+
+    /**
+     * 成功发送邮箱验证码后
+     * @return
+     */
+    @GetMapping({"/comparevcode","comparevcode.html"})
+    public  String comparevcodePage(){return "mike/comparevcode";}
+
 
 
     /**
@@ -120,17 +132,7 @@ public class PersonalController {
         return ResultGenerator.genFailResult(registerResult);
     }
 
-    /**
-     * 退出登陆
-     * @param httpSession 缓存的用户登陆信息
-     * @return
-     */
-    @GetMapping("/logout")
-    public String logout(HttpSession httpSession) {
-        //清空缓存信息
-        httpSession.removeAttribute(Constants.MIKE_STUDENT_SESSION_KEY);
-        return "mike/login";
-    }
+
 
     /**
      * 找回密码
@@ -141,8 +143,11 @@ public class PersonalController {
     @ResponseBody
     public Result findpassword(@RequestParam("loginName") String loginName,
                                @RequestParam("email") String email,
-                           @RequestParam("verifyCode") String verifyCode,
-                           HttpSession httpSession) {
+                               @RequestParam("verifyCode") String verifyCode,
+                               HttpSession httpSession,
+                               HttpServletRequest httpServletRequest,
+                               HttpServletResponse httpServletResponse
+    ) {
         //判断用户名、密码、验证码是否为空
         if (StringUtils.isEmpty(loginName)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_NAME_NULL.getResult());
@@ -153,19 +158,55 @@ public class PersonalController {
         if (StringUtils.isEmpty(verifyCode)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_NULL.getResult());
         }
-        //获取session中验证码的值
+//        获取session中验证码的值
         String kaptchaCode = httpSession.getAttribute(Constants.VERIFY_CODE_KEY) + "";
         //判断验证码是否正确
         if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.toLowerCase().equals(kaptchaCode)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
         }
+
+
         //向service层传入信息，找回密码
         String findpasswordResult = studentService.findpassword(loginName, email);
-        //若返回信息为登陆成功，则登陆成功
+        //若返回信息为登陆成功，则发送验证码
         if (ServiceResultEnum.SUCCESS.getResult().equals(findpasswordResult)) {
+
+            //服务器通知浏览器不要缓存
+            httpServletResponse.setHeader("Cache-Control", "no-store");
+            httpServletResponse.setHeader("Pragma", "no-cache");
+            httpServletResponse.setDateHeader("Expires", 0);
+
+            //生成随机数作为邮箱验证码
+            String base = "0123456789ABCDEFGHIJKLMNOPQRSDUVWXYZabcdefghijklmnopqrsduvwxyz";
+            int size = base.length();
+            Random r = new Random();
+            StringBuilder code = new StringBuilder();
+            for(int i=1;i<=4;i++){
+                //产生0到size-1的随机值
+                int index = r.nextInt(size);
+                //在base字符串中获取下标为index的字符
+                char c = base.charAt(index);
+                //将c放入到StringBuffer中去
+                code.append(c);
+            }
+
+            // 邮箱验证码存入session
+            httpServletRequest.getSession().setAttribute("EmailCode",code.toString());
             return ResultGenerator.genSuccessResult();
         }
         //找回密码失败
         return ResultGenerator.genFailResult(findpasswordResult);
+    }
+
+    /**
+     * 退出登陆
+     * @param httpSession 缓存的用户登陆信息
+     * @return
+     */
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession) {
+        //清空缓存信息
+        httpSession.removeAttribute(Constants.MIKE_STUDENT_SESSION_KEY);
+        return "mike/login";
     }
 }

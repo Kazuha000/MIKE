@@ -37,6 +37,8 @@ public enum ServiceResultEnum {
     SHOPPING_CART_ITEM_TOTAL_NUMBER_ERROR("超出购物车最大容量！"),
 
     LOGIN_ERROR("密码错误！"),
+
+    EMIAL_ERROR("邮箱错误！"),
     LOGIN_NAME_ERROR("用户不存在！"),
 
     LOGIN_USER_LOCKED("用户已被禁止登录！"),
