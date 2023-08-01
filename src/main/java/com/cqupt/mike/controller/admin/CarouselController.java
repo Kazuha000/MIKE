@@ -26,8 +26,8 @@ public class CarouselController {
     CarouselService carouselService;
     @GetMapping("/carousels")
     public String carouselPage(HttpServletRequest request) {
-        request.setAttribute("path", "mike_carousel");
-        return "admin/mike_carousel";
+        request.setAttribute("path", "carousel");
+        return "admin/carousel";
     }
 
     /**
