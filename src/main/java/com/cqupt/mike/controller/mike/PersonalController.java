@@ -3,7 +3,6 @@ package com.cqupt.mike.controller.mike;
 import com.cqupt.mike.common.ServiceResultEnum;
 import com.cqupt.mike.common.Constants;
 import com.cqupt.mike.service.StudentService;
-import com.cqupt.mike.util.MailUtils;
 import com.cqupt.mike.util.Result;
 import com.cqupt.mike.util.ResultGenerator;
 import org.springframework.stereotype.Controller;
@@ -14,12 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Random;
-
 //学生用户的登陆注册退出
 @Controller
 public class PersonalController {
@@ -44,31 +38,6 @@ public class PersonalController {
     public String registerPage() {
         return "mike/register";
     }
-
-    /**
-     * 找回密码界面跳转
-     * @return
-     */
-    @GetMapping({"/forgetpassword","forgetpassword.html"})
-    public String forgetpasswwordPage() {return "mike/forgetpassword";}
-
-    /**
-     * 比对验证码界面跳转
-     * @return
-     */
-    @GetMapping({"/comparevcode","comparevcode.html"})
-    public  String comparevcodePage(){return "mike/comparevcode";}
-
-    /**
-     * 重置密码界面跳转
-     * @return
-     */
-    @GetMapping({"/resetpassword","resetpassword.html"})
-    public  String reserpasswordPage() {return  "mike/resetpassword";}
-
-
-
-
 
     /**
      * 提交登陆
@@ -112,7 +81,6 @@ public class PersonalController {
     public Result register(@RequestParam("loginName") String loginName,
                            @RequestParam("verifyCode") String verifyCode,
                            @RequestParam("password") String password,
-                           @RequestParam("email") String email,
                            HttpSession httpSession) {
         //判断用户名、密码、验证码是否为空
         if (StringUtils.isEmpty(loginName)) {
@@ -120,9 +88,6 @@ public class PersonalController {
         }
         if (StringUtils.isEmpty(password)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_PASSWORD_NULL.getResult());
-        }
-        if (StringUtils.isEmpty(email)){
-            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_EMAIL_NULL.getResult());
         }
         if (StringUtils.isEmpty(verifyCode)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_NULL.getResult());
@@ -143,130 +108,6 @@ public class PersonalController {
         return ResultGenerator.genFailResult(registerResult);
     }
 
-
-
-    /**
-     * 忘记密码
-     * @param email
-     * @return
-     */
-    @PostMapping("/forgetpassword")
-    @ResponseBody
-    public Result forgetpassword(@RequestParam("loginName") String loginName,
-                               @RequestParam("email") String email,
-                               @RequestParam("verifyCode") String verifyCode,
-                               HttpSession httpSession,
-                               HttpServletRequest httpServletRequest,
-                               HttpServletResponse httpServletResponse
-    ) {
-        //判断用户名、密码、验证码是否为空
-        if (StringUtils.isEmpty(loginName)) {
-            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_NAME_NULL.getResult());
-        }
-        if (StringUtils.isEmpty(email)){
-            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_EMAIL_NULL.getResult());
-        }
-        if (StringUtils.isEmpty(verifyCode)) {
-            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_NULL.getResult());
-        }
-//        获取session中验证码的值
-        String kaptchaCode = httpSession.getAttribute(Constants.VERIFY_CODE_KEY) + "";
-        //判断验证码是否正确
-        if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.toLowerCase().equals(kaptchaCode)) {
-            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
-        }
-
-
-        //向service层传入信息，找回密码
-        String forgetpasswordResult = studentService.forgetpassword(loginName, email,httpSession,httpServletRequest);
-        //若返回信息为登陆成功，则发送验证码
-        if (ServiceResultEnum.SUCCESS.getResult().equals(forgetpasswordResult)) {
-
-            //服务器通知浏览器不要缓存
-            httpServletResponse.setHeader("Cache-Control", "no-store");
-            httpServletResponse.setHeader("Pragma", "no-cache");
-            httpServletResponse.setDateHeader("Expires", 0);
-
-            //生成随机数作为邮箱验证码
-            String base = "0123456789ABCDEFGHIJKLMNOPQRSDUVWXYZabcdefghijklmnopqrsduvwxyz";
-            int size = base.length();
-            Random r = new Random();
-            StringBuilder code = new StringBuilder();
-            for(int i=1;i<=4;i++){
-                //产生0到size-1的随机值
-                int index = r.nextInt(size);
-                //在base字符串中获取下标为index的字符
-                char c = base.charAt(index);
-                //将c放入到StringBuffer中去
-                code.append(c);
-            }
-
-            // 邮箱验证码存入session
-            httpServletRequest.getSession().setAttribute("EmailCode",code.toString());
-
-
-            try {
-                MailUtils.sendMail(email,code.toString());
-            } catch (MessagingException e) {
-                throw new RuntimeException(e);
-            }
-            return ResultGenerator.genSuccessResult();
-        }
-        //找回密码失败
-        return ResultGenerator.genFailResult(forgetpasswordResult);
-    }
-
-
-    @PostMapping("/comparevcode")
-    @ResponseBody
-    public Result comparevcode(
-                                 @RequestParam("verifyCode") String verifyCode,
-                                 HttpSession httpSession,
-                                 HttpServletRequest httpServletRequest,
-                                 HttpServletResponse httpServletResponse
-    ) {
-        //判断验证码是否为空
-        if (StringUtils.isEmpty(verifyCode)) {
-            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_NULL.getResult());
-        }
-//        获取session中验证码的值
-        String vCode = httpSession.getAttribute("EmailCode") + "";
-        //判断验证码是否正确
-        if (StringUtils.isEmpty(vCode) || !verifyCode.toLowerCase().equals(vCode)) {
-            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
-        }
-        //比对验证码成功
-        return ResultGenerator.genSuccessResult();
-    }
-
-//    @PostMapping("/resetpassword")
-//    @ResponseBody
-//    public Result resetpassword(@RequestParam("password") String newpassword,
-//                                 @RequestParam("stId") int stId,
-//                                 HttpSession httpSession,
-//                                 HttpServletRequest httpServletRequest,
-//                                 HttpServletResponse httpServletResponse
-//    ) {
-//        //判断用户名、密码、验证码是否为空
-//        if (StringUtils.isEmpty(newpassword)) {
-//            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_PASSWORD_NULL.getResult());
-//        }
-//        //向service层传入信息，找回密码
-//        Integer userId = (Integer)httpServletRequest.getSession().getAttribute("userId");
-//
-//        String resetpasswordResult = studentService.resetpassword(stId,newpassword);
-//        //若返回信息为登陆成功，则发送验证码
-//        if (ServiceResultEnum.SUCCESS.getResult().equals(resetpasswordResult)) {
-//
-//
-//
-//            // 邮箱验证码存入session
-//            httpServletRequest.getSession().setAttribute("EmailCode",code.toString());
-//            return ResultGenerator.genSuccessResult();
-//        }
-//        //找回密码失败
-//        return ResultGenerator.genFailResult(resetpasswordResult);
-//    }
     /**
      * 退出登陆
      * @param httpSession 缓存的用户登陆信息

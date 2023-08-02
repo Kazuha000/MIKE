@@ -10,9 +10,9 @@ package com.cqupt.mike.controller.common;
 
 
 import com.cqupt.mike.common.Constants;
-import com.cqupt.mike.until.MikeUtils;
-import com.cqupt.mike.until.Result;
-import com.cqupt.mike.until.ResultGenerator;
+import com.cqupt.mike.util.MikeUtils;
+import com.cqupt.mike.util.Result;
+import com.cqupt.mike.util.ResultGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;

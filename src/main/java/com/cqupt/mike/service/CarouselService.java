@@ -2,8 +2,8 @@ package com.cqupt.mike.service;
 
 import com.cqupt.mike.controller.vo.IndexCarouselVO;
 import com.cqupt.mike.entity.Carousel;
-import com.cqupt.mike.until.PageQueryUtil;
-import com.cqupt.mike.until.PageResult;
+import com.cqupt.mike.util.PageQueryUtil;
+import com.cqupt.mike.util.PageResult;
 
 import java.util.List;
 
