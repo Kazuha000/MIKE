@@ -86,14 +86,11 @@ $(function () {
             }
         },
         onComplete: function (file, r) {
-            alert("1");
             if (r != null && r.resultCode == 200) {
-                alert("2");
                 $("#courseCoverImg").attr("src", r.data);
                 $("#courseCoverImg").attr("style", "width: 128px;height: 128px;display:block;");
                 return false;
             } else if (r != null && r.resultCode != 200) {
-                alert("3");
                 Swal.fire({
                     text: r.message,
                     icon: "error",iconColor:"#f05b72",
@@ -101,7 +98,6 @@ $(function () {
                 return false;
             }
             else {
-                alert("4");
                 Swal.fire({
                     text: "error",
                     icon: "error",iconColor:"#f05b72",
