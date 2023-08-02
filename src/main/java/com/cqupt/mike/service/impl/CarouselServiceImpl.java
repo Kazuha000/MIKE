@@ -5,9 +5,9 @@ import com.cqupt.mike.controller.vo.IndexCarouselVO;
 import com.cqupt.mike.dao.CarouselMapper;
 import com.cqupt.mike.entity.Carousel;
 import com.cqupt.mike.service.CarouselService;
-import com.cqupt.mike.until.BeanUtil;
-import com.cqupt.mike.until.PageQueryUtil;
-import com.cqupt.mike.until.PageResult;
+import com.cqupt.mike.util.BeanUtil;
+import com.cqupt.mike.util.PageQueryUtil;
+import com.cqupt.mike.util.PageResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
