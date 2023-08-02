@@ -1,7 +1,7 @@
 package com.cqupt.mike.dao;
 
 import com.cqupt.mike.entity.Carousel;
-import com.cqupt.mike.until.PageQueryUtil;
+import com.cqupt.mike.util.PageQueryUtil;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.cqupt.mike.until;
+package com.cqupt.mike.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
