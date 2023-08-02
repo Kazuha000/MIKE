@@ -1,6 +1,6 @@
 package com.cqupt.mike.controller;
 
-import com.cqupt.mike.until.MailUtils;
+import com.cqupt.mike.util.MailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;

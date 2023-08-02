@@ -1,12 +1,11 @@
 package com.cqupt.mike.service.impl;
 
-import com.cqupt.mike.common.Constants;
 import com.cqupt.mike.common.ServiceResultEnum;
 import com.cqupt.mike.controller.vo.MikeStudentVo;
 import com.cqupt.mike.dao.StudentMapper;
 import com.cqupt.mike.entity.Student;
 import com.cqupt.mike.service.StudentService;
-import com.cqupt.mike.until.BeanUtil;
+import com.cqupt.mike.util.BeanUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
