@@ -30,6 +30,7 @@
         <ul class="fl">
             <li><a th:href="@{/index}">MIKE首页</a></li>
             <li><a th:href="@{/admin}">后台管理系统</a></li>
+            <li><a th:href="@{/teacher}">教师端</a></li>
             <li><a href="https://edu.csdn.net/course/detail/26258">课程视频</a></li>
             <li><a href="https://juejin.cn/book/6844733814074245133?suid=3808363978174302&source=pc">课程文档</a></li>
         </ul>
@@ -72,8 +73,8 @@
             </th:block>
             <th:block th:if="${session.mikeStudent==null}">
                 <ul class="login">
-                    <li><a th:href="@{/login}">登录</a></li>
-                    <li><a th:href="@{/register}">注册</a></li>
+                    <li><a th:href="@{/login}">学生登录</a></li>
+                    <li><a th:href="@{/register}">学生注册</a></li>
                 </ul>
                 <div class="shopcart">
                     <a href="##" style="color: white;"><i class="iconfont icon-cart"></i>
