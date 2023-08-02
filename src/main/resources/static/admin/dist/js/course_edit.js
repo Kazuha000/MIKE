@@ -1,71 +1,297 @@
-var editorD;
+var editor;
+
 $(function () {
+
     //富文本编辑器 用于商品详情编辑
     const E = window.wangEditor;
-    editorD = new E('#wangEditor')
-    // 设置编辑区域高度为 750px
-    editorD.config.height = 750
-    //配置服务端图片上传地址
-    editorD.config.uploadImgServer = '/admin/upload/files'
-    editorD.config.uploadFileName = 'files'
-    //限制图片大小 2M
-    editorD.config.uploadImgMaxSize = 2 * 1024 * 1024
-    //限制一次最多能传几张图片 一次最多上传 5 个图片
-    editorD.config.uploadImgMaxLength = 5
-    //隐藏插入网络图片的功能
-    editorD.config.showLinkImg = false
-    editorD.config.uploadImgHooks = {
-        // 图片上传并返回了结果，图片插入已成功
-        success: function (xhr) {
-            console.log('success', xhr)
+
+    const editorConfig = { MENU_CONF: {} }
+    editorConfig.MENU_CONF['uploadImage'] = {
+        //配置服务端图片上传地址
+        server: '/admin/upload/files',
+        // 超时时间5s
+        timeout: 5 * 1000,
+        fieldName: 'files',
+        // 选择文件时的类型限制，默认为 ['image/*']
+        allowedFileTypes: ['image/*'],
+        // 限制图片大小 4M
+        maxFileSize: 4 * 1024 * 1024,
+        base64LimitSize: 5 * 1024,
+
+        onBeforeUpload(file) {
+            console.log('onBeforeUpload', file)
+
+            return file // will upload this file
+            // return false // prevent upload
         },
-        // 图片上传并返回了结果，但图片插入时出错了
-        fail: function (xhr, editor, resData) {
-            console.log('fail', resData)
+        onProgress(progress) {
+            console.log('onProgress', progress)
         },
-        // 上传图片出错，一般为 http 请求的错误
-        error: function (xhr, editor, resData) {
-            console.log('error', xhr, resData)
+        onSuccess(file, res) {
+            console.log('onSuccess', file, res)
         },
-        // 上传图片超时
-        timeout: function (xhr) {
-            console.log('timeout')
+        onFailed(file, res) {
+            alert(res.message)
+            console.log('onFailed', file, res)
         },
-        customInsert: function (insertImgFn, result) {
+        onError(file, err, res) {
+            alert(err.message)
+            console.error('onError', file, err, res)
+        },
+        customInsert: function (result,insertImgFn) {
             if (result != null && result.resultCode == 200) {
                 // insertImgFn 可把图片插入到编辑器，传入图片 src ，执行函数即可
                 result.data.forEach(img => {
                     insertImgFn(img)
                 });
+            } else if (result != null && result.resultCode != 200) {
+                Swal.fire({
+                    text: result.message,
+                    icon: "error",iconColor:"#f05b72",
+                });
             } else {
-                alert("error");
+                Swal.fire({
+                    text: "error",
+                    icon: "error",iconColor:"#f05b72",
+                });
             }
         }
     }
-    editorD.create();
 
-    //图片上传插件初始化 用于商品预览图上传
-    new AjaxUpload('#uploadGoodsCoverImg', {
+    editor = E.createEditor({
+        selector: '#editor-text-area',
+        html: $(".editor-text").val(),
+        config: editorConfig
+    })
+
+    const toolbar = E.createToolbar({
+        editor,
+        selector: '#editor-toolbar',
+    })
+
+    //图片上传插件初始化 用于课程预览图上传
+    new AjaxUpload('#uploadCourseCoverImg', {
         action: '/admin/upload/file',
         name: 'file',
         autoSubmit: true,
         responseType: "json",
         onSubmit: function (file, extension) {
+            alert("提交图片")
             if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))) {
-                alert('只支持jpg、png、gif格式的文件！');
+                Swal.fire({
+                    text: "只支持jpg、png、gif格式的文件！",
+                    icon: "error",iconColor:"#f05b72",
+                });
                 return false;
             }
         },
         onComplete: function (file, r) {
+            alert("1");
             if (r != null && r.resultCode == 200) {
-                $("#goodsCoverImg").attr("src", r.data);
-                $("#goodsCoverImg").attr("style", "width: 128px;height: 128px;display:block;");
+                alert("2");
+                $("#courseCoverImg").attr("src", r.data);
+                $("#courseCoverImg").attr("style", "width: 128px;height: 128px;display:block;");
                 return false;
-            } else {
-                alert("error");
+            } else if (r != null && r.resultCode != 200) {
+                alert("3");
+                Swal.fire({
+                    text: r.message,
+                    icon: "error",iconColor:"#f05b72",
+                });
+                return false;
+            }
+            else {
+                alert("4");
+                Swal.fire({
+                    text: "error",
+                    icon: "error",iconColor:"#f05b72",
+                });
             }
         }
     });
+});
+
+$('#saveButton').click(function () {
+    var courseId = $('#courseId').val();
+    var courseCategoryId = $('#levelThree option:selected').val();
+    var courseName = $('#courseName').val();
+    var tag = $('#tag').val();
+    var originalPrice = $('#originalPrice').val();
+    var sellingPrice = $('#sellingPrice').val();
+    var courseIntro = $('#courseIntro').val();
+    var stockNum = $('#stockNum').val();
+    var courseSellStatus = $("input[name='courseSellStatus']:checked").val();
+    var courseDetailContent = editor.getHtml();
+    var courseCoverImg = $('#courseCoverImg')[0].src;
+    if (isNull(courseCategoryId)) {
+        Swal.fire({
+            text: "请选择分类",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return;
+    }
+    if (isNull(courseName)) {
+        Swal.fire({
+            text: "请输入商品名称",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return;
+    }
+    if (!validLength(courseName, 100)) {
+        Swal.fire({
+            text: "商品名称过长",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return;
+    }
+    if (isNull(tag)) {
+        Swal.fire({
+            text: "请输入商品小标签",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return;
+    }
+    if (!validLength(tag, 100)) {
+        Swal.fire({
+            text: "标签过长",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return;
+    }
+    if (isNull(courseIntro)) {
+        Swal.fire({
+            text: "请输入商品简介",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return;
+    }
+    if (!validLength(courseIntro, 100)) {
+        Swal.fire({
+            text: "简介过长",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return;
+    }
+    if (isNull(originalPrice) || originalPrice < 1) {
+        Swal.fire({
+            text: "请输入商品价格",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return;
+    }
+    if (isNull(sellingPrice) || sellingPrice < 1) {
+        Swal.fire({
+            text: "请输入商品售卖价",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return;
+    }
+    if (isNull(stockNum) || sellingPrice < 0) {
+        Swal.fire({
+            text: "请输入商品库存数",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return;
+    }
+    if (isNull(courseSellStatus)) {
+        Swal.fire({
+            text: "请选择上架状态",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return;
+    }
+    if (isNull(courseDetailContent)) {
+        Swal.fire({
+            text: "请输入商品介绍",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return;
+    }
+    if (!validLength(courseDetailContent, 50000)) {
+        Swal.fire({
+            text: "商品介绍内容过长",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return;
+    }
+    if (isNull(courseCoverImg) || courseCoverImg.indexOf('img-upload') != -1) {
+        Swal.fire({
+            text: "封面图片不能为空",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return;
+    }
+    var url = '/admin/course/save';
+    var swlMessage = '保存成功';
+    var data = {
+        "courseName": courseName,
+        "courseIntro": courseIntro,
+        "courseCategoryId": courseCategoryId,
+        "tag": tag,
+        "originalPrice": originalPrice,
+        "sellingPrice": sellingPrice,
+        "stockNum": stockNum,
+        "courseDetailContent": courseDetailContent,
+        "courseCoverImg": courseCoverImg,
+        "courseCarousel": courseCoverImg,
+        "courseSellStatus": courseSellStatus
+    };
+    if (courseId > 0) {
+        url = '/admin/course/update';
+        swlMessage = '修改成功';
+        data = {
+            "courseId": courseId,
+            "courseName": courseName,
+            "courseIntro": courseIntro,
+            "courseCategoryId": courseCategoryId,
+            "tag": tag,
+            "originalPrice": originalPrice,
+            "sellingPrice": sellingPrice,
+            "stockNum": stockNum,
+            "courseDetailContent": courseDetailContent,
+            "courseCoverImg": courseCoverImg,
+            "courseCarousel": courseCoverImg,
+            "courseSellStatus": courseSellStatus
+        };
+    }
+    console.log(data);
+    $.ajax({
+        type: 'POST',//方法类型
+        url: url,
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function (result) {
+            if (result.resultCode === 200) {
+                Swal.fire({
+                    text: swlMessage,
+                    icon: "success",iconColor:"#1d953f",
+                    showCancelButton: false,
+                    confirmButtonColor: '#1baeae',
+                    confirmButtonText: '返回商品列表',
+                    confirmButtonClass: 'btn btn-success',
+                    buttonsStyling: false
+                }).then(function () {
+                    window.location.href = "/admin/goods";
+                })
+            } else {
+                Swal.fire({
+                    text: result.message,
+                    icon: "error",iconColor:"#f05b72",
+                });
+            }
+            ;
+        },
+        error: function () {
+            Swal.fire({
+                text: "操作失败",
+                icon: "error",iconColor:"#f05b72",
+            });
+        }
+    });
+});
+
+$('#cancelButton').click(function () {
+    window.location.href = "/admin/goods";
 });
 
 $('#levelOne').on('change', function () {
@@ -89,15 +315,17 @@ $('#levelOne').on('change', function () {
                 }
                 $('#levelThree').html(levelThreeSelect);
             } else {
-                swal(result.message, {
-                    icon: "error",
+                Swal.fire({
+                    text: result.message,
+                    icon: "error",iconColor:"#f05b72",
                 });
             }
             ;
         },
         error: function () {
-            swal("操作失败", {
-                icon: "error",
+            Swal.fire({
+                text: "操作失败",
+                icon: "error",iconColor:"#f05b72",
             });
         }
     });
@@ -117,15 +345,17 @@ $('#levelTwo').on('change', function () {
                 }
                 $('#levelThree').html(levelThreeSelect);
             } else {
-                swal(result.message, {
-                    icon: "error",
+                Swal.fire({
+                    text: result.message,
+                    icon: "error",iconColor:"#f05b72",
                 });
             }
             ;
         },
         error: function () {
-            swal("操作失败", {
-                icon: "error",
+            Swal.fire({
+                text: "操作失败",
+                icon: "error",iconColor:"#f05b72",
             });
         }
     });

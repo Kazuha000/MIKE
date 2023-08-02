@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqupt.mike.dao.CourseMapper">
+    <resultMap id="BaseResultMap" type="com.cqupt.mike.entity.Course">
+        <id column="course_id" jdbcType="BIGINT" property="courseId"/>
+        <result column="course_name" jdbcType="VARCHAR" property="courseName"/>
+        <result column="course_intro" jdbcType="VARCHAR" property="courseIntro"/>
+        <result column="teacher_id" jdbcType="BIGINT" property="teacherId"/>
+        <result column="course_category_id" jdbcType="BIGINT" property="courseCategoryId"/>
+        <result column="course_cover_img" jdbcType="VARCHAR" property="courseCoverImg"/>
+        <result column="course_carousel" jdbcType="VARCHAR" property="courseCarousel"/>
+        <result column="original_price" jdbcType="INTEGER" property="originalPrice"/>
+        <result column="selling_price" jdbcType="INTEGER" property="sellingPrice"/>
+        <result column="stock_num" jdbcType="INTEGER" property="stockNum"/>
+        <result column="tag" jdbcType="VARCHAR" property="tag"/>
+        <result column="course_sell_status" jdbcType="TINYINT" property="courseSellStatus"/>
+        <result column="create_user" jdbcType="INTEGER" property="createUser"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_user" jdbcType="INTEGER" property="updateUser"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.cqupt.mike.entity.Course">
+        <result column="course_detail_content" jdbcType="LONGVARCHAR" property="courseDetailContent"/>
+    </resultMap>
+    <insert id="insertSelective" parameterType="com.cqupt.mike.entity.Course">
+        insert into course_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">
+                course_id,
+            </if>
+            <if test="courseName != null">
+                course_name,
+            </if>
+            <if test="courseIntro != null">
+                course_intro,
+            </if>
+            <if test="teacherId != null">
+                teacher_id,
+            </if>
+            <if test="courseCategoryId != null">
+                course_category_id,
+            </if>
+            <if test="courseCoverImg != null">
+                course_cover_img,
+            </if>
+            <if test="courseCarousel != null">
+                course_carousel,
+            </if>
+            <if test="originalPrice != null">
+                original_price,
+            </if>
+            <if test="sellingPrice != null">
+                selling_price,
+            </if>
+            <if test="stockNum != null">
+                stock_num,
+            </if>
+            <if test="tag != null">
+                tag,
+            </if>
+            <if test="courseSellStatus != null">
+                course_sell_status,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateUser != null">
+                update_user,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="courseDetailContent != null">
+                course_detail_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="courseId != null">
+                #{courseId,jdbcType=BIGINT},
+            </if>
+            <if test="courseName != null">
+                #{courseName,jdbcType=VARCHAR},
+            </if>
+            <if test="courseIntro != null">
+                #{courseIntro,jdbcType=VARCHAR},
+            </if>
+            <if test="teacherId != null">
+                #{teacherId,jdbcType=BIGINT},
+            </if>
+            <if test="courseCategoryId != null">
+                #{courseCategoryId,jdbcType=BIGINT},
+            </if>
+            <if test="courseCoverImg != null">
+                #{courseCoverImg,jdbcType=VARCHAR},
+            </if>
+            <if test="courseCarousel != null">
+                #{courseCarousel,jdbcType=VARCHAR},
+            </if>
+            <if test="originalPrice != null">
+                #{originalPrice,jdbcType=INTEGER},
+            </if>
+            <if test="sellingPrice != null">
+                #{sellingPrice,jdbcType=INTEGER},
+            </if>
+            <if test="stockNum != null">
+                #{stockNum,jdbcType=INTEGER},
+            </if>
+            <if test="tag != null">
+                #{tag,jdbcType=VARCHAR},
+            </if>
+            <if test="courseSellStatus != null">
+                #{courseSellStatus,jdbcType=TINYINT},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser,jdbcType=INTEGER},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="courseDetailContent != null">
+                #{courseDetailContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+</mapper>

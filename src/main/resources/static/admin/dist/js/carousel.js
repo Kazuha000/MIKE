@@ -43,7 +43,7 @@ $(function () {
     $(window).resize(function () {
         $("#jqGrid").setGridWidth($(".card-body").width());
     });
-
+//图片上传插件初始化
     new AjaxUpload('#uploadCarouselImage', {
         action: '/admin/upload/file',
         name: 'file',
