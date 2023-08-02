@@ -1,8 +1,11 @@
 package com.cqupt.mike.service;
 
+import com.cqupt.mike.controller.vo.IndexCarouselVO;
 import com.cqupt.mike.entity.Carousel;
 import com.cqupt.mike.until.PageQueryUtil;
 import com.cqupt.mike.until.PageResult;
+
+import java.util.List;
 
 public interface CarouselService {
     /**
@@ -44,4 +47,11 @@ public interface CarouselService {
      * @return
      */
     Boolean deleteBatch(Integer[] ids);
+
+    /**
+     * 返回固定数量的轮播图对象(首页调用)
+     * @param number
+     * @return
+     */
+    public List<IndexCarouselVO> getCarouselsForIndex(int number);
 }

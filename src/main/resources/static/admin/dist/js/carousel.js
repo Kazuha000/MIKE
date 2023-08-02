@@ -43,6 +43,7 @@ $(function () {
     $(window).resize(function () {
         $("#jqGrid").setGridWidth($(".card-body").width());
     });
+
     new AjaxUpload('#uploadCarouselImage', {
         action: '/admin/upload/file',
         name: 'file',
@@ -71,6 +72,7 @@ $(function () {
         }
     });
 });
+
 /**
  * jqGrid重新加载
  */

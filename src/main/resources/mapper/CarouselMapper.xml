@@ -63,7 +63,7 @@
                 #{createUser,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=INTEGER}
                )
     </insert>-->
-    <insert id="insertSelective" parameterType="com.cqupt.mike.entity.Carousel">
+    <insert id="insert" parameterType="com.cqupt.mike.entity.Carousel">
         insert into carousel
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="carouselId != null">
@@ -125,7 +125,7 @@
         </trim>
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.cqupt.mike.entity.Carousel">
+    <update id="updateByPrimaryKey" parameterType="com.cqupt.mike.entity.Carousel">
         update carousel
         <set>
             <if test="carouselUrl != null">

@@ -1,4 +1,5 @@
-!DOCTYPE html>
+<!-- 轮播图 -->
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <header th:replace="admin/header::header-fragment">
 </header>
@@ -16,9 +17,9 @@
   <div th:replace="admin/header::header-nav"></div>
   <!-- 引入工具栏sidebar-fragment -->
   <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
-  <!-- Content Wrapper. Contains （图标content） -->
+  <!-- Content Wrapper. Contains 图标content -->
   <div class="content-wrapper">
-    <!-- Content Header （图标header） -->
+    <!-- Content Header (图标header) -->
     <div class="content-header">
       <div class="container-fluid">
       </div><!-- /.container-fluid -->
@@ -50,6 +51,7 @@
         </div>
       </div><!-- /.container-fluid -->
     </div>
+    <!-- /.content -->
     <div class="content">
       <!-- 模态框（Modal） -->
       <div class="modal fade" id="carouselModal" tabindex="-1" role="dialog"
@@ -105,6 +107,7 @@
       <!-- /.modal -->
     </div>
   </div>
+  <!-- /.content-wrapper -->
   <!-- 引入页脚footer-fragment -->
   <div th:replace="admin/footer::footer-fragment"></div>
 </div>
