@@ -1,13 +1,18 @@
 package com.cqupt.mike.service.impl;
 
 import com.cqupt.mike.common.ServiceResultEnum;
+import com.cqupt.mike.controller.vo.IndexCarouselVO;
 import com.cqupt.mike.dao.CarouselMapper;
 import com.cqupt.mike.entity.Carousel;
 import com.cqupt.mike.service.CarouselService;
+import com.cqupt.mike.until.BeanUtil;
 import com.cqupt.mike.until.PageQueryUtil;
 import com.cqupt.mike.until.PageResult;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -60,5 +65,15 @@ public class CarouselServiceImpl implements CarouselService {
         }
         //删除数据
         return carouselMapper.deleteBatch(ids) > 0;
+    }
+
+    @Override
+    public List<IndexCarouselVO> getCarouselsForIndex(int number) {
+        List<IndexCarouselVO> indexCarouselVOS = new ArrayList<>(number);
+        List<Carousel> carousels = carouselMapper.findCarouselsByNum(number);
+        if (!CollectionUtils.isEmpty(carousels)) {
+            indexCarouselVOS = BeanUtil.copyList(carousels, IndexCarouselVO.class);
+        }
+        return indexCarouselVOS;
     }
 }
