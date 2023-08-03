@@ -14,8 +14,8 @@ $(function () {
         fieldName: 'files',
         // 选择文件时的类型限制，默认为 ['image/*']
         allowedFileTypes: ['image/*'],
-        // 限制图片大小 4M
-        maxFileSize: 4 * 1024 * 1024,
+        // 限制图片大小 50M
+        maxFileSize: 50 * 1024 * 1024,
         base64LimitSize: 5 * 1024,
 
         onBeforeUpload(file) {
@@ -76,7 +76,6 @@ $(function () {
         autoSubmit: true,
         responseType: "json",
         onSubmit: function (file, extension) {
-            alert("提交图片")
             if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))) {
                 Swal.fire({
                     text: "只支持jpg、png、gif格式的文件！",
@@ -106,6 +105,7 @@ $(function () {
         }
     });
 });
+
 
 $('#saveButton').click(function () {
     var courseId = $('#courseId').val();
@@ -210,14 +210,14 @@ $('#saveButton').click(function () {
         });
         return;
     }
-    if (isNull(courseCoverImg) || courseCoverImg.indexOf('img-upload') != -1) {
+    /*if (isNull(courseCoverImg) || courseCoverImg.indexOf('img-upload') != -1) {
         Swal.fire({
             text: "封面图片不能为空",
             icon: "error",iconColor:"#f05b72",
         });
         return;
-    }
-    var url = '/admin/course/save';
+    }*/
+    var url = '/teacher/course/save';
     var swlMessage = '保存成功';
     var data = {
         "courseName": courseName,
@@ -251,6 +251,7 @@ $('#saveButton').click(function () {
         };
     }
     console.log(data);
+    alert(data);
     $.ajax({
         type: 'POST',//方法类型
         url: url,
@@ -287,7 +288,7 @@ $('#saveButton').click(function () {
 });
 
 $('#cancelButton').click(function () {
-    window.location.href = "/admin/goods";
+    window.location.href = "/teacher/course";
 });
 
 $('#levelOne').on('change', function () {
