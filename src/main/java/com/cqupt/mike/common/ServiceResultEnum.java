@@ -16,6 +16,10 @@ public enum ServiceResultEnum {
 
     LOGIN_PASSWORD_NULL("请输入密码！"),
 
+    RESET_PASSWORD_NULL("请输入密码"),
+
+    RESET_PASSWORD_NOEQUAL("密码不相同"),
+
     LOGIN_EMAIL_NULL("请输入邮箱"),
 
     LOGIN_VERIFY_CODE_NULL("请输入验证码！"),
