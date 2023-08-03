@@ -31,7 +31,7 @@ import java.util.*;
  * 文件上传
  */
 @Controller
-@RequestMapping("/admin")
+//@RequestMapping("/admin")
 public class UploadController {
 
     @Resource
