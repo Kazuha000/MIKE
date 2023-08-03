@@ -8,7 +8,7 @@ $(function () {
     const editorConfig = { MENU_CONF: {} }
     editorConfig.MENU_CONF['uploadImage'] = {
         //配置服务端图片上传地址
-        server: '/admin/upload/files',
+        server: '/upload/files',
         // 超时时间5s
         timeout: 5 * 1000,
         fieldName: 'files',
@@ -71,7 +71,7 @@ $(function () {
 
     //图片上传插件初始化 用于课程预览图上传
     new AjaxUpload('#uploadCourseCoverImg', {
-        action: '/admin/upload/file',
+        action: '/upload/file',
         name: 'file',
         autoSubmit: true,
         responseType: "json",

@@ -45,7 +45,7 @@ $(function () {
     });
 //图片上传插件初始化
     new AjaxUpload('#uploadCarouselImage', {
-        action: '/admin/upload/file',
+        action: '/upload/file',
         name: 'file',
         autoSubmit: true,
         responseType: "json",
