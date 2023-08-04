@@ -32,11 +32,11 @@ public enum ServiceResultEnum {
 
     SAME_GOODS_EXIST("已存在相同的商品信息！"),
 
-    GOODS_NOT_EXIST("商品不存在！"),
+    GOODS_NOT_EXIST("课程不存在！"),
 
-    GOODS_PUT_DOWN("商品已下架！"),
+    GOODS_PUT_DOWN("课程已下架！"),
 
-    SHOPPING_CART_ITEM_LIMIT_NUMBER_ERROR("超出单个商品的最大购买数量！"),
+    SHOPPING_CART_ITEM_LIMIT_NUMBER_ERROR("超出单个课程的最大购买数量！"),
 
     SHOPPING_CART_ITEM_TOTAL_NUMBER_ERROR("超出购物车最大容量！"),
 
