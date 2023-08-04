@@ -77,4 +77,61 @@ public class CourseController {
             return ResultGenerator.genFailResult(result);
         }
     }
+
+    @GetMapping("/course/edit/{courseId}")
+    public String edit(HttpServletRequest request, @PathVariable("courseId") Long courseId) {
+        request.setAttribute("path", "edit");
+        Course course = courseService.getCourseById(courseId);
+        if (course == null) {
+            return "error/error_400";
+        }
+        if (course.getCourseCategoryId() > 0) {
+            if (course.getCourseCategoryId() != null || course.getCourseCategoryId() > 0) {
+                //有分类字段则查询相关分类数据返回给前端以供分类的三级联动显示
+                CourseCategory currentCourseCategory = categoryService.getCourseCategoryById(course.getCourseCategoryId());
+                //商品表中存储的分类id字段为三级分类的id，不为三级分类则是错误数据
+                if (currentCourseCategory != null && currentCourseCategory.getCategoryLevel() == CategoryLevelEnum.LEVEL_THREE.getLevel()) {
+                    //查询所有的一级分类
+                    List<CourseCategory> firstLevelCategories = categoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0L), CategoryLevelEnum.LEVEL_ONE.getLevel());
+                    //根据parentId查询当前parentId下所有的三级分类
+                    List<CourseCategory> thirdLevelCategories = categoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(currentCourseCategory.getParentId()), CategoryLevelEnum.LEVEL_THREE.getLevel());
+                    //查询当前三级分类的父级二级分类
+                    CourseCategory secondCategory = categoryService.getCourseCategoryById(currentCourseCategory.getParentId());
+                    if (secondCategory != null) {
+                        //根据parentId查询当前parentId下所有的二级分类
+                        List<CourseCategory> secondLevelCategories = categoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondCategory.getParentId()), CategoryLevelEnum.LEVEL_TWO.getLevel());
+                        //查询当前二级分类的父级一级分类
+                        CourseCategory firestCategory = categoryService.getCourseCategoryById(secondCategory.getParentId());
+                        if (firestCategory != null) {
+                            //所有分类数据都得到之后放到request对象中供前端读取
+                            request.setAttribute("firstLevelCategories", firstLevelCategories);
+                            request.setAttribute("secondLevelCategories", secondLevelCategories);
+                            request.setAttribute("thirdLevelCategories", thirdLevelCategories);
+                            request.setAttribute("firstLevelCategoryId", firestCategory.getCategoryId());
+                            request.setAttribute("secondLevelCategoryId", secondCategory.getCategoryId());
+                            request.setAttribute("thirdLevelCategoryId", currentCourseCategory.getCategoryId());
+                        }
+                    }
+                }
+            }
+        }
+        if (course.getCourseCategoryId() == 0) {
+            //查询所有的一级分类
+            List<CourseCategory> firstLevelCategories = categoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(0L), CategoryLevelEnum.LEVEL_ONE.getLevel());
+            if (!CollectionUtils.isEmpty(firstLevelCategories)) {
+                //查询一级分类列表中第一个实体的所有二级分类
+                List<CourseCategory> secondLevelCategories = categoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(firstLevelCategories.get(0).getCategoryId()), CategoryLevelEnum.LEVEL_TWO.getLevel());
+                if (!CollectionUtils.isEmpty(secondLevelCategories)) {
+                    //查询二级分类列表中第一个实体的所有三级分类
+                    List<CourseCategory> thirdLevelCategories = categoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondLevelCategories.get(0).getCategoryId()), CategoryLevelEnum.LEVEL_THREE.getLevel());
+                    request.setAttribute("firstLevelCategories", firstLevelCategories);
+                    request.setAttribute("secondLevelCategories", secondLevelCategories);
+                    request.setAttribute("thirdLevelCategories", thirdLevelCategories);
+                }
+            }
+        }
+        request.setAttribute("course", course);
+        request.setAttribute("path", "course-edit");
+        return "admin/newbee_mall_goods_edit";
+    }
 }

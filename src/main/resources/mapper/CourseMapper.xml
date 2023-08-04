@@ -131,4 +131,40 @@
             </if>
         </trim>
     </insert>
+
+    <select id="findCourseList" parameterType="Map" resultMap="BaseResultMap">
+        select *
+<!--        <include refid="Base_Column_List"/>-->
+        from course_info
+        order by course_id desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="getTotalCourse" parameterType="Map" resultType="int">
+        select count(*) from course_info
+    </select>
+
+    <update id="batchUpdateSellStatus">
+        update course_info
+        set course_sell_status=#{sellStatus},update_time=now() where course_info.course_id in
+        <foreach item="id" collection="course_id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="selectByPrimaryKeys" resultMap="BaseResultMap">
+        select *
+        from course_info
+        where course_info.course_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        order by field(course_id,
+        <foreach item="id" collection="list" separator=",">
+            #{id}
+        </foreach>
+        );
+    </select>
 </mapper>
