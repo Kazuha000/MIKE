@@ -9,6 +9,7 @@ import com.cqupt.mike.util.BeanUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Service
@@ -67,4 +68,26 @@ public class StudentServiceImpl implements StudentService {
         }
         return ServiceResultEnum.LOGIN_NAME_ERROR.getResult();
     }
+
+    /**
+     * 忘记密码
+     * @param stName 用户名
+     * @param email 邮箱
+     * @param httpSession
+     * @param httpServletRequest
+     * @return
+     */
+    public String forgetpassword(String stName, String email, HttpSession httpSession, HttpServletRequest httpServletRequest) {
+        Student user = studentMapper.selectByLoginName(stName);
+        if (user != null) {
+            if (!user.getEmail().equals(email)) { //判断邮箱是否正确
+                return ServiceResultEnum.EMAIL_ERROR.getResult();
+            }
+            // 学生id存入session
+            httpServletRequest.getSession().setAttribute("stId",user.getStId());//setAttribute(string name,string value)
+            return ServiceResultEnum.SUCCESS.getResult();  //返回成功或失败
+        }
+        return ServiceResultEnum.LOGIN_NAME_ERROR.getResult();
+    }
+
 }

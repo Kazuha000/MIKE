@@ -16,6 +16,8 @@ public enum ServiceResultEnum {
 
     LOGIN_PASSWORD_NULL("请输入密码！"),
 
+    REGISTER_EMAIL_NULL("请输入邮箱"),
+
     LOGIN_VERIFY_CODE_NULL("请输入验证码！"),
 
     LOGIN_VERIFY_CODE_ERROR("验证码错误！"),
@@ -35,6 +37,7 @@ public enum ServiceResultEnum {
     SHOPPING_CART_ITEM_TOTAL_NUMBER_ERROR("超出购物车最大容量！"),
 
     LOGIN_ERROR("密码错误！"),
+    EMAIL_ERROR("邮箱错误"),
     LOGIN_NAME_ERROR("用户不存在！"),
 
     LOGIN_USER_LOCKED("用户已被禁止登录！"),

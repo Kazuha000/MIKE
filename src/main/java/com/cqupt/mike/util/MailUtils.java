@@ -13,6 +13,8 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
 
+import static java.awt.SystemColor.text;
+
 /**
  * 邮件发送工具类
  */
@@ -47,10 +49,10 @@ public class MailUtils {
 		message.setFrom(new InternetAddress("1834543408@qq.com")); // 设置发送者
 		message.setRecipient(RecipientType.TO, new InternetAddress(email)); // 设置发送方式与接收者
 
-		message.setSubject("刘奕辰邮件验证");  //邮件标题
+		message.setSubject("mike教育平台邮件验证");  //邮件标题
 		// message.setText("这是一封激活邮件，请<a href='#'>点击</a>");
 
-		message.setContent(emailMsg, "text/html;charset=utf-8");
+		message.setContent("您正在找回密码，验证码为： "+ emailMsg ,"text/html;charset=utf-8");
 
 		// 3.创建 Transport用于将邮件发送
 
