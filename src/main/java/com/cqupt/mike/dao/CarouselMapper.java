@@ -13,7 +13,6 @@ public interface CarouselMapper {
      */
     int deleteByPrimaryKey(Integer carouselId);
 
-
     /**
      * 保存一条新记录
      * @param record
