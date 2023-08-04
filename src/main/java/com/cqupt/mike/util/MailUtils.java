@@ -1,4 +1,4 @@
-package com.cqupt.mike.until;
+package com.cqupt.mike.util;
 
 import java.util.Properties;
 
@@ -47,7 +47,7 @@ public class MailUtils {
 		message.setFrom(new InternetAddress("1834543408@qq.com")); // 设置发送者
 		message.setRecipient(RecipientType.TO, new InternetAddress(email)); // 设置发送方式与接收者
 
-		message.setSubject("刘奕辰邮件验证");  //邮件标题
+		message.setSubject("mike教育平台邮件验证");  //邮件标题
 		// message.setText("这是一封激活邮件，请<a href='#'>点击</a>");
 		message.setContent( "您正在找回密码，验证码为：" +emailMsg +"\n只有一次输入机会，请正确输入！如非本人操作，请忽略。", "text/html;charset=utf-8");
 
