@@ -132,6 +132,39 @@ public class CourseController {
         }
         request.setAttribute("course", course);
         request.setAttribute("path", "course-edit");
-        return "admin/newbee_mall_goods_edit";
+        return "teacher/course_edit";
+    }
+
+    /**
+     * 修改课程信息
+     */
+    @RequestMapping(value = "/course/update", method = RequestMethod.POST)
+    @ResponseBody
+    public Result update(@RequestBody Course course) {
+        if (Objects.isNull(course.getCourseId())
+                || StringUtils.isEmpty(course.getCourseName())
+                || StringUtils.isEmpty(course.getCourseIntro())
+                || StringUtils.isEmpty(course.getTag())
+                || Objects.isNull(course.getOriginalPrice())
+                || Objects.isNull(course.getSellingPrice())
+                || Objects.isNull(course.getCourseCategoryId())
+                || Objects.isNull(course.getStockNum())
+                || Objects.isNull(course.getCourseSellStatus())
+                || StringUtils.isEmpty(course.getCourseCoverImg())
+                || StringUtils.isEmpty(course.getCourseDetailContent())) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        String result = courseService.updateCourse(course);
+        if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
+            return ResultGenerator.genSuccessResult();
+        } else {
+            return ResultGenerator.genFailResult(result);
+        }
+    }
+
+    @GetMapping("/course")
+    public String goodsPage(HttpServletRequest request) {
+        request.setAttribute("path", "course");
+        return "teacher/course";
     }
 }

@@ -11,11 +11,18 @@ import java.util.List;
 public interface CourseMapper {
 
     /**
-     * 保存一条新记录
+     * 添加课程
      * @param record
      * @return
      */
     int insertSelective(Course record);
+
+    /**
+     * 更新课程
+     * @param record
+     * @return
+     */
+    int updateByPrimaryKeySelective(Course record);
 
     /**
      * 查询分页数据
@@ -25,14 +32,14 @@ public interface CourseMapper {
     List<Course> findCourseList(PageQueryUtil pageUtil);
 
     /**
-     * 查询总数
+     * 查询课程总数
      * @param pageUtil
      * @return
      */
     int getTotalCourse(PageQueryUtil pageUtil);
 
     /**
-     * 批量修改记录
+     * 批量修改课程状态
      * @param courseIds
      * @param sellStatus
      * @return
@@ -45,5 +52,15 @@ public interface CourseMapper {
      * @return
      */
     Course selectByPrimaryKey(Long courseId);
+
+    /**
+     * 通过课程分类id与课程名查询课程
+     * @param courseName
+     * @param courseCategoryId
+     * @return
+     */
+    Course selectByCategoryIdAndName(@Param("courseName") String courseName, @Param("courseCategoryId") Long courseCategoryId);
+
+
 
 }
