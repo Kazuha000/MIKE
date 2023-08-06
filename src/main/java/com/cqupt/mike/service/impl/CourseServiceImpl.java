@@ -60,6 +60,11 @@ public class CourseServiceImpl implements CourseService {
         return ServiceResultEnum.DB_ERROR.getResult();
     }
 
+    /**
+     * 获取课程分页
+     * @param pageUtil
+     * @return
+     */
     @Override
     public PageResult getCoursePage(PageQueryUtil pageUtil) {
         List<Course> courseList = courseMapper.findCourseList(pageUtil);
@@ -68,6 +73,12 @@ public class CourseServiceImpl implements CourseService {
         return pageResult;
     }
 
+    /**
+     * 批量修改销售状态
+     * @param ids
+     * @param sellStatus
+     * @return
+     */
     @Override
     public Boolean batchUpdateSellStatus(Long[] ids, int sellStatus) {
         return courseMapper.batchUpdateSellStatus(ids, sellStatus) > 0;
