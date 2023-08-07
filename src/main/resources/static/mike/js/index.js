@@ -1,10 +1,10 @@
 var newbeeSwiper = new Swiper('.swiper-container', {
-    //设置自动播放
+    //设置轮播图自动播放
     autoplay: {
         delay: 2000,
         disableOnInteraction: false
     },
-    //设置无限循环播放
+    //设置轮播图无限循环播放
     loop: true,
     //设置圆点指示器
     pagination: {

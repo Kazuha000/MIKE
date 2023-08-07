@@ -31,7 +31,7 @@ public class MikeWebMvcConfigurer implements WebMvcConfigurer {
                 .excludePathPatterns("/admin/login")
                 .excludePathPatterns("/admin/dist/**")
                 .excludePathPatterns("/admin/plugins/**");
-        // 添加一个拦截器，拦截以/admin为前缀的URL路径（后台管理系统登录拦截）
+        // 添加一个拦截器，拦截以/teacher为前缀的URL路径（后台管理系统登录拦截）
         registry.addInterceptor(teacherLoginInterceptor)
                 .addPathPatterns("/teacher/**")
                 .excludePathPatterns("/teacher/course/**")
