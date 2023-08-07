@@ -52,4 +52,11 @@ public interface StudentMapper {
      * @return
      */
     Student selectByLoginNameAndPasswd(@Param("stName") String stName, @Param("password") String password);
+
+    /**
+     * 根据id查询记录
+     * @param stId
+     * @return
+     */
+    Student selectById(@Param("stId") int stId);
 }

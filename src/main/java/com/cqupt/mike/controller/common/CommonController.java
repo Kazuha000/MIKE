@@ -11,6 +11,7 @@ import com.wf.captcha.base.Captcha;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Random;
 
 
 @Controller
@@ -63,4 +64,6 @@ public class CommonController {
         // 输出图片流
         captcha.out(httpServletResponse.getOutputStream());
     }
+
+
 }

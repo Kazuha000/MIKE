@@ -1,5 +1,5 @@
 <!-- 正则验证 start-->
-/**
+/**  方法注释快捷键/** + Enter
  * 判空
  *
  * @param obj
@@ -62,6 +62,21 @@ function validUserName(userName) {
         return (true);
     } else {
         return (false);
+    }
+}
+
+/**
+ * 邮箱验证
+ *
+ * @param email
+ * @returns {boolean}
+ */
+function  validEmail(email){
+    var pattern = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;             /*/^\w{3,}(\.\w+)*@[A-z0-9]+(\.[A-z]{2,5}){1,2}$/*/
+    if (pattern.test(email.trim())){
+        return (true);
+    }else{
+        return(false);
     }
 }
 

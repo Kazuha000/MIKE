@@ -9,16 +9,17 @@ import com.cqupt.mike.util.BeanUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Service
 public class StudentServiceImpl implements StudentService {
     @Resource
     private StudentMapper studentMapper;
-
     /**
      * 注册
-     * @param stName 用户名
+     *
+     * @param stName   用户名
      * @param password 密码
      * @return
      */
@@ -39,9 +40,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     /**
+     * 登录
      *
-     * @param stName 用户名
-     * @param password 密码
+     * @param stName      用户名
+     * @param password    密码
      * @param httpSession session
      * @return
      */
@@ -49,7 +51,7 @@ public class StudentServiceImpl implements StudentService {
     public String login(String stName, String password, HttpSession httpSession) {
         Student user = studentMapper.selectByLoginName(stName);
         if (user != null && httpSession != null) {
-            if(!user.getPassword().equals(password)){ //判断密码是否正确
+            if (!user.getPassword().equals(password)) { //判断密码是否正确
                 return ServiceResultEnum.LOGIN_ERROR.getResult();
             }
             if (user.getStatus() == 0) {   //判断用户是否已经锁定
@@ -67,4 +69,44 @@ public class StudentServiceImpl implements StudentService {
         }
         return ServiceResultEnum.LOGIN_NAME_ERROR.getResult();
     }
+
+    /**
+     * 忘记密码
+     *
+     * @param stName 用户名
+     * @param email  邮箱
+     * @return
+     */
+    public String forgetpassword(String stName, String email, HttpSession httpSession, HttpServletRequest httpServletRequest) {
+        Student user = studentMapper.selectByLoginName(stName);
+        if (user != null) {
+            if (!user.getEmail().equals(email)) { //判断邮箱是否正确
+                return ServiceResultEnum.EMIAL_ERROR.getResult();
+            }
+            // 学生id存入session
+            httpServletRequest.getSession().setAttribute("stId",user.getStId());//setAttribute(string name,string value)
+            return ServiceResultEnum.SUCCESS.getResult();  //返回成功或失败
+        }
+        return ServiceResultEnum.LOGIN_NAME_ERROR.getResult();
+    }
+
+    /**
+     *重置密码
+     *
+     * @param stId 用户ID
+     * @param newpassword 新密码
+     * @return
+     */
+    public String resetpassword(int stId, String newpassword) {
+        Student user = studentMapper.selectById(stId);
+        if (user != null) {
+            user.setPassword(newpassword);
+        }
+        if (studentMapper.updStudent(user) > 0) {  //更改数据用户信息，更改成功返回success，失败返回error
+            return ServiceResultEnum.SUCCESS.getResult();
+        }
+        return ServiceResultEnum.DB_ERROR.getResult();
+    }
 }
+
+
