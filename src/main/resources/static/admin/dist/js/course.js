@@ -113,7 +113,7 @@ function putUpCourse() {
             if (flag.value) {
                 $.ajax({
                     type: "PUT",
-                    url: "/teacher/course/status/0",
+                    url: "/admin/course/status/0",
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function (r) {
@@ -156,7 +156,7 @@ function putDownCourse() {
             if (flag.value) {
                 $.ajax({
                     type: "PUT",
-                    url: "/teacher/course/status/1",
+                    url: "/admin/course/status/1",
                     contentType: "application/json",
                     data: JSON.stringify(ids),
                     success: function (r) {

@@ -184,23 +184,6 @@ public class CourseController {
         return ResultGenerator.genSuccessResult(courseService.getCoursePage(pageUtil));
     }
 
-    /**
-     * 批量修改销售状态
-     */
-    @RequestMapping(value = "/course/status/{sellStatus}", method = RequestMethod.PUT)
-    @ResponseBody
-    public Result delete(@RequestBody Long[] ids, @PathVariable("sellStatus") int sellStatus) {
-        if (ids.length < 1) {
-            return ResultGenerator.genFailResult("参数异常！");
-        }
-        if (sellStatus != Constants.SELL_STATUS_UP && sellStatus != Constants.SELL_STATUS_DOWN) {
-            return ResultGenerator.genFailResult("状态异常！");
-        }
-        if (courseService.batchUpdateSellStatus(ids, sellStatus)) {
-            return ResultGenerator.genSuccessResult();
-        } else {
-            return ResultGenerator.genFailResult("修改失败");
-        }
-    }
+
 
 }
