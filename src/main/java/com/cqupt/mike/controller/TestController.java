@@ -134,7 +134,7 @@ public class TestController {
     //邮箱验证
     public static void main(String[] args) {
         try {
-            MailUtils.sendMail("2078501297@qq.com","邮箱验证");
+            MailUtils.sendMail("3542680964@qq.com","");
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }

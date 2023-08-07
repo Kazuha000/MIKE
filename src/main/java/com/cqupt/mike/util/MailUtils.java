@@ -36,7 +36,7 @@ public class MailUtils {
 		Authenticator auth = new Authenticator() {
 			public PasswordAuthentication getPasswordAuthentication() {
 //				return new PasswordAuthentication("2078501297", "gczqagbcbxbjgadg");
-				return new PasswordAuthentication("1834543408", "unjemrzliqjucihe");
+				return new PasswordAuthentication("3458977769", "vpkwrbmgnlwgdbaj");
 			}
 		};
 
@@ -46,7 +46,7 @@ public class MailUtils {
 		Message message = new MimeMessage(session);
 
 //		message.setFrom(new InternetAddress("2078501297@qq.com")); // 设置发送者
-		message.setFrom(new InternetAddress("1834543408@qq.com")); // 设置发送者
+		message.setFrom(new InternetAddress("3458977769@qq.com")); // 设置发送者
 		message.setRecipient(RecipientType.TO, new InternetAddress(email)); // 设置发送方式与接收者
 
 		message.setSubject("mike教育平台邮件验证");  //邮件标题
