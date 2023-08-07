@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Random;
 
 
+
 @Controller
 public class CommonController {
 
