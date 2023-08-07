@@ -1,8 +1,11 @@
 package com.cqupt.mike.controller.mike;
 
 import com.cqupt.mike.common.Constants;
+import com.cqupt.mike.common.MikeException;
 import com.cqupt.mike.controller.vo.IndexCarouselVO;
+import com.cqupt.mike.controller.vo.IndexCategoryVO;
 import com.cqupt.mike.service.CarouselService;
+import com.cqupt.mike.service.CategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +17,8 @@ import java.util.List;
 public class IndexController {
     @Resource
     private CarouselService carouselService;
+    @Resource
+    private CategoryService categoryService;
 
 //    @Resource
 //    private NewBeeMallIndexConfigService newBeeMallIndexConfigService;
@@ -23,9 +28,9 @@ public class IndexController {
     @GetMapping({"/index", "/", "/index.html"})//MIKE主页跳转
     public String indexPage(HttpServletRequest request) {
 
-//        List<NewBeeMallIndexCategoryVO> categories = newBeeMallCategoryService.getCategoriesForIndex();
+//        List<IndexCategoryVO> categories = categoryService.getCategoriesForIndex();
 //        if (CollectionUtils.isEmpty(categories)) {
-//            NewBeeMallException.fail("分类数据不完善");
+//            MikeException.fail("分类数据不完善");
 //        }
         //返回固定数量的轮播图对象(首页调用)
         List<IndexCarouselVO> carousels = carouselService.getCarouselsForIndex(Constants.INDEX_CAROUSEL_NUMBER);

@@ -8,6 +8,7 @@
 <content id="content">
     <nav th:replace="mike/header::nav-fragment"></nav>
     <div id="banner">
+<!--        首页商品分类数据渲染-->
         <div class="all-sort-list">
             <th:block th:each="category : ${categories}">
             <div class="item">
@@ -19,7 +20,7 @@
                             <dt><a href="#"><th:block th:text="${secondLevelCategory.categoryName}"></th:block></a></dt>
                             <dd>
                                 <th:block th:each="thirdLevelCategory : ${secondLevelCategory.thirdLevelCategoryVOS}">
-                                <em><a href="#"th:href="@{'/search?goodsCategoryId='+${thirdLevelCategory.categoryId}}">
+                                <em><a href="#"th:href="@{'/search?courseCategoryId='+${thirdLevelCategory.categoryId}}">
                                     <th:block th:text="${thirdLevelCategory.categoryName}"></th:block>
                                 </a></em>
                                 </th:block>

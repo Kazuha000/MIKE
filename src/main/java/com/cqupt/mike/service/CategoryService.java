@@ -1,5 +1,7 @@
 package com.cqupt.mike.service;
 
+import com.cqupt.mike.controller.vo.IndexCategoryVO;
+import com.cqupt.mike.controller.vo.SearchPageCategoryVO;
 import com.cqupt.mike.entity.CourseCategory;
 import com.cqupt.mike.util.PageQueryUtil;
 import com.cqupt.mike.util.PageResult;
@@ -55,6 +57,22 @@ public interface CategoryService {
          * @return
          */
         List<CourseCategory> selectByLevelAndParentIdsAndNumber(List<Long> parentIds, int categoryLevel);
+
+        /**
+         * 返回分类数据(首页调用)
+         *
+         * @return
+         */
+        List<IndexCategoryVO> getCategoriesForIndex();
+
+        /**
+         * 返回分类数据(搜索页调用)
+         *
+         * @param categoryId
+         * @return
+         */
+        SearchPageCategoryVO getCategoriesForSearch(Long categoryId);
+
     }
 
 
