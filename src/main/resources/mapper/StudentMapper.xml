@@ -86,7 +86,7 @@
             <if test="accountNo != null">
                 account_no = #{accountNo,jdbcType=INTEGER},
             </if>
-            <if test="adName != null">
+            <if test="stName != null">
                 st_name = #{stName,jdbcType=VARCHAR},
             </if>
             <if test="password != null">

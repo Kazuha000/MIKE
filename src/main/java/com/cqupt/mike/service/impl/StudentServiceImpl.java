@@ -16,8 +16,6 @@ import javax.servlet.http.HttpSession;
 public class StudentServiceImpl implements StudentService {
     @Resource
     private StudentMapper studentMapper;
-    @Resource
-    private StudentService studentService;
     /**
      * 注册
      *

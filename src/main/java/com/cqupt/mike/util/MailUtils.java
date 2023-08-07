@@ -35,7 +35,7 @@ public class MailUtils {
 		Authenticator auth = new Authenticator() {
 			public PasswordAuthentication getPasswordAuthentication() {
 //				return new PasswordAuthentication("2078501297", "gczqagbcbxbjgadg");
-				return new PasswordAuthentication("1834543408", "unjemrzliqjucihe");
+				return new PasswordAuthentication("3458977769", "vpkwrbmgnlwgdbaj");
 			}
 		};
 		//设置环境信息
@@ -44,12 +44,12 @@ public class MailUtils {
 		Message message = new MimeMessage(session);
 
 //		message.setFrom(new InternetAddress("2078501297@qq.com")); // 设置发送者
-		message.setFrom(new InternetAddress("1834543408@qq.com")); // 设置发送者
+		message.setFrom(new InternetAddress("3458977769@qq.com")); // 设置发送者
 		message.setRecipient(RecipientType.TO, new InternetAddress(email)); // 设置发送方式与接收者
 
-		message.setSubject("刘奕辰邮件验证");  //邮件标题
+		message.setSubject("mike教育管理邮件验证");  //邮件标题
 		// message.setText("这是一封激活邮件，请<a href='#'>点击</a>");
-		message.setContent( "您正在找回密码，验证码为：" +emailMsg +"\n只有一次输入机会，请正确输入！如非本人操作，请忽略。", "text/html;charset=utf-8");
+		message.setContent("您正在找回密码，验证码为： "+ emailMsg ,"text/html;charset=utf-8");
 
 		// 3.创建 Transport用于将邮件发送
 

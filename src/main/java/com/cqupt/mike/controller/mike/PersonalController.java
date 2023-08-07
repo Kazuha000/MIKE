@@ -2,7 +2,9 @@ package com.cqupt.mike.controller.mike;
 
 import com.cqupt.mike.common.ServiceResultEnum;
 import com.cqupt.mike.common.Constants;
+import com.cqupt.mike.entity.Student;
 import com.cqupt.mike.service.StudentService;
+import com.cqupt.mike.util.MailUtils;
 import com.cqupt.mike.util.Result;
 import com.cqupt.mike.util.ResultGenerator;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -47,8 +50,8 @@ public class PersonalController {
      * 找回密码界面跳转
      * @return
      */
-    @GetMapping({"/findpassword","findpassword.html"})
-    public String findpasswordPage() {return "mike/findpassword";}
+    @GetMapping({"/forgetpassword","forgetpassword.html"})
+    public String forgetpasswordPage() {return "mike/forgetpassword";}
 
     /**
      * 成功发送邮箱验证码后
@@ -56,6 +59,13 @@ public class PersonalController {
      */
     @GetMapping({"/comparevcode","comparevcode.html"})
     public  String comparevcodePage(){return "mike/comparevcode";}
+
+    /**
+     * 重置密码界面跳转
+     * @return
+     */
+    @GetMapping({"/resetpassword","resetpassword.html"})
+    public  String resetpasswordPage(){return "mike/resetpassword";}
 
 
 
@@ -135,18 +145,18 @@ public class PersonalController {
 
 
     /**
-     * 找回密码
+     * 忘记密码
      * @param email
      * @return
      */
-    @PostMapping("/findpassword")
+    @PostMapping("/forgetpassword")
     @ResponseBody
-    public Result findpassword(@RequestParam("loginName") String loginName,
-                               @RequestParam("email") String email,
-                               @RequestParam("verifyCode") String verifyCode,
-                               HttpSession httpSession,
-                               HttpServletRequest httpServletRequest,
-                               HttpServletResponse httpServletResponse
+    public Result forgetpassword(@RequestParam("loginName") String loginName,
+                                 @RequestParam("email") String email,
+                                 @RequestParam("verifyCode") String verifyCode,
+                                 HttpSession httpSession,
+                                 HttpServletRequest httpServletRequest,
+                                 HttpServletResponse httpServletResponse
     ) {
         //判断用户名、密码、验证码是否为空
         if (StringUtils.isEmpty(loginName)) {
@@ -164,12 +174,10 @@ public class PersonalController {
         if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.toLowerCase().equals(kaptchaCode)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
         }
-
-
         //向service层传入信息，找回密码
-        String findpasswordResult = studentService.findpassword(loginName, email);
+        String forgetpasswordResult = studentService.forgetpassword(loginName, email,httpSession,httpServletRequest);
         //若返回信息为登陆成功，则发送验证码
-        if (ServiceResultEnum.SUCCESS.getResult().equals(findpasswordResult)) {
+        if (ServiceResultEnum.SUCCESS.getResult().equals(forgetpasswordResult)) {
 
             //服务器通知浏览器不要缓存
             httpServletResponse.setHeader("Cache-Control", "no-store");
@@ -192,10 +200,76 @@ public class PersonalController {
 
             // 邮箱验证码存入session
             httpServletRequest.getSession().setAttribute("EmailCode",code.toString());
+            try {
+                MailUtils.sendMail(email,code.toString());
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            }
             return ResultGenerator.genSuccessResult();
         }
         //找回密码失败
-        return ResultGenerator.genFailResult(findpasswordResult);
+        return ResultGenerator.genFailResult(forgetpasswordResult);
+    }
+
+    /**
+     * 比对验证码
+     *
+     * @param verifyCode
+     * @param httpSession
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @return
+     */
+
+    @PostMapping("/comparevcode")
+    @ResponseBody
+    public Result comparevcode(
+            @RequestParam("verifyCode") String verifyCode,
+            HttpSession httpSession,
+            HttpServletRequest httpServletRequest,
+            HttpServletResponse httpServletResponse
+    ) {
+        //判断验证码是否为空
+        if (StringUtils.isEmpty(verifyCode)) {
+            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_NULL.getResult());
+        }
+//        获取session中验证码的值
+        String vCode = httpSession.getAttribute("EmailCode") + "";
+        //判断验证码是否正确
+        if (!verifyCode.equals(vCode)) {
+            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
+        }
+        //比对验证码成功
+        return ResultGenerator.genSuccessResult();
+    }
+
+    /**
+     * 重置密码
+     *
+     * @param newpassword
+     * @param httpSession
+     * @return
+     */
+    @PostMapping("/resetpassword")
+    @ResponseBody
+    public Result resetpassword(
+                           @RequestParam("password1") String newpassword,
+                           HttpSession httpSession,
+                           HttpServletRequest httpServletRequest) {
+        //判断密码是否为空
+        if (StringUtils.isEmpty(newpassword)) {
+            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_PASSWORD_NULL.getResult());
+        }
+        //向service层传入注册信息，注册
+        String n= httpServletRequest.getSession().getAttribute("stId").toString();
+        int id = Integer.parseInt(n);
+        String registerResult = studentService.resetpassword(id, newpassword);
+        //若返回信息为登陆成功，则登陆成功
+        if (ServiceResultEnum.SUCCESS.getResult().equals(registerResult)) {
+            return ResultGenerator.genSuccessResult();
+        }
+        //注册失败
+        return ResultGenerator.genFailResult(registerResult);
     }
 
     /**
