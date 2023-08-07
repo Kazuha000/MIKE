@@ -7,7 +7,6 @@ import com.cqupt.mike.util.PageResult;
 
 import java.util.List;
 
-import java.util.List;
 
 public interface CarouselService {
     /**
