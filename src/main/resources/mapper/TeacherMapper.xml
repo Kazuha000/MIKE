@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqupt.mike.dao.TeacherMapper">
+    <resultMap id="BaseResultMap" type="com.cqupt.mike.entity.Teacher">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="accountNo" column="account_no" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="INTEGER"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+<!--    <sql id="AdminUser_List">-->
+<!--        ad_id, account_no, ad_name, password, sex,phone,email,status,create_time,update_time-->
+<!--    </sql>-->
+
+    <select id="login" resultMap="BaseResultMap">
+        select *
+<!--        <include refid="AdminUser_List" />-->
+        from teacher
+        where name = #{name,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select *
+        from teacher
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+<!--    <insert id="insert" parameterType="com.cqupt.mike.entity.AdminUser">
+        insert into admin (ad_id, account_no, ad_name,password,sex,phone,email,status)
+        values (#{adId,jdbcType=INTEGER}, #{accountNo,jdbcType=INTEGER}, #{adName,jdbcType=VARCHAR},
+                #{password,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER},#{phone,jdbcType=VARCHAR},
+                #{email,jdbcType=VARCHAR},#{status,jdbcType=INTEGER})
+    </insert>-->
+    <insert id="insert" parameterType="com.cqupt.mike.entity.Teacher">
+        insert into teacher
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="accountNo != null">
+                account_no,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{adId,jdbcType=INTEGER},
+            </if>
+            <if test="accountNo != null">
+                #{accountNo,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{adName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKey" parameterType="com.cqupt.mike.entity.Teacher">
+        update admin
+        <set>
+            <if test="accountNo != null">
+                account_no = #{accountNo,jdbcType=INTEGER},
+            </if>
+            <if test="adName != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+<!--    <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.AdminUser">
+        update tb_newbee_mall_admin_user
+        set login_user_name = #{loginUserName,jdbcType=VARCHAR},
+            login_password = #{loginPassword,jdbcType=VARCHAR},
+            nick_name = #{nickName,jdbcType=VARCHAR},
+            locked = #{locked,jdbcType=TINYINT}
+        where admin_user_id = #{adminUserId,jdbcType=INTEGER}
+    </update>-->
+</mapper>

@@ -204,23 +204,15 @@
     <update id="batchUpdateSellStatus">
         update course_info
         set course_sell_status=#{sellStatus},update_time=now() where course_info.course_id in
-        <foreach item="id" collection="course_id" open="(" separator="," close=")">
+        <foreach item="id" collection="courseIds" open="(" separator="," close=")">
             #{id}
         </foreach>
     </update>
 
-    <select id="selectByPrimaryKeys" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select *
         from course_info
-        where course_info.course_id in
-        <foreach item="id" collection="list" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-        order by field(course_id,
-        <foreach item="id" collection="list" separator=",">
-            #{id}
-        </foreach>
-        );
+        where course_id = #{courseId,jdbcType=BIGINT}
     </select>
 
     <select id="selectByCategoryIdAndName" resultMap="BaseResultMap">

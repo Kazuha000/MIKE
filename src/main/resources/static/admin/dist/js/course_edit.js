@@ -233,7 +233,7 @@ $('#saveButton').click(function () {
         "courseSellStatus": courseSellStatus
     };
     if (courseId > 0) {
-        url = '/admin/course/update';
+        url = '/teacher/course/update';
         swlMessage = '修改成功';
         data = {
             "courseId": courseId,
