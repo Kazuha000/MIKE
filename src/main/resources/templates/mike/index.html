@@ -1,7 +1,7 @@
 <!-- 首页-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="mike/header::head-fragment('NewBee商城-首页','index')">
+<head th:replace="mike/header::head-fragment('MIKE教育-首页','index')">
 </head>
 <body>
 <header th:replace="mike/header::header-fragment"></header>
@@ -10,7 +10,7 @@
     <div id="banner">
 <!--        首页商品分类数据渲染-->
         <div class="all-sort-list">
-            <th:block th:each="category : ${categories}">
+            <th:block th:each="category:${categories}">
             <div class="item">
                 <h3><span>·</span><a href="##"><th:block th:text="${category.categoryName}"></th:block></a></h3>
                 <div class="item-list clearfix">
