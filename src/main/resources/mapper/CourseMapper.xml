@@ -197,6 +197,17 @@
         </if>
     </select>
 
+    <select id="findCourseListByTeacherId"  resultMap="BaseResultMap">
+        select *
+        <!--        <include refid="Base_Column_List"/>-->
+        from course_info
+        where teacher_id=#{teacherId}
+        order by course_id desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
     <select id="findCourseListBySearch" parameterType="Map" resultMap="BaseResultMap">
         select *
 <!--        <include refid="Base_Column_List"/>-->

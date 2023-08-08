@@ -107,7 +107,7 @@ $(function () {
 
     //视频资源上传插件初始化 用于课程视频资源上传
     new AjaxUpload('#uploadCourseVideo', {
-        action: '/upload/file',
+        action: '/upload/big/file',
         name: 'file',
         autoSubmit: true,
         responseType: "json",
@@ -126,7 +126,6 @@ $(function () {
                     text: "文件上传成功",
                 });
                 courseVideo=r.data;
-                alert(courseVideo);
                 return false;
             } else if (r != null && r.resultCode != 200) {
                 Swal.fire({
