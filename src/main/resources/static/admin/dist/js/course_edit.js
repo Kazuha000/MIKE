@@ -116,7 +116,7 @@ $('#saveButton').click(function () {
     var sellingPrice = $('#sellingPrice').val();
     var courseIntro = $('#courseIntro').val();
     var stockNum = $('#stockNum').val();
-    var courseSellStatus = $("input[name='courseSellStatus']:checked").val();
+    // var courseSellStatus = $("input[name='courseSellStatus']:checked").val();
     var courseDetailContent = editor.getHtml();
     var courseCoverImg = $('#courseCoverImg')[0].src;
     if (isNull(courseCategoryId)) {
@@ -189,13 +189,13 @@ $('#saveButton').click(function () {
         });
         return;
     }
-    if (isNull(courseSellStatus)) {
-        Swal.fire({
-            text: "请选择上架状态",
-            icon: "error",iconColor:"#f05b72",
-        });
-        return;
-    }
+    // if (isNull(courseSellStatus)) {
+    //     Swal.fire({
+    //         text: "请选择上架状态",
+    //         icon: "error",iconColor:"#f05b72",
+    //     });
+    //     return;
+    // }
     if (isNull(courseDetailContent)) {
         Swal.fire({
             text: "请输入商品介绍",
@@ -210,13 +210,13 @@ $('#saveButton').click(function () {
         });
         return;
     }
-    /*if (isNull(courseCoverImg) || courseCoverImg.indexOf('img-upload') != -1) {
+    if (isNull(courseCoverImg) || courseCoverImg.indexOf('img-upload') != -1) {
         Swal.fire({
             text: "封面图片不能为空",
             icon: "error",iconColor:"#f05b72",
         });
         return;
-    }*/
+    }
     var url = '/teacher/course/save';
     var swlMessage = '保存成功';
     var data = {
@@ -230,7 +230,7 @@ $('#saveButton').click(function () {
         "courseDetailContent": courseDetailContent,
         "courseCoverImg": courseCoverImg,
         "courseCarousel": courseCoverImg,
-        "courseSellStatus": courseSellStatus
+        // "courseSellStatus": courseSellStatus
     };
     if (courseId > 0) {
         url = '/teacher/course/update';
@@ -247,7 +247,7 @@ $('#saveButton').click(function () {
             "courseDetailContent": courseDetailContent,
             "courseCoverImg": courseCoverImg,
             "courseCarousel": courseCoverImg,
-            "courseSellStatus": courseSellStatus
+            // "courseSellStatus": courseSellStatus
         };
     }
     console.log(data);
@@ -268,7 +268,7 @@ $('#saveButton').click(function () {
                     confirmButtonClass: 'btn btn-success',
                     buttonsStyling: false
                 }).then(function () {
-                    window.location.href = "/admin/goods";
+                    window.location.href = "/teacher/course";
                 })
             } else {
                 Swal.fire({
@@ -293,7 +293,7 @@ $('#cancelButton').click(function () {
 
 $('#levelOne').on('change', function () {
     $.ajax({
-        url: '/admin/categories/listForSelect?categoryId=' + $(this).val(),
+        url: '/teacher/course/categories/listForSelect?categoryId=' + $(this).val(),
         type: 'GET',
         success: function (result) {
             if (result.resultCode == 200) {
@@ -330,7 +330,7 @@ $('#levelOne').on('change', function () {
 
 $('#levelTwo').on('change', function () {
     $.ajax({
-        url: '/admin/categories/listForSelect?categoryId=' + $(this).val(),
+        url: '/teacher/course/categories/listForSelect?categoryId=' + $(this).val(),
         type: 'GET',
         success: function (result) {
             if (result.resultCode == 200) {

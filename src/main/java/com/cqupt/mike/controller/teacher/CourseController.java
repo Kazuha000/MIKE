@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Controller
 @RequestMapping("/teacher")
@@ -31,7 +28,11 @@ public class CourseController {
     @Resource
     private CourseService courseService;
 
-
+    /**
+     * 添加课程页面
+     * @param request
+     * @return
+     */
     @GetMapping("/course/edit")
     public String edit(HttpServletRequest request) {
         request.setAttribute("path", "edit");
@@ -67,7 +68,6 @@ public class CourseController {
                 || Objects.isNull(course.getCourseCategoryId())
                 || Objects.isNull(course.getSellingPrice())
                 || Objects.isNull(course.getStockNum())
-                || Objects.isNull(course.getCourseSellStatus())
                 || StringUtils.isEmpty(course.getCourseCoverImg())
                 || StringUtils.isEmpty(course.getCourseDetailContent())) {
             return ResultGenerator.genFailResult("参数异常！");
@@ -81,6 +81,12 @@ public class CourseController {
         }
     }
 
+    /**
+     * 修改课程页面
+     * @param request
+     * @param courseId
+     * @return
+     */
     @GetMapping("/course/edit/{courseId}")
     public String edit(HttpServletRequest request, @PathVariable("courseId") Long courseId) {
         request.setAttribute("path", "edit");
@@ -152,7 +158,6 @@ public class CourseController {
                 || Objects.isNull(course.getSellingPrice())
                 || Objects.isNull(course.getCourseCategoryId())
                 || Objects.isNull(course.getStockNum())
-                || Objects.isNull(course.getCourseSellStatus())
                 || StringUtils.isEmpty(course.getCourseCoverImg())
                 || StringUtils.isEmpty(course.getCourseDetailContent())) {
             return ResultGenerator.genFailResult("参数异常！");
@@ -172,7 +177,7 @@ public class CourseController {
     }
 
     /**
-     * 列表
+     * 课程列表
      */
     @RequestMapping(value = "/course/list", method = RequestMethod.GET)
     @ResponseBody
@@ -184,6 +189,38 @@ public class CourseController {
         return ResultGenerator.genSuccessResult(courseService.getCoursePage(pageUtil));
     }
 
-
+    /**
+     * 列表
+     */
+    @RequestMapping(value = "/course/categories/listForSelect", method = RequestMethod.GET)
+    @ResponseBody
+    public Result listForSelect(@RequestParam("categoryId") Long categoryId) {
+        if (categoryId == null || categoryId < 1) {
+            return ResultGenerator.genFailResult("缺少参数！");
+        }
+        CourseCategory category = categoryService.getCourseCategoryById(categoryId);
+        //既不是一级分类也不是二级分类则为不返回数据
+        if (category == null || category.getCategoryLevel() == CategoryLevelEnum.LEVEL_THREE.getLevel()) {
+            return ResultGenerator.genFailResult("参数异常！");
+        }
+        Map categoryResult = new HashMap(4);
+        if (category.getCategoryLevel() == CategoryLevelEnum.LEVEL_ONE.getLevel()) {
+            //如果是一级分类则返回当前一级分类下的所有二级分类，以及二级分类列表中第一条数据下的所有三级分类列表
+            //查询一级分类列表中第一个实体的所有二级分类
+            List<CourseCategory> secondLevelCategories = categoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(categoryId), CategoryLevelEnum.LEVEL_TWO.getLevel());
+            if (!CollectionUtils.isEmpty(secondLevelCategories)) {
+                //查询二级分类列表中第一个实体的所有三级分类
+                List<CourseCategory> thirdLevelCategories = categoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(secondLevelCategories.get(0).getCategoryId()), CategoryLevelEnum.LEVEL_THREE.getLevel());
+                categoryResult.put("secondLevelCategories", secondLevelCategories);
+                categoryResult.put("thirdLevelCategories", thirdLevelCategories);
+            }
+        }
+        if (category.getCategoryLevel() == CategoryLevelEnum.LEVEL_TWO.getLevel()) {
+            //如果是二级分类则返回当前分类下的所有三级分类列表
+            List<CourseCategory> thirdLevelCategories = categoryService.selectByLevelAndParentIdsAndNumber(Collections.singletonList(categoryId),CategoryLevelEnum.LEVEL_THREE.getLevel());
+            categoryResult.put("thirdLevelCategories", thirdLevelCategories);
+        }
+        return ResultGenerator.genSuccessResult(categoryResult);
+    }
 
 }

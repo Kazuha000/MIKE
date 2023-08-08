@@ -34,6 +34,12 @@ public class CourseStatusController {
 
 
 
+    @GetMapping("/course")
+    public String goodsPage(HttpServletRequest request) {
+        request.setAttribute("path", "course");
+        return "admin/course";
+    }
+
     /**
      * 列表
      */

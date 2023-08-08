@@ -50,12 +50,15 @@ $(function () {
     });
 
     function courseSellStatusFormatter(cellvalue) {
-        //商品上架状态 0-上架 1-下架
-        if (cellvalue == 0) {
+        //商品上架状态 0-上架 1-下架 -1-待审核
+        if (cellvalue === 0) {
             return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 80%;\">销售中</button>";
         }
-        if (cellvalue == 1) {
+        if (cellvalue === 1) {
             return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 80%;\">已下架</button>";
+        }
+        if (cellvalue === -1) {
+            return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 80%;\">待审核</button>";
         }
     }
 
@@ -94,88 +97,87 @@ function editCourse() {
     window.location.href = "/teacher/course/edit/" + id;
 }
 
-/**
- * 上架
- */
-function putUpCourse() {
-    var ids = getSelectedRows();
-    if (ids == null) {
-        return;
-    }
-    Swal.fire({
-        title: "确认弹框",
-        text: "确认要执行上架操作吗?",
-        icon: "warning",iconColor:"#dea32c",
-        showCancelButton: true,
-        confirmButtonText: '确认',
-        cancelButtonText: '取消'
-    }).then((flag) => {
-            if (flag.value) {
-                $.ajax({
-                    type: "PUT",
-                    url: "/admin/course/status/0",
-                    contentType: "application/json",
-                    data: JSON.stringify(ids),
-                    success: function (r) {
-                        if (r.resultCode == 200) {
-                            Swal.fire({
-                                text: "上架成功",
-                                icon: "success",iconColor:"#1d953f",
-                            });
-                            $("#jqGrid").trigger("reloadGrid");
-                        } else {
-                            Swal.fire({
-                                text: r.message,
-                                icon: "error",iconColor:"#f05b72",
-                            });
-                        }
-                    }
-                });
-            }
-        }
-    )
-    ;
-}
-
-/**
- * 下架
- */
-function putDownCourse() {
-    var ids = getSelectedRows();
-    if (ids == null) {
-        return;
-    }
-    Swal.fire({
-        title: "确认弹框",
-        text: "确认要执行下架操作吗?",
-        icon: "warning",iconColor:"#dea32c",
-        showCancelButton: true,
-        confirmButtonText: '确认',
-        cancelButtonText: '取消'
-    }).then((flag) => {
-            if (flag.value) {
-                $.ajax({
-                    type: "PUT",
-                    url: "/admin/course/status/1",
-                    contentType: "application/json",
-                    data: JSON.stringify(ids),
-                    success: function (r) {
-                        if (r.resultCode == 200) {
-                            Swal.fire({
-                                text: "下架成功",
-                                icon: "success",iconColor:"#1d953f",
-                            });
-                            $("#jqGrid").trigger("reloadGrid");
-                        } else {
-                            Swal.fire({
-                                text: r.message,
-                                icon: "error",iconColor:"#f05b72",
-                            });
-                        }
-                    }
-                });
-            }
-        }
-    )
-    ;
-}
+// /**
+//  * 上架
+//  */
+// function putUpCourse() {
+//     var ids = getSelectedRows();
+//     if (ids == null) {
+//         return;
+//     }
+//     Swal.fire({
+//         title: "确认弹框",
+//         text: "确认要执行上架操作吗?",
+//         icon: "warning",iconColor:"#dea32c",
+//         showCancelButton: true,
+//         confirmButtonText: '确认',
+//         cancelButtonText: '取消'
+//     }).then((flag) => {
+//             if (flag.value) {
+//                 $.ajax({
+//                     type: "PUT",
+//                     url: "/admin/course/status/0",
+//                     contentType: "application/json",
+//                     data: JSON.stringify(ids),
+//                     success: function (r) {
+//                         if (r.resultCode == 200) {
+//                             Swal.fire({
+//                                 text: "上架成功",
+//                                 icon: "success",iconColor:"#1d953f",
+//                             });
+//                             $("#jqGrid").trigger("reloadGrid");
+//                         } else {
+//                             Swal.fire({
+//                                 text: r.message,
+//                                 icon: "error",iconColor:"#f05b72",
+//                             });
+//                         }
+//                     }
+//                 });
+//             }
+//         }
+//     )
+//     ;
+// }
+//
+// /**
+//  * 下架
+//  */
+// function putDownCourse() {
+//     var ids = getSelectedRows();
+//     if (ids == null) {
+//         return;
+//     }
+//     Swal.fire({
+//         title: "确认弹框",
+//         text: "确认要执行下架操作吗?",
+//         icon: "warning",iconColor:"#dea32c",
+//         showCancelButton: true,
+//         confirmButtonText: '确认',
+//         cancelButtonText: '取消'
+//     }).then((flag) => {
+//             if (flag.value) {
+//                 $.ajax({
+//                     type: "PUT",
+//                     url: "/admin/course/status/1",
+//                     contentType: "application/json",
+//                     data: JSON.stringify(ids),
+//                     success: function (r) {
+//                         if (r.resultCode == 200) {
+//                             Swal.fire({
+//                                 text: "下架成功",
+//                                 icon: "success",iconColor:"#1d953f",
+//                             });
+//                             $("#jqGrid").trigger("reloadGrid");
+//                         } else {
+//                             Swal.fire({
+//                                 text: r.message,
+//                                 icon: "error",iconColor:"#f05b72",
+//                             });
+//                         }
+//                     }
+//                 });
+//             }
+//         }
+//     );
+// }
