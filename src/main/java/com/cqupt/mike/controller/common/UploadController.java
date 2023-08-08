@@ -41,10 +41,10 @@ public class UploadController {
     @ResponseBody
     public Result upload(HttpServletRequest httpServletRequest, @RequestParam("file") MultipartFile file) throws URISyntaxException, IOException {
         String fileName = file.getOriginalFilename();
-        BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
-        if (bufferedImage == null) {
-            return ResultGenerator.genFailResult("请上传图片类型的文件");
-        }
+//        BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
+//        if (bufferedImage == null) {
+//            return ResultGenerator.genFailResult("请上传正确类型的文件");
+//        }
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         //生成文件名称通用方法
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
@@ -63,6 +63,7 @@ public class UploadController {
             }
             file.transferTo(destFile);
             Result resultSuccess = ResultGenerator.genSuccessResult();
+            //文件上传成功，返回url
             resultSuccess.setData(MikeUtils.getHost(new URI(httpServletRequest.getRequestURL() + "")) + "/upload/" + newFileName);
             return resultSuccess;
         } catch (IOException e) {

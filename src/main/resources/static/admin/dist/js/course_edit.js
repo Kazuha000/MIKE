@@ -1,5 +1,5 @@
 var editor;
-
+var courseVideo="url";
 $(function () {
 
     //富文本编辑器 用于商品详情编辑
@@ -104,6 +104,45 @@ $(function () {
             }
         }
     });
+
+    //视频资源上传插件初始化 用于课程视频资源上传
+    new AjaxUpload('#uploadCourseVideo', {
+        action: '/upload/file',
+        name: 'file',
+        autoSubmit: true,
+        responseType: "json",
+        onSubmit: function (file, extension) {
+            // if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))) {
+            //     Swal.fire({
+            //         text: "只支持jpg、png、gif格式的文件！",
+            //         icon: "error",iconColor:"#f05b72",
+            //     });
+            //     return false;
+            // }
+        },
+        onComplete: function (file, r) {
+            if (r != null && r.resultCode == 200) {
+                Swal.fire({
+                    text: "文件上传成功",
+                });
+                courseVideo=r.data;
+                alert(courseVideo);
+                return false;
+            } else if (r != null && r.resultCode != 200) {
+                Swal.fire({
+                    text: r.message,
+                    icon: "error",iconColor:"#f05b72",
+                });
+                return false;
+            }
+            else {
+                Swal.fire({
+                    text: "error",
+                    icon: "error",iconColor:"#f05b72",
+                });
+            }
+        }
+    });
 });
 
 
@@ -116,9 +155,9 @@ $('#saveButton').click(function () {
     var sellingPrice = $('#sellingPrice').val();
     var courseIntro = $('#courseIntro').val();
     var stockNum = $('#stockNum').val();
-    // var courseSellStatus = $("input[name='courseSellStatus']:checked").val();
     var courseDetailContent = editor.getHtml();
     var courseCoverImg = $('#courseCoverImg')[0].src;
+    alert(courseVideo);
     if (isNull(courseCategoryId)) {
         Swal.fire({
             text: "请选择分类",
@@ -189,13 +228,7 @@ $('#saveButton').click(function () {
         });
         return;
     }
-    // if (isNull(courseSellStatus)) {
-    //     Swal.fire({
-    //         text: "请选择上架状态",
-    //         icon: "error",iconColor:"#f05b72",
-    //     });
-    //     return;
-    // }
+
     if (isNull(courseDetailContent)) {
         Swal.fire({
             text: "请输入商品介绍",
@@ -230,6 +263,7 @@ $('#saveButton').click(function () {
         "courseDetailContent": courseDetailContent,
         "courseCoverImg": courseCoverImg,
         "courseCarousel": courseCoverImg,
+        "courseVideo": courseVideo,
         // "courseSellStatus": courseSellStatus
     };
     if (courseId > 0) {
@@ -247,6 +281,7 @@ $('#saveButton').click(function () {
             "courseDetailContent": courseDetailContent,
             "courseCoverImg": courseCoverImg,
             "courseCarousel": courseCoverImg,
+            "courseVideo": courseVideo,
             // "courseSellStatus": courseSellStatus
         };
     }

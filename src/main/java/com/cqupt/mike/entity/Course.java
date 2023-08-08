@@ -16,6 +16,8 @@ public class Course{
 
     private Long courseCategoryId;//关联分类id
 
+    private String courseVideo;//课程视频资源
+
     private String courseCoverImg;//课程主图
 
     private String courseCarousel;//课程轮播图
@@ -178,6 +180,14 @@ public class Course{
         this.updateTime = updateTime;
     }
 
+    public String getCourseVideo() {
+        return courseVideo;
+    }
+
+    public void setCourseVideo(String courseVideo) {
+        this.courseVideo = courseVideo;
+    }
+
     @Override
     public String toString() {
         return "Course{" +
@@ -186,6 +196,7 @@ public class Course{
                 ", courseIntro='" + courseIntro + '\'' +
                 ", teacherId=" + teacherId +
                 ", courseCategoryId=" + courseCategoryId +
+                ", courseVideo='" + courseVideo + '\'' +
                 ", courseCoverImg='" + courseCoverImg + '\'' +
                 ", courseCarousel='" + courseCarousel + '\'' +
                 ", courseDetailContent='" + courseDetailContent + '\'' +

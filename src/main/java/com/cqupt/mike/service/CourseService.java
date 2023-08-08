@@ -16,7 +16,7 @@ public interface CourseService {
     /**
      * 修改商品信息
      *
-     * @param goods
+     * @param course
      * @return
      */
     String updateCourse(Course course);
