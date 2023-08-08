@@ -1,6 +1,7 @@
 package com.cqupt.mike.dao;
 
 import com.cqupt.mike.entity.Student;
+import com.cqupt.mike.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -51,5 +52,10 @@ public interface StudentMapper {
      * @param stName
      * @return
      */
+
     Student selectByLoginNameAndPasswd(@Param("stName") String stName, @Param("password") String password);
+
+    List<Student> findstudentList(PageQueryUtil pageUtil);
+    int getTotalStudent(PageQueryUtil pageUtil);
+    int lockUserBatch(@Param("ids") Integer[] ids, @Param("lockStatus") int lockStatus);
 }

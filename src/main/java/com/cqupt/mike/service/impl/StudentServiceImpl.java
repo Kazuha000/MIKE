@@ -6,16 +6,28 @@ import com.cqupt.mike.dao.StudentMapper;
 import com.cqupt.mike.entity.Student;
 import com.cqupt.mike.service.StudentService;
 import com.cqupt.mike.util.BeanUtil;
+import com.cqupt.mike.util.PageQueryUtil;
+import com.cqupt.mike.util.PageResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-    @Resource
+    @Autowired
     private StudentMapper studentMapper;
+
+    @Override
+    public  PageResult getstudentPage (PageQueryUtil pageUtil) {
+        List<Student> mallUsers = studentMapper.findstudentList(pageUtil);
+        int total = studentMapper.getTotalStudent(pageUtil);
+        PageResult pageResult = new PageResult(mallUsers, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
 
     /**
      * 注册
@@ -88,6 +100,12 @@ public class StudentServiceImpl implements StudentService {
             return ServiceResultEnum.SUCCESS.getResult();  //返回成功或失败
         }
         return ServiceResultEnum.LOGIN_NAME_ERROR.getResult();
+    }
+    public Boolean lockUsers(Integer[] ids, int lockStatus) {
+        if (ids.length < 1) {
+            return false;
+        }
+        return studentMapper.lockUserBatch(ids, lockStatus) > 0;
     }
 
 }

@@ -13,10 +13,19 @@
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
-    <select id="findAllStudents" resultMap="StudentResult">
+
+    <select id="findstudentList" resultMap="StudentResult">
         select *
         from student
         order by st_id desc
+    </select>
+
+    <select id="getTotalStudent" parameterType="Map" resultType="int">
+        select count(*) from student
+        where 1=1
+        <if test="loginName!=null and loginName!=''">
+            and login_name = #{loginName}
+        </if>
     </select>
 
     <!--<insert id="insertStudent" parameterType="com.cqupt.mike.entity.Student">
@@ -103,4 +112,12 @@
         from student
         where st_name = #{stName} and password = #{password} and status != -1
     </select>
+
+    <update id="lockUserBatch">
+        update student
+        set locked_flag=#{lockStatus} where user_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>

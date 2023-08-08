@@ -1,10 +1,13 @@
 package com.cqupt.mike.service;
 
+import com.cqupt.mike.util.PageQueryUtil;
+import com.cqupt.mike.util.PageResult;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public interface StudentService {
-
+    PageResult getstudentPage(PageQueryUtil pageUtil);
     /**
      * 用户注册
      *
@@ -34,4 +37,6 @@ public interface StudentService {
      * @return
      */
     String forgetpassword(String stName, String email, HttpSession httpSession, HttpServletRequest httpServletRequest);
+
+    Boolean lockUsers(Integer[] ids, int lockStatus);
 }
