@@ -47,7 +47,7 @@ public class StudentController {
     }
 
     /**
-     * 用户禁用与解除禁用(0-未锁定 1-已锁定)
+     * 用户禁用与解除禁用(0-未锁定 1-已锁定 -1-已注销)
      */
     @RequestMapping(value = "/users/lock/{lockStatus}", method = RequestMethod.POST)
     @ResponseBody
@@ -55,7 +55,7 @@ public class StudentController {
         if (ids.length < 1) {
             return ResultGenerator.genFailResult("参数异常！");
         }
-        if (lockStatus != 0 && lockStatus != 1) {
+        if (lockStatus != 0 && lockStatus != 1 && lockStatus != -1) {
             return ResultGenerator.genFailResult("操作非法！");
         }
         if (studentService.lockUsers(ids, lockStatus)) {

@@ -9,8 +9,7 @@ $(function () {
             {label: '性别', name: 'sex', index: 'sex', width: 120},
             {label: '电话', name: 'phone', index: 'phone', width: 120},
             {label: '邮箱', name: 'email', index: 'email', width: 120},
-            {label: '身份状态', name: 'lockedFlag', index: 'lockedFlag', width: 80, formatter: lockedFormatter},
-            {label: '是否注销', name: 'isDeleted', index: 'isDeleted', width: 80, formatter: deletedFormatter},
+            {label: '身份状态', name: 'status', index: 'status', width: 80, formatter: lockedFormatter},
             {label: '注册时间', name: 'createTime', index: 'createTime', width: 120}
         ],
         height: 560,
