@@ -74,6 +74,20 @@ public class CourseServiceImpl implements CourseService {
     }
 
     /**
+     * 教师个人课程获取课程分页
+     * @param pageUtil
+     * @param teacherId
+     * @return
+     */
+    @Override
+    public PageResult getCoursePage(PageQueryUtil pageUtil,int teacherId) {
+        int start=((pageUtil.getPage() - 1) * pageUtil.getLimit());
+        List<Course> courseList = courseMapper.findCourseListByTeacherId(start,pageUtil.getLimit(),teacherId);
+        int total = courseMapper.getTotalCourse(pageUtil);
+        PageResult pageResult = new PageResult(courseList, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
+    /**
      * 批量修改销售状态
      * @param ids
      * @param sellStatus

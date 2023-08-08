@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Controller
@@ -59,7 +60,7 @@ public class CourseController {
      */
     @RequestMapping(value = "/course/save", method = RequestMethod.POST)
     @ResponseBody
-    public Result save(@RequestBody Course course) {
+    public Result save(@RequestBody Course course, HttpSession session) {
         //判断参数是否为空
         if (StringUtils.isEmpty(course.getCourseName())
                 || StringUtils.isEmpty(course.getCourseIntro())
@@ -72,6 +73,8 @@ public class CourseController {
                 || StringUtils.isEmpty(course.getCourseDetailContent())) {
             return ResultGenerator.genFailResult("参数异常！");
         }
+        String teacherId = session.getAttribute("loginUserId") + "";
+        course.setTeacherId((long)Integer.parseInt(teacherId));
         //向数据库新增一个课程信息
         String result = courseService.saveCourse(course);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
@@ -181,16 +184,17 @@ public class CourseController {
      */
     @RequestMapping(value = "/course/list", method = RequestMethod.GET)
     @ResponseBody
-    public Result list(@RequestParam Map<String, Object> params) {
+    public Result list(@RequestParam Map<String, Object> params,HttpSession session) {
         if (StringUtils.isEmpty(params.get("page")) || StringUtils.isEmpty(params.get("limit"))) {
             return ResultGenerator.genFailResult("参数异常！");
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        return ResultGenerator.genSuccessResult(courseService.getCoursePage(pageUtil));
+        String teacherId = session.getAttribute("loginUserId") + "";
+        return ResultGenerator.genSuccessResult(courseService.getCoursePage(pageUtil,Integer.parseInt(teacherId)));
     }
 
     /**
-     * 列表
+     * 课程添加与修改中的选择分类的列表
      */
     @RequestMapping(value = "/course/categories/listForSelect", method = RequestMethod.GET)
     @ResponseBody

@@ -30,6 +30,15 @@ public interface CourseService {
     PageResult getCoursePage(PageQueryUtil pageUtil);
 
     /**
+     * 教师个人课程获取分页
+     * @param pageUtil
+     * @param teacherId
+     * @return
+     */
+
+    PageResult getCoursePage(PageQueryUtil pageUtil,int teacherId);
+
+    /**
      * 批量修改销售状态(上架下架)
      *
      * @param ids

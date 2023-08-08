@@ -41,7 +41,8 @@ public class TeacherController {
             session.setAttribute("errorMsg", "用户名或密码不能为空");
             return "teacher/login";
         }
-        String kaptchaCode = session.getAttribute("verifyCode") + "";  //验证码错误则返回
+        String kaptchaCode = session.getAttribute("verifyCode") + "";
+        //验证码错误则返回
         if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.equals(kaptchaCode)) {
             session.setAttribute("errorMsg", "验证码错误");
             return "teacher/login";

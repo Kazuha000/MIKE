@@ -100,14 +100,6 @@
                                        required="true">
                             </div>
                             <div class="form-group">
-                                <label class="control-label">上架状态:&nbsp;</label>
-                                <input name="courseSellStatus" type="radio" id="courseSellStatusTrue" checked=true
-                                       th:checked="${null==course||(null !=course and null !=course.courseSellStatus and course.courseSellStatus==0)} ?true:false"
-                                       value="0"/>&nbsp;上架&nbsp;
-                                <input name="courseSellStatus" type="radio" id="courseSellStatusFalse" value="1"
-                                       th:checked="${null !=course and null !=course.courseSellStatus and course.courseSellStatus==1} ?true:false"/>&nbsp;下架&nbsp;
-                            </div>
-                            <div class="form-group">
                                 <div class="form-group">
                                     <div class="col-sm-4">
                                         <th:block th:if="${null == course}">

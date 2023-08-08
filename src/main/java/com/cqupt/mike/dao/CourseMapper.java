@@ -32,6 +32,15 @@ public interface CourseMapper {
     List<Course> findCourseList(PageQueryUtil pageUtil);
 
     /**
+     * 通过教师id查询分页数据
+     * @param start
+     * @param limit
+     * @param teacherId
+     * @return
+     */
+    List<Course> findCourseListByTeacherId(@Param("start") int start,@Param("limit") int limit,@Param("teacherId") int teacherId);
+
+    /**
      * 查询课程总数
      * @param pageUtil
      * @return
