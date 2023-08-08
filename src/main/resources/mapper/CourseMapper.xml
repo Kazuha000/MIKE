@@ -7,7 +7,6 @@
         <result column="course_intro" jdbcType="VARCHAR" property="courseIntro"/>
         <result column="teacher_id" jdbcType="BIGINT" property="teacherId"/>
         <result column="course_category_id" jdbcType="BIGINT" property="courseCategoryId"/>
-        <result column="course_video" jdbcType="VARCHAR" property="courseVideo"/>
         <result column="course_cover_img" jdbcType="VARCHAR" property="courseCoverImg"/>
         <result column="course_carousel" jdbcType="VARCHAR" property="courseCarousel"/>
         <result column="original_price" jdbcType="INTEGER" property="originalPrice"/>
@@ -40,9 +39,6 @@
             </if>
             <if test="courseCategoryId != null">
                 course_category_id,
-            </if>
-            <if test="courseVideo != null">
-                course_video,
             </if>
             <if test="courseCoverImg != null">
                 course_cover_img,
@@ -96,9 +92,6 @@
             </if>
             <if test="courseCategoryId != null">
                 #{courseCategoryId,jdbcType=BIGINT},
-            </if>
-            <if test="courseVideo != null">
-                #{courseVideo,jdbcType=VARCHAR},
             </if>
             <if test="courseCoverImg != null">
                 #{courseCoverImg,jdbcType=VARCHAR},
@@ -154,9 +147,6 @@
             <if test="courseCategoryId != null">
                 course_category_id = #{courseCategoryId,jdbcType=BIGINT},
             </if>
-            <if test="courseVideo != null">
-                course_video = #{courseVideo,jdbcType=VARCHAR},
-            </if>
             <if test="courseCoverImg != null">
                 course_cover_img = #{courseCoverImg,jdbcType=VARCHAR},
             </if>
@@ -207,15 +197,55 @@
         </if>
     </select>
 
-    <select id="findCourseListByTeacherId"  resultMap="BaseResultMap">
+    <select id="findCourseListBySearch" parameterType="Map" resultMap="BaseResultMap">
         select *
-        <!--        <include refid="Base_Column_List"/>-->
+<!--        <include refid="Base_Column_List"/>-->
         from course_info
-        where teacher_id=#{teacherId}
-        order by course_id desc
+        <where>
+            <if test="keyword!=null and keyword!=''">
+                and (course_name like CONCAT('%',#{keyword},'%') or course_intro like CONCAT('%',#{keyword},'%'))
+            </if>
+            <if test="courseCategoryId!=null and courseCategoryId!=''">
+                and course_category_id = #{courseCategoryId}
+            </if>
+            <if test="courseSellStatus!=null">
+                and course_sell_status = #{courseSellStatus}
+            </if>
+        </where>
+        <if test="orderBy!=null and orderBy!=''">
+            <choose>
+                <when test="orderBy == 'new'">
+                    <!-- 按照发布时间倒序排列 -->
+                    order by course_id desc
+                </when>
+                <when test="orderBy == 'price'">
+                    <!-- 按照售价从小到大排列 -->
+                    order by selling_price asc
+                </when>
+                <otherwise>
+                    <!-- 默认按照库存数量从大到小排列 -->
+                    order by stock_num desc
+                </otherwise>
+            </choose>
+        </if>
         <if test="start!=null and limit!=null">
             limit #{start},#{limit}
         </if>
+    </select>
+
+    <select id="getTotalCourseBySearch" parameterType="Map" resultType="int">
+        select count(*) from course_info
+        <where>
+            <if test="keyword!=null and keyword!=''">
+                and (course_name like CONCAT('%',#{keyword},'%') or course_intro like CONCAT('%',#{keyword},'%'))
+            </if>
+            <if test="courseCategoryId!=null and courseCategoryId!=''">
+                and course_category_id = #{courseCategoryId}
+            </if>
+            <if test="courseSellStatus!=null">
+                and course_sell_status = #{courseSellStatus}
+            </if>
+        </where>
     </select>
 
     <select id="getTotalCourse" parameterType="Map" resultType="int">

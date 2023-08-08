@@ -54,4 +54,13 @@ public interface CourseService {
      */
     Course getCourseById(Long id);
 
+    /**
+     * 商品搜索
+     *
+     * @param pageUtil
+     * @return
+     */
+    PageResult searchCourse(PageQueryUtil pageUtil);
+
+
 }
