@@ -1,9 +1,6 @@
 
 package com.cqupt.mike.entity;
 
-
-
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;

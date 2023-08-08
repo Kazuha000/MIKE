@@ -197,6 +197,57 @@
         </if>
     </select>
 
+    <select id="findCourseListBySearch" parameterType="Map" resultMap="BaseResultMap">
+        select *
+<!--        <include refid="Base_Column_List"/>-->
+        from course_info
+        <where>
+            <if test="keyword!=null and keyword!=''">
+                and (course_name like CONCAT('%',#{keyword},'%') or course_intro like CONCAT('%',#{keyword},'%'))
+            </if>
+            <if test="courseCategoryId!=null and courseCategoryId!=''">
+                and course_category_id = #{courseCategoryId}
+            </if>
+            <if test="courseSellStatus!=null">
+                and course_sell_status = #{courseSellStatus}
+            </if>
+        </where>
+        <if test="orderBy!=null and orderBy!=''">
+            <choose>
+                <when test="orderBy == 'new'">
+                    <!-- 按照发布时间倒序排列 -->
+                    order by course_id desc
+                </when>
+                <when test="orderBy == 'price'">
+                    <!-- 按照售价从小到大排列 -->
+                    order by selling_price asc
+                </when>
+                <otherwise>
+                    <!-- 默认按照库存数量从大到小排列 -->
+                    order by stock_num desc
+                </otherwise>
+            </choose>
+        </if>
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="getTotalCourseBySearch" parameterType="Map" resultType="int">
+        select count(*) from course_info
+        <where>
+            <if test="keyword!=null and keyword!=''">
+                and (course_name like CONCAT('%',#{keyword},'%') or course_intro like CONCAT('%',#{keyword},'%'))
+            </if>
+            <if test="courseCategoryId!=null and courseCategoryId!=''">
+                and course_category_id = #{courseCategoryId}
+            </if>
+            <if test="courseSellStatus!=null">
+                and course_sell_status = #{courseSellStatus}
+            </if>
+        </where>
+    </select>
+
     <select id="getTotalCourse" parameterType="Map" resultType="int">
         select count(*) from course_info
     </select>

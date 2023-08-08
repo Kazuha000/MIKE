@@ -16,7 +16,7 @@ public interface CourseService {
     /**
      * 修改商品信息
      *
-     * @param goods
+     * @param course
      * @return
      */
     String updateCourse(Course course);
@@ -44,5 +44,14 @@ public interface CourseService {
      * @return
      */
     Course getCourseById(Long id);
+
+    /**
+     * 商品搜索
+     *
+     * @param pageUtil
+     * @return
+     */
+    PageResult searchCourse(PageQueryUtil pageUtil);
+
 
 }

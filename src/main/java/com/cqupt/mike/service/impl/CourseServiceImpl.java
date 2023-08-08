@@ -3,16 +3,21 @@ package com.cqupt.mike.service.impl;
 import com.cqupt.mike.common.CategoryLevelEnum;
 import com.cqupt.mike.common.MikeException;
 import com.cqupt.mike.common.ServiceResultEnum;
+import com.cqupt.mike.controller.vo.SearchCourseVO;
 import com.cqupt.mike.dao.CourseCategoryMapper;
 import com.cqupt.mike.dao.CourseMapper;
 import com.cqupt.mike.entity.Course;
 import com.cqupt.mike.entity.CourseCategory;
 import com.cqupt.mike.service.CourseService;
+import com.cqupt.mike.util.BeanUtil;
 import com.cqupt.mike.util.MikeUtils;
 import com.cqupt.mike.util.PageQueryUtil;
 import com.cqupt.mike.util.PageResult;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -92,6 +97,31 @@ public class CourseServiceImpl implements CourseService {
             MikeException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
         }
         return course;
+    }
+
+    @Override
+    public PageResult searchCourse(PageQueryUtil pageUtil) {
+        List<Course> courseList = courseMapper.findCourseListBySearch(pageUtil);
+        int total = courseMapper.getTotalCourseBySearch(pageUtil);
+        List<SearchCourseVO> SearchCourseVOS = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(courseList)) {
+            SearchCourseVOS = BeanUtil.copyList(courseList, SearchCourseVO.class);
+            for (SearchCourseVO SearchCourseVO : SearchCourseVOS) {
+                String courseName = SearchCourseVO.getCourseName();
+                String courseIntro = SearchCourseVO.getCourseIntro();
+                // 字符串过长导致文字超出的问题
+                if (courseName.length() > 28) {
+                    courseName = courseName.substring(0, 28) + "...";
+                    SearchCourseVO.setCourseName(courseName);
+                }
+                if (courseIntro.length() > 30) {
+                    courseIntro = courseIntro.substring(0, 30) + "...";
+                    SearchCourseVO.setCourseIntro(courseIntro);
+                }
+            }
+        }
+        PageResult pageResult = new PageResult(SearchCourseVOS, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
     }
 
 }

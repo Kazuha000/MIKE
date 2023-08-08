@@ -39,6 +39,20 @@ public interface CourseMapper {
     int getTotalCourse(PageQueryUtil pageUtil);
 
     /**
+     * 根据搜索字段查询分页数据
+     * @param pageUtil
+     * @return
+     */
+    List<Course> findCourseListBySearch(PageQueryUtil pageUtil);
+
+    /**
+     * 根据搜索字段查询总数
+     * @param pageUtil
+     * @return
+     */
+    int getTotalCourseBySearch(PageQueryUtil pageUtil);
+
+    /**
      * 批量修改课程状态
      * @param courseIds
      * @param sellStatus

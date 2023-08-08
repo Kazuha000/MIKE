@@ -8,10 +8,10 @@ public interface AdminUserService {
 
 
     /**
-     *管理员登陆
+     *管理员登录
      * @param adName 管理员用户名
      * @param password 密码
-     * @return 登陆成功返回管理员id，密码错误返回0，用户不存在返回-1
+     * @return 登录成功返回管理员id，密码错误返回0，用户不存在返回-1
      */
     int login(String adName,String password);
 
