@@ -21,7 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Random;
 
-//学生用户的登陆注册退出
+
+/**
+ * 学生用户的登陆注册退出
+ */
 @Controller
 public class PersonalController {
 
@@ -156,8 +159,7 @@ public class PersonalController {
                                  @RequestParam("verifyCode") String verifyCode,
                                  HttpSession httpSession,
                                  HttpServletRequest httpServletRequest,
-                                 HttpServletResponse httpServletResponse
-    ) {
+                                 HttpServletResponse httpServletResponse) {
         //判断用户名、密码、验证码是否为空
         if (StringUtils.isEmpty(loginName)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_NAME_NULL.getResult());
@@ -168,12 +170,14 @@ public class PersonalController {
         if (StringUtils.isEmpty(verifyCode)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_NULL.getResult());
         }
+
 //        获取session中验证码的值
         String kaptchaCode = httpSession.getAttribute(Constants.VERIFY_CODE_KEY) + "";
         //判断验证码是否正确
         if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.toLowerCase().equals(kaptchaCode)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
         }
+
         //向service层传入信息，找回密码
         String forgetpasswordResult = studentService.forgetpassword(loginName, email,httpSession,httpServletRequest);
         //若返回信息为登陆成功，则发送验证码
@@ -203,7 +207,7 @@ public class PersonalController {
             try {
                 MailUtils.sendMail(email,code.toString());
             } catch (MessagingException e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException(e.getMessage());
             }
             return ResultGenerator.genSuccessResult();
         }

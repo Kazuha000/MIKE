@@ -51,10 +51,12 @@ public class StudentServiceImpl implements StudentService {
     public String login(String stName, String password, HttpSession httpSession) {
         Student user = studentMapper.selectByLoginName(stName);
         if (user != null && httpSession != null) {
-            if (!user.getPassword().equals(password)) { //判断密码是否正确
+            //判断密码是否正确
+            if (!user.getPassword().equals(password)) {
                 return ServiceResultEnum.LOGIN_ERROR.getResult();
             }
-            if (user.getStatus() == 0) {   //判断用户是否已经锁定
+            //判断用户是否已经锁定
+            if (user.getStatus() == 0) {
                 return ServiceResultEnum.LOGIN_USER_LOCKED.getResult();
             }
             //用户名太长 影响页面展示
