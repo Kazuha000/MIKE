@@ -277,6 +277,20 @@
         where course_id = #{courseId,jdbcType=BIGINT}
     </select>
 
+    <select id="selectByPrimaryKeys" resultMap="BaseResultMap">
+        select *
+        from course_info
+        where course_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        order by field(course_id,
+        <foreach item="id" collection="list" separator=",">
+            #{id}
+        </foreach>
+        );
+    </select>
+
     <select id="selectByCategoryIdAndName" resultMap="BaseResultMap">
         select *
         from course_info

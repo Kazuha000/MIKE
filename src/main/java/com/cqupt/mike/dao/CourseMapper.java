@@ -77,6 +77,13 @@ public interface CourseMapper {
     Course selectByPrimaryKey(Long courseId);
 
     /**
+     * 通过id列表查询课程列表
+     * @param courseId
+     * @return
+     */
+    List<Course> selectByPrimaryKeys(List<Long> courseId);
+
+    /**
      * 通过课程分类id与课程名查询课程
      * @param courseName
      * @param courseCategoryId
