@@ -53,15 +53,13 @@
     </select>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
+        select *
         from index_config
         where config_id = #{configId,jdbcType=BIGINT} and is_deleted=0
     </select>
 
     <select id="selectByTypeAndCourseId" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
+        select *
         from index_config
         where config_type = #{configType,jdbcType=BIGINT} and course_id=#{courseId,jdbcType=BIGINT} and is_deleted=0 limit 1
     </select>

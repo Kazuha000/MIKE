@@ -1,11 +1,14 @@
 package com.cqupt.mike.controller.mike;
 
 import com.cqupt.mike.common.Constants;
+import com.cqupt.mike.common.IndexConfigTypeEnum;
 import com.cqupt.mike.common.MikeException;
 import com.cqupt.mike.controller.vo.IndexCarouselVO;
 import com.cqupt.mike.controller.vo.IndexCategoryVO;
+import com.cqupt.mike.controller.vo.IndexConfigCourseVO;
 import com.cqupt.mike.service.CarouselService;
 import com.cqupt.mike.service.CategoryService;
+import com.cqupt.mike.service.IndexConfigService;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +22,8 @@ public class IndexController {
     private CarouselService carouselService;
     @Resource
     private CategoryService categoryService;
-
+    @Resource
+    private IndexConfigService indexConfigService;
 
     @GetMapping({"/index", "/", "/index.html"})//MIKE主页跳转
     public String indexPage(HttpServletRequest request) {
@@ -30,14 +34,14 @@ public class IndexController {
         }
         //返回固定数量的轮播图对象(首页调用)
         List<IndexCarouselVO> carousels = carouselService.getCarouselsForIndex(Constants.INDEX_CAROUSEL_NUMBER);
-//        List<NewBeeMallIndexConfigGoodsVO> hotGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_HOT.getType(), Constants.INDEX_GOODS_HOT_NUMBER);
-//        List<NewBeeMallIndexConfigGoodsVO> newGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_NEW.getType(), Constants.INDEX_GOODS_NEW_NUMBER);
-//        List<NewBeeMallIndexConfigGoodsVO> recommendGoodses = newBeeMallIndexConfigService.getConfigGoodsesForIndex(IndexConfigTypeEnum.INDEX_GOODS_RECOMMOND.getType(), Constants.INDEX_GOODS_RECOMMOND_NUMBER);
+        List<IndexConfigCourseVO> hotCourse = indexConfigService.getConfigCourseForIndex(IndexConfigTypeEnum.INDEX_GOODS_HOT.getType(), Constants.INDEX_COURSES_HOT_NUMBER);
+        List<IndexConfigCourseVO> newCourse = indexConfigService.getConfigCourseForIndex(IndexConfigTypeEnum.INDEX_GOODS_NEW.getType(), Constants.INDEX_COURSES_NEW_NUMBER);
+        List<IndexConfigCourseVO> recommendCourse = indexConfigService.getConfigCourseForIndex(IndexConfigTypeEnum.INDEX_GOODS_RECOMMOND.getType(), Constants.INDEX_COURSES_RECOMMOND_NUMBER);
         request.setAttribute("categories", categories);//分类数据
         request.setAttribute("carousels", carousels);//轮播图
-//        request.setAttribute("hotGoodses", hotGoodses);//热销商品
-//        request.setAttribute("newGoodses", newGoodses);//新品
-//        request.setAttribute("recommendGoodses", recommendGoodses);//推荐商品
+        request.setAttribute("hotCourse", hotCourse);//热销课程
+        request.setAttribute("newCourse", newCourse);//新品
+        request.setAttribute("recommendCourse", recommendCourse);//推荐课程
         return "mike/index";
     }
 }
