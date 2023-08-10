@@ -3,8 +3,12 @@ package com.cqupt.mike.service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public interface StudentService {
+import com.cqupt.mike.controller.vo.MikeStudentVo;
+import com.cqupt.mike.entity.Student;
+import com.cqupt.mike.util.PageQueryUtil;
+import com.cqupt.mike.util.PageResult;
 
+public interface StudentService {
     /**
      * 用户注册
      *
@@ -12,7 +16,7 @@ public interface StudentService {
      * @param password 密码
      * @return 登陆结果
      */
-    String register(String stName, String password);
+    String register(String stName, String password,String email);
 
     /**
      * 登录

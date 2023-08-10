@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cqupt.mike.dao.TeacherMapper">
     <resultMap id="BaseResultMap" type="com.cqupt.mike.entity.Teacher">
+<!--        id属性 ，resultMap标签的标识。-->
+<!--        type属性 ，返回值的全限定类名，或类型别名。-->
+<!--        autoMapping属性 ，值范围true（默认值）|false, 设置是否启动自动映射功能，自动映射功能就是自动查找与字段名小写同名的属性名，-->
+<!--        并调用setter方法。而设置为false后，则需要在resultMap内明确注明映射关系才会调用对应的setter方法。-->
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="accountNo" column="account_no" jdbcType="INTEGER"/>
         <result property="name" column="name" jdbcType="VARCHAR"/>
@@ -10,12 +14,19 @@
         <result property="phone" column="phone" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
-        <result property="createTime" column="create_time"/>
+        <result property="creatTime" column="creat_time"/>
         <result property="updateTime" column="update_time"/>
+<!--        property	需要映射到JavaBean 的属性名称。-->
+<!--        column	数据表的列名或者标签别名。-->
+<!--        jdbcType	数据表支持的类型列表。这个属性只在insert,update 或delete 的时候针对允许空的列有用。JDBC 需要这项，但MyBatis 不需要。-->
+<!--        如果你是直接针对JDBC 编码，且有允许空的列，而你要指定这项。-->
     </resultMap>
 <!--    <sql id="AdminUser_List">-->
 <!--        ad_id, account_no, ad_name, password, sex,phone,email,status,create_time,update_time-->
 <!--    </sql>-->
+    <sql id="Base_Column_List">
+        id, account_no, name, password, sex, phone, email, status, creat_time, update_time
+    </sql>
 
     <select id="login" resultMap="BaseResultMap">
         select *
@@ -29,12 +40,7 @@
         from teacher
         where id = #{id,jdbcType=INTEGER}
     </select>
-<!--    <insert id="insert" parameterType="com.cqupt.mike.entity.AdminUser">
-        insert into admin (ad_id, account_no, ad_name,password,sex,phone,email,status)
-        values (#{adId,jdbcType=INTEGER}, #{accountNo,jdbcType=INTEGER}, #{adName,jdbcType=VARCHAR},
-                #{password,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER},#{phone,jdbcType=VARCHAR},
-                #{email,jdbcType=VARCHAR},#{status,jdbcType=INTEGER})
-    </insert>-->
+
     <insert id="insert" parameterType="com.cqupt.mike.entity.Teacher">
         insert into teacher
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -62,16 +68,17 @@
             <if test="status != null">
                 status,
             </if>
+
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
-                #{adId,jdbcType=INTEGER},
+                #{id,jdbcType=INTEGER},
             </if>
             <if test="accountNo != null">
                 #{accountNo,jdbcType=INTEGER},
             </if>
             <if test="name != null">
-                #{adName,jdbcType=VARCHAR},
+                #{name,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
                 #{password,jdbcType=VARCHAR},
@@ -88,15 +95,16 @@
             <if test="status != null">
                 #{status,jdbcType=INTEGER},
             </if>
+
         </trim>
     </insert>
     <update id="updateByPrimaryKey" parameterType="com.cqupt.mike.entity.Teacher">
-        update admin
+        update teacher
         <set>
             <if test="accountNo != null">
                 account_no = #{accountNo,jdbcType=INTEGER},
             </if>
-            <if test="adName != null">
+            <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
@@ -114,6 +122,7 @@
             <if test="status != null">
                 status = #{status,jdbcType=INTEGER},
             </if>
+
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -125,4 +134,32 @@
             locked = #{locked,jdbcType=TINYINT}
         where admin_user_id = #{adminUserId,jdbcType=INTEGER}
     </update>-->
+    <select id="findTeacherList" parameterType="Map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from teacher
+        where 1=1
+        <if test="name!=null and name!=''">
+            and name = #{name}
+        </if>
+        order by creat_time desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="getTotalTeachers" parameterType="Map" resultType="int">
+        select count(*) from teacher
+        where 1=1
+        <if test="name!=null and name!=''">
+            and name = #{name}
+        </if>
+    </select>
+    <update id="lockTeacherBatch">
+        update teacher
+        set status=#{lockStatus} where id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>

@@ -72,9 +72,12 @@ public class TeacherController {
         if (teacher == null) {  //未查询到用户，返回登陆界面
             return "teacher/login";
         }
+//        request.setAttribute("loginUser",..)与teacher.js里的th:value="${loginUser}"相对应
         request.setAttribute("path", "profile"); //传入个人信息页面路径
-        request.setAttribute("loginUser", teacher.getName()); //传入登陆的管理员用户名
-        request.setAttribute("accountNo", teacher.getAccountNo());//传入管理员账号
+        request.setAttribute("loginUser", teacher.getName()); //传入登陆的教师用户名
+        request.setAttribute("accountNo", teacher.getAccountNo());//传入教师账号
+        request.setAttribute("phone", teacher.getPhone()); //传入教师手机号
+        request.setAttribute("email", teacher.getEmail());//传入教师邮箱
         return "teacher/profile";
     }
 
@@ -102,15 +105,16 @@ public class TeacherController {
     @PostMapping("/profile/name") //修改用户名和账号
     @ResponseBody
     public String nameUpdate(HttpServletRequest request, @RequestParam("loginUser") String loginUser,
-                             @RequestParam("accountNo") Integer accountNo) {
+                             @RequestParam("accountNo") Integer accountNo, @RequestParam("phone") String phone,
+                             @RequestParam("email") String email) {
         //判断输入的用户名和账号是否为空
-        if (StringUtils.isEmpty(loginUser) || accountNo==null) {
+        if (StringUtils.isEmpty(loginUser) || accountNo==null || phone==null || StringUtils.isEmpty(email)) {
             return "参数不能为空";
         }
         //从前端获取登陆的管理员用户的id
         Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
         //修改用户名和账号
-        if (teacherService.updateName(loginUserId, loginUser, accountNo)) {
+        if (teacherService.updateName(loginUserId, loginUser, accountNo,phone ,email)) {
             return "success";
         } else {
             return "修改失败";

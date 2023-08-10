@@ -2,6 +2,7 @@ package com.cqupt.mike.controller.admin;
 
 import com.cqupt.mike.entity.AdminUser;
 import com.cqupt.mike.service.AdminUserService;
+import org.apache.naming.factory.SendMailFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -75,9 +76,23 @@ public class AdminController {
         request.setAttribute("path", "profile"); //传入个人信息页面路径
         request.setAttribute("loginUser", adminUser.getAdName()); //传入登陆的管理员用户名
         request.setAttribute("accountNo", adminUser.getAccountNo());//传入管理员账号
+        request.setAttribute("phone", adminUser.getPhone()); //传入登陆的管理员用户名
+        request.setAttribute("email", adminUser.getEmail());//传入管理员账号
         return "admin/profile";
     }
 
+//    @GetMapping("/teacher")  //跳转到教师管理界面
+//    public String teacher(HttpServletRequest request) {
+//        Integer adId = (int) request.getSession().getAttribute("loginUserId"); //从前端页面获取登陆用户id
+//        AdminUser adminUser = adminUserService.getUserDetailById(adId);//通过id查询管理员用户
+//        if (adminUser == null) {  //未查询到用户，返回登陆界面
+//            return "admin/login";
+//        }
+//        request.setAttribute("path", "profile"); //传入个人信息页面路径
+//        request.setAttribute("loginUser", adminUser.getAdName()); //传入登陆的管理员用户名
+//        request.setAttribute("accountNo", adminUser.getAccountNo());//传入管理员账号
+//        return "admin/teacher";
+//    }
     @PostMapping("/profile/password")  //修改密码
     @ResponseBody
     public String passwordUpdate(HttpServletRequest request, @RequestParam("originalPassword") String originalPassword,
@@ -99,10 +114,12 @@ public class AdminController {
         }
     }
 
-    @PostMapping("/profile/name") //修改用户名和账号
+    @PostMapping("/profile/name") //修改用户名、账号、手机号和密码
     @ResponseBody
     public String nameUpdate(HttpServletRequest request, @RequestParam("loginUser") String loginUser,
-                             @RequestParam("accountNo") Integer accountNo) {
+                             @RequestParam("accountNo") Integer accountNo,
+                             @RequestParam("phone") String phone,
+                                         @RequestParam("email") String email) {
         //判断输入的用户名和账号是否为空
         if (StringUtils.isEmpty(loginUser) || accountNo==null) {
             return "参数不能为空";
@@ -110,7 +127,7 @@ public class AdminController {
         //从前端获取登陆的管理员用户的id
         Integer loginUserId = (int) request.getSession().getAttribute("loginUserId");
         //修改用户名和账号
-        if (adminUserService.updateName(loginUserId, loginUser, accountNo)) {
+        if (adminUserService.updateName(loginUserId, loginUser, accountNo, phone, email)) {
             return "success";
         } else {
             return "修改失败";

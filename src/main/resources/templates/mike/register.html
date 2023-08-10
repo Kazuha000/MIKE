@@ -6,7 +6,7 @@
     <title>MIKE教育-注册</title>
     <link rel="shortcut icon" th:href="@{/admin/dist/img/favicon.ico}"/>
     <link rel="stylesheet" th:href="@{/mike/css/common.css}">
-    <link rel="stylesheet" th:href="@{/mike/styles/login.css}">
+    <link rel="stylesheet" th:href="@{/mike/styles/register.css}">
     <link rel="stylesheet" th:href="@{/mike/styles/header.css}">
     <link rel="stylesheet" th:href="@{/admin/plugins/sweetalert2/sweetalert2.min.css}"/>
 </head>
@@ -28,16 +28,27 @@
             </div>
             <form id="registerForm" onsubmit="return false;" action="##">
                 <div class="login_main center">
-                    <div class="login-info">用户名:&nbsp;<input class="login-info-input" type="text" name="loginName"
+                    <div class="login-info">请设置用户名:&nbsp;<input class="login-info-input" type="text" name="loginName"
                                                              placeholder="请输入你的用户名" id="loginName"/>
                     </div>
-                    <div class="login-info">密&nbsp;&nbsp;&nbsp;&nbsp;码:&nbsp;<input class="login-info-input"
+                    <div class="login-info">请设置密&nbsp;&nbsp;&nbsp;&nbsp;码:&nbsp;<input class="login-info-input"
                                                                                     type="password"
                                                                                     name="password"
                                                                                     id="password"
                                                                                     placeholder="请输入你的密码"/>
                     </div>
-
+                    <div class="login-info">再次输入密码:&nbsp;<input class="login-info-input"
+                                                                                      type="password"
+                                                                                      name="again-password"
+                                                                                      id="again-password"
+                                                                                      placeholder="请再次输入你的密码"/>
+                    </div>
+                    <div class="login-info">请输入邮&nbsp;&nbsp;&nbsp;&nbsp;箱:&nbsp;<input class="login-info-input"
+                                                                      type="email"
+                                                                      name="email"
+                                                                      id="email"
+                                                                      placeholder="请输入你的邮箱"/>
+                    </div>
                     <div class="login-info">
                         验证码:&nbsp;
                         <input class="login-info-input verify-code" type="text" name="verifyCode" id="verifyCode"
@@ -77,6 +88,22 @@
                 icon: "error",iconColor:"#f05b72",
             });
             return false;
+        }
+        var againpassword = $("#again-password").val();
+        if (!validPassword(againpassword)) {
+            Swal.fire({
+                text: "请输入正确的密码格式(6-20位字符和数字组合)",
+                icon: "error",iconColor:"#f05b72",
+            });
+            return false;
+        }
+        if(password !== againpassword){
+            Swal.fire({
+                text: "请输入相同的密码",
+                icon: "error",iconColor:"#f05b72",
+            });
+            return false;
+
         }
         var verifyCode = $("#verifyCode").val();
         if (!validLength(verifyCode, 5)) {

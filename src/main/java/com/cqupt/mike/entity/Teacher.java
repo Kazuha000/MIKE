@@ -24,7 +24,7 @@ public class Teacher {
 
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;  //创建时间
+    private Date creatTime;  //创建时间
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;  //更改时间
@@ -93,12 +93,12 @@ public class Teacher {
         this.status = status;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreatTime() {
+        return creatTime;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreatTime(Date createTime) {
+        this.creatTime = createTime;
     }
 
     public Date getUpdateTime() {

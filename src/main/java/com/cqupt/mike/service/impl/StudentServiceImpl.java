@@ -24,15 +24,15 @@ public class StudentServiceImpl implements StudentService {
      * @return
      */
     @Override
-    public String register(String stName, String password) {
+    public String register(String stName, String password,String eamil) {
         if (studentMapper.selectByLoginName(stName) != null) {  //查询用户是否已存在，若已存在则返回“用户已存在”
             return ServiceResultEnum.SAME_LOGIN_NAME_EXIST.getResult();
         }
         Student registerUser = new Student(); //若用户不存在，则new一个，传入注册信息
         registerUser.setStName(stName);
-
 //        String passwordMD5 = MD5Util.MD5Encode(password, "UTF-8");
         registerUser.setPassword(password);
+        registerUser.setEmail(eamil);
         if (studentMapper.insertStudent(registerUser) > 0) {  //向数据库插入注册用户信息，插入成功返回success，失败返回error
             return ServiceResultEnum.SUCCESS.getResult();
         }

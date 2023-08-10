@@ -26,7 +26,7 @@ body {
 
 .form .login {
     width: 400px;
-    height: 470px;
+    height: 570px;
     margin: 30px auto;
     background: #444;
     color: #fff;
@@ -56,22 +56,6 @@ body {
     line-height: 40px;
     font-weight: bold;
     font-size: 20px;
-}
-.form .login .login_center .login_main .left2 {
-    float: right;
-    position: absolute;
-    height: 20px;
-    line-height: 20px;
-    font-size: 13px;
-}
-
-.form .login .login_center .login_main .left2 a {
-    color: #1baeae;
-    font-weight: bold;
-}
-
-.form .login .login_center .login_main .left2 a:hover {
-    color: #1baeae;
 }
 
 .form .login .login_center .login_top .right {
@@ -109,20 +93,8 @@ body {
     line-height: 40px;
     margin: 35px 0;
 }
-.form .login .login_center .login-info-2 {
-    font: 16px Times New Roman;
-    height: 40px;
-    line-height: 40px;
-    margin: 35px 0 10px;
-}
 
 .form .login .login_center .login-info .login-info-input {
-    width: 220px;
-    height: 30px;
-    border: 1px solid #ccc;
-    padding: 5px 10px;
-}
-.form .login .login_center .login-info-2 .login-info-input {
     width: 220px;
     height: 30px;
     border: 1px solid #ccc;

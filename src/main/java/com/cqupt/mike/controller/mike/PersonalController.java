@@ -133,7 +133,7 @@ public class PersonalController {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
         }
         //向service层传入注册信息，注册
-        String registerResult = studentService.register(loginName, password);
+        String registerResult = studentService.register(loginName, password,email);
         //若返回信息为登陆成功，则登陆成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(registerResult)) {
             return ResultGenerator.genSuccessResult();
