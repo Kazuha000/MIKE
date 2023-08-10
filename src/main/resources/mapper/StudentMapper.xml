@@ -115,7 +115,7 @@
 
     <update id="lockUserBatch">
         update student
-        set locked_flag=#{lockStatus} where st_id in
+        set status=#{lockStatus} where st_id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}
         </foreach>

@@ -49,15 +49,12 @@ $(function () {
         } else if (cellvalue == 0) {
             return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">正常</button>";
         }
-    }
-
-    function deletedFormatter(cellvalue) {
-        if (cellvalue == 1) {
-            return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 50%;\">注销</button>";
-        } else if (cellvalue == 0) {
-            return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">正常</button>";
+        else if (cellvalue == -1) {
+            return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">注销</button>";
         }
     }
+
+
 });
 
 /**
