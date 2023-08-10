@@ -1,10 +1,20 @@
 package com.cqupt.mike.service;
 
 import com.cqupt.mike.entity.AdminUser;
+import com.cqupt.mike.entity.Carousel;
 import com.cqupt.mike.entity.Teacher;
+import com.cqupt.mike.util.PageQueryUtil;
+import com.cqupt.mike.util.PageResult;
 
 public interface TeacherService {
 
+    /**
+     * 后台分页
+     *
+     * @param pageUtil
+     * @return
+     */
+    PageResult getMikeTeachersPage(PageQueryUtil pageUtil);
 
     /**
      *管理员登陆
@@ -31,11 +41,36 @@ public interface TeacherService {
     public Boolean updatePassword(Integer id, String originalPassword, String newPassword);
 
     /**
-     *修改用户名与账号
+     *修改用户名、账号、手机号和邮箱
      * @param id 管理员id
      * @param name 用户名
      * @param accountNo 账号
      * @return 修改成功，返回true
      */
-    public Boolean updateName(Integer id, String name, Integer accountNo);
+    public Boolean updateName(Integer id, String name, Integer accountNo, String phone, String email);
+
+    /**
+     * 新增一条教师信息
+     *
+     * @param teacher 教师
+     * @return
+     */
+    String saveTeacher(Teacher teacher);
+
+    /**
+     * 修改一条教师信息
+     *
+     * @param teacher 教师
+     * @return
+     */
+    String updateTeacher(Teacher teacher);
+
+    /**
+     * 用户禁用与解除禁用(0-未锁定 1-已锁定)
+     *
+     * @param ids
+     * @param lockStatus
+     * @return
+     */
+    Boolean lockTeachers(Integer[] ids, int lockStatus);
 }

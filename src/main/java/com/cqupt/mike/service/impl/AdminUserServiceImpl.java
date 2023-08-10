@@ -54,9 +54,9 @@ public class AdminUserServiceImpl implements AdminUserService {
         return false;
     }
 
-    //修改用户名与账号
+    //修改用户名、账号、手机号和邮箱
     @Override
-    public Boolean updateName(Integer adId, String adName, Integer accountNo) {
+    public Boolean updateName(Integer adId, String adName, Integer accountNo , String phone, String email) {
         //根据id查询管理员用户
         AdminUser adminUser = adminUserMapper.selectByPrimaryKey(adId);
         //当前用户非空才可以进行更改
@@ -64,6 +64,8 @@ public class AdminUserServiceImpl implements AdminUserService {
             //设置新名称并修改
             adminUser.setAdName(adName);
             adminUser.setAccountNo(accountNo);
+            adminUser.setPhone(phone);
+            adminUser.setEmail(email);
             if (adminUserMapper.updateByPrimaryKey(adminUser) > 0) {
                 //修改,成功则返回true
                 return true;

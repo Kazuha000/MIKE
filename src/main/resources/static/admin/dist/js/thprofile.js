@@ -4,7 +4,9 @@ $(function () {
         $("#updateUserNameButton").attr("disabled",true);
         var loginUser = $('#loginUser').val();
         var accountNo = $('#accountNo').val();
-        if (validUserNameForUpdate(loginUser, accountNo)) {
+        var phone = $('#phone').val();
+        var email = $('#email').val();
+        if (validUserNameForUpdate(loginUser, accountNo, phone, email)) {
             //ajax提交数据
             var params = $("#userNameForm").serialize();
             $.ajax({
@@ -59,7 +61,8 @@ $(function () {
 /**
  * 名称验证
  */
-function validUserNameForUpdate(loginUser, accountNo) {
+function validUserNameForUpdate(loginUser, accountNo, phone, email) {
+    /*trim() 方法用于删除字符串的头尾空白符，空白符包括：空格、制表符 tab、换行符等其他空白符等。*/
     if (isNull(loginUser) || loginUser.trim().length < 1) {
         $('#updateUserName-info').css("display", "block");
         $('#updateUserName-info').html("请输入用户名！");
@@ -72,6 +75,18 @@ function validUserNameForUpdate(loginUser, accountNo) {
         // alert("账号不能为空")
         return false;
     }
+    if (isNull(phone) || phone.trim().length < 1) {
+        $('#updateUserName-info').css("display", "block");
+        $('#updateUserName-info').html("请输入手机号！");
+        // alert("手机号不能为空")
+        return false;
+    }
+    if (isNull(email) || email.trim().length < 1) {
+        $('#updateUserName-info').css("display", "block");
+        $('#updateUserName-info').html("请输入邮箱！");
+        // alert("邮箱不能为空")
+        return false;
+    }
     if (!validUserName(loginUser)) {
         $('#updateUserName-info').css("display", "block");
         $('#updateUserName-info').html("请输入符合规范的用户名！");
@@ -82,6 +97,18 @@ function validUserNameForUpdate(loginUser, accountNo) {
         $('#updateUserName-info').css("display", "block");
         $('#updateUserName-info').html("请输入符合规范的账号！");
         // alert("请输入符合规范的账号")
+        return false;
+    }
+    if (!validPhoneNumber(phone)) {
+        $('#updateUserName-info').css("display", "block");
+        $('#updateUserName-info').html("请输入符合规范的手机号！");
+        // alert("请输入符合规范的手机号")
+        return false;
+    }
+    if (!validEmail(email)) {
+        $('#updateUserName-info').css("display", "block");
+        $('#updateUserName-info').html("请输入符合规范的邮箱！");
+        // alert("请输入符合规范的邮箱号")
         return false;
     }
     return true;

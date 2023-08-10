@@ -2,14 +2,20 @@ package com.cqupt.mike.controller.admin;
 
 import com.cqupt.mike.dao.StudentMapper;
 import com.cqupt.mike.entity.Student;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.cqupt.mike.service.StudentService;
+import com.cqupt.mike.util.PageQueryUtil;
+import com.cqupt.mike.util.Result;
+import com.cqupt.mike.util.ResultGenerator;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.util.StringUtils;
 
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")

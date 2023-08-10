@@ -1,0 +1,155 @@
+<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="admin/header::header-fragment">
+</header>
+<style>
+    .ui-jqgrid tr.jqgrow td {
+        white-space: normal !important;
+        height: auto;
+        vertical-align: text-top;
+        padding-top: 2px;
+    }
+</style>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+    <!-- Content Wrapper. Contains 图标content -->
+    <div class="content-wrapper">
+        <!-- Content Header (图标header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">教师管理</h3>
+                    </div> <!-- /.card-body -->
+                    <div class="card-body">
+                        <div class="grid-btn">
+                            <button class="btn btn-info" onclick="teacherAdd()"><i
+                                    class="fa fa-plus"></i>&nbsp;添加
+                            </button>
+                            <button class="btn btn-info" onclick="teacherEdit()"><i
+                                    class="fa fa-plus"></i>&nbsp;修改
+                            </button>
+                            <button class="btn btn-info" onclick="lockUser(0)"><i
+                                    class="fa fa-plus"></i>&nbsp;解除禁用
+                            </button>
+                            <button class="btn btn-danger" onclick="lockUser(1)"><i
+                                    class="fa fa-trash-o"></i>&nbsp;禁用账户
+                            </button>
+                        </div>
+                        <table id="jqGrid" class="table table-bordered">
+                        </table>
+                        <div id="jqGridPager"></div>
+                    </div><!-- /.card-body -->
+                </div><!-- /.container-fluid -->
+            </div>
+        </div>
+        <!-- /.content -->
+        <div class="content">
+            <!-- 模态框（Modal） -->
+<!--            tabindex 属性规定当使用 "tab" 键进行导航时元素的顺序。
+                aria-labelledby="carouselModalLabel"，该属性引用模态框的标题。
+-->
+            <div class="modal fade" id="teacherModal" tabindex="-1" role="dialog"
+                 aria-labelledby="teacherModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <!--data-dismiss="modal"是一个自定义的 HTML5 data 属性。在这里它被用于关闭模态窗口。-->
+                            <!--close 是一个 CSS class，用于为模态窗口的关闭按钮设置样式。-->
+                            <button type="button" class="close" data-dismiss="modal"  aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h6 class="modal-title" id="teacherModalLabel">Modal</h6>
+                        </div>
+                        <div class="modal-body">
+                            <form id="indexConfigForm">
+                                <div class="form-group">
+                                    <div class="alert alert-danger" id="edit-error-msg" style="display: none;">
+                                        错误信息展示栏。
+                                    </div>
+                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <div class="col-sm-4">-->
+<!--                                        <img id="carouselImg" src="/admin/dist/img/img-upload.png"-->
+<!--                                             style="height: 64px;width: 64px;">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <br>-->
+<!--                                <div class="form-group">-->
+<!--                                    <div class="col-sm-4">-->
+<!--                                        <button class="btn btn-info" style="margin-bottom: 5px;"-->
+<!--                                                id="uploadCarouselImage">-->
+<!--                                            <i class="fa fa-picture-o"></i>&nbsp;上传轮播图-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <div class="form-group">
+                                    <label for="teacherName" class="control-label">教师昵称:</label>
+                                    <input type="text" class="form-control" id="teacherName" name="teacherName"
+                                           placeholder="请输入昵称">
+                                </div>
+                                <div class="form-group">
+                                    <label for="teacherAccountNo" class="control-label">登录名:</label>
+                                    <input type="number" class="form-control" id="teacherAccountNo" name="teacherAccountNo"
+                                           placeholder="请输入登录名">
+                                </div>
+                                <div class="form-group">
+                                    <label for="teacherPassword" class="control-label">密码:</label>
+                                    <input type="number" class="form-control" id="teacherPassword" name="teacherPassword"
+                                           placeholder="请输入密码">
+                                </div>
+                                <div class="form-group">
+                                    <label for="teacherSex" class="control-label">性别:</label>
+                                    <input type="text" class="form-control" id="teacherSex" name="teacherSex"
+                                           placeholder="请输入性别">
+                                </div>
+                                <div class="form-group">
+                                    <label for="teacherPhone" class="control-label">电话:</label>
+                                    <input type="number" class="form-control" id="teacherPhone" name="teacherPhone"
+                                           placeholder="请输入电话">
+                                </div>
+                                <div class="form-group">
+                                    <label for="teacherEmail" class="control-label">邮箱:</label>
+                                    <input type="email" class="form-control" id="teacherEmail" name="teacherEmail"
+                                           placeholder="请输入邮箱">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" id="saveButton">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal -->
+        </div>
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+<!-- jqgrid -->
+<script th:src="@{/admin/plugins/jqgrid-5.7.0/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/admin/plugins/jqgrid-5.7.0/grid.locale-cn.js}"></script>
+<!-- sweetalert -->
+<script th:src="@{/admin/plugins/sweetalert2/sweetalert2.all.min.js}"></script>
+<script th:src="@{/admin/dist/js/public.js}"></script>
+<script th:src="@{/admin/dist/js/teacher.js}"></script>
+</body>
+</html>

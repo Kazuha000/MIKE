@@ -32,11 +32,13 @@ public interface AdminUserService {
     public Boolean updatePassword(Integer adId, String originalPassword, String newPassword);
 
     /**
-     *修改用户名与账号
+     *修改用户名、账号、手机号和密码
      * @param adId 管理员id
      * @param adName 用户名
      * @param accountNo 账号
+     * @param phone 手机号
+     * @param email 邮箱
      * @return 修改成功，返回true
      */
-    public Boolean updateName(Integer adId, String adName, Integer accountNo);
+    public Boolean updateName(Integer adId, String adName, Integer accountNo, String phone,String email);
 }

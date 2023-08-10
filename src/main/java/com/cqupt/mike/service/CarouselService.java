@@ -7,6 +7,7 @@ import com.cqupt.mike.util.PageResult;
 
 import java.util.List;
 
+
 public interface CarouselService {
     /**
      * 查询后台管理系统轮播图分页数据

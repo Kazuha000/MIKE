@@ -1,14 +1,20 @@
 package com.cqupt.mike.service.impl;
 
+import com.cqupt.mike.common.ServiceResultEnum;
 import com.cqupt.mike.dao.AdminUserMapper;
 import com.cqupt.mike.dao.TeacherMapper;
 import com.cqupt.mike.entity.AdminUser;
+import com.cqupt.mike.entity.Carousel;
 import com.cqupt.mike.entity.Teacher;
 import com.cqupt.mike.service.AdminUserService;
 import com.cqupt.mike.service.TeacherService;
+import com.cqupt.mike.util.PageQueryUtil;
+import com.cqupt.mike.util.PageResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,6 +23,13 @@ public class TeacherServiceImpl implements TeacherService {
     @Resource
     private TeacherMapper teacherMapper;
 
+    @Override
+    public PageResult getMikeTeachersPage(PageQueryUtil pageUtil) {
+        List<Teacher> Teachers = teacherMapper.findTeacherList(pageUtil);//前端js里调用的值要与实体层教师里相同
+        int total = teacherMapper.getTotalTeachers(pageUtil);
+        PageResult pageResult = new PageResult(Teachers, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
     @Override
     public int login(String name,String password){
         List<Teacher> userList=teacherMapper.login(name);//根据管理员用户名查询所有符合条件的管理员
@@ -33,7 +46,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Teacher getUserDetailById(Integer loginUserId){
-        return teacherMapper.selectByPrimaryKey(loginUserId);//调用数据库，通过id查询管理员信息
+        return teacherMapper.selectByPrimaryKey(loginUserId);//调用数据库，通过id查询教师信息
     }
 
     @Override
@@ -57,9 +70,9 @@ public class TeacherServiceImpl implements TeacherService {
         return false;
     }
 
-    //修改用户名与账号
+    //修改用户名、账户、手机号和邮箱
     @Override
-    public Boolean updateName(Integer id, String name, Integer accountNo) {
+    public Boolean updateName(Integer id, String name, Integer accountNo,String phone, String email) {
         //根据id查询管理员用户
         Teacher  teacher = teacherMapper.selectByPrimaryKey(id);
         //当前用户非空才可以进行更改
@@ -67,12 +80,49 @@ public class TeacherServiceImpl implements TeacherService {
             //设置新名称并修改
             teacher.setName(name);
             teacher.setAccountNo(accountNo);
+            teacher.setPhone(phone);
+            teacher.setEmail(email);
             if (teacherMapper.updateByPrimaryKey(teacher) > 0) {
                 //修改,成功则返回true
                 return true;
             }
         }
         return false;
+    }
+    @Override
+    public String saveTeacher(Teacher teacher) {
+        if (teacherMapper.insert(teacher) > 0) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        }
+        return ServiceResultEnum.DB_ERROR.getResult();
+    }
+
+    @Override
+    public String updateTeacher(Teacher teacher) {
+        Teacher temp = teacherMapper.selectByPrimaryKey(teacher.getId());
+        if (temp == null) {
+            return ServiceResultEnum.DATA_NOT_EXIST.getResult();
+        }
+        temp.setName(teacher.getName());
+        temp.setAccountNo(teacher.getAccountNo());
+        temp.setSex(teacher.getSex());
+        temp.setPhone(teacher.getPhone());
+        temp.setEmail(teacher.getEmail());
+        temp.setUpdateTime(new Date());
+        if (teacherMapper.updateByPrimaryKey(temp) > 0) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        }
+        return ServiceResultEnum.DB_ERROR.getResult();
+    }
+
+
+    //更改教师状态
+    @Override
+    public Boolean lockTeachers(Integer[] ids, int lockStatus) {
+        if (ids.length < 1) {
+            return false;
+        }
+        return teacherMapper.lockTeacherBatch(ids, lockStatus) > 0;
     }
 
 }
