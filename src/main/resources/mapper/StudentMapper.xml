@@ -104,7 +104,7 @@
     <select id="selectByLoginName" parameterType="java.lang.String" resultMap="StudentResult">
         select*
         from student
-        where st_name = #{stName} and status != -1
+        where st_name = #{stName}
     </select>
 
     <select id="selectByLoginNameAndPasswd" resultMap="StudentResult">

@@ -4,9 +4,10 @@ import com.cqupt.mike.entity.Student;
 import com.cqupt.mike.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface StudentMapper {
     /**
      * 返回数据列表

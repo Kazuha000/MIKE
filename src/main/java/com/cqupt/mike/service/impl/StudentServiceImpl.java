@@ -65,7 +65,7 @@ public class StudentServiceImpl implements StudentService {
             if(!user.getPassword().equals(password)){ //判断密码是否正确
                 return ServiceResultEnum.LOGIN_ERROR.getResult();
             }
-            if (user.getStatus() == 0) {   //判断用户是否已经锁定
+            if (user.getStatus() == -1) {   //判断用户是否已经锁定
                 return ServiceResultEnum.LOGIN_USER_LOCKED.getResult();
             }
             //用户名太长 影响页面展示
