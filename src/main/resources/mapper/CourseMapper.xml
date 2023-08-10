@@ -7,6 +7,7 @@
         <result column="course_intro" jdbcType="VARCHAR" property="courseIntro"/>
         <result column="teacher_id" jdbcType="BIGINT" property="teacherId"/>
         <result column="course_category_id" jdbcType="BIGINT" property="courseCategoryId"/>
+        <result column="course_video" jdbcType="VARCHAR" property="courseVideo"/>
         <result column="course_cover_img" jdbcType="VARCHAR" property="courseCoverImg"/>
         <result column="course_carousel" jdbcType="VARCHAR" property="courseCarousel"/>
         <result column="original_price" jdbcType="INTEGER" property="originalPrice"/>
@@ -39,6 +40,9 @@
             </if>
             <if test="courseCategoryId != null">
                 course_category_id,
+            </if>
+            <if test="courseVideo != null">
+                course_video,
             </if>
             <if test="courseCoverImg != null">
                 course_cover_img,
@@ -93,6 +97,9 @@
             <if test="courseCategoryId != null">
                 #{courseCategoryId,jdbcType=BIGINT},
             </if>
+            <if test="courseVideo != null">
+                #{courseVideo,jdbcType=VARCHAR},
+            </if>
             <if test="courseCoverImg != null">
                 #{courseCoverImg,jdbcType=VARCHAR},
             </if>
@@ -146,6 +153,9 @@
             </if>
             <if test="courseCategoryId != null">
                 course_category_id = #{courseCategoryId,jdbcType=BIGINT},
+            </if>
+            <if test="courseVideo != null">
+                course_video = #{courseVideo,jdbcType=VARCHAR},
             </if>
             <if test="courseCoverImg != null">
                 course_cover_img = #{courseCoverImg,jdbcType=VARCHAR},

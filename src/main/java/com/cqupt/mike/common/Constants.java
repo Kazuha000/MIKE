@@ -2,7 +2,7 @@ package com.cqupt.mike.common;
 //常量参数设置
 public class Constants {
     //public final static String FILE_UPLOAD_DIC = "/opt/image/upload/";//上传文件的默认url前缀，根据部署设置自行修改
-    public final static String FILE_UPLOAD_DIC ="G:\\java\\workspace\\mallModel\\upload\\";//上传文件的默认url前缀，根据部署设置自行修改
+    public final static String FILE_UPLOAD_DIC ="G:\\java\\workspace\\mike-edu\\upload\\";//上传文件的默认url前缀，根据部署设置自行修改
 
     public final static int INDEX_CAROUSEL_NUMBER = 5;//首页轮播图数量(可根据自身需求修改)
 
@@ -21,6 +21,8 @@ public class Constants {
     public final static String VERIFY_CODE_KEY = "VerifyCode";//验证码key
 
     public final static String MIKE_STUDENT_SESSION_KEY = "mikeStudent";//session中user的key
+
+    public final static String VERIFY_EMAIL_KEY = "EmailCode";//邮箱验证码key
 
     public final static int COURSES_SEARCH_PAGE_LIMIT = 10;//搜索分页的默认条数(每页10条)
 

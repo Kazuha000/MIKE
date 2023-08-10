@@ -156,7 +156,6 @@ $('#saveButton').click(function () {
     var stockNum = $('#stockNum').val();
     var courseDetailContent = editor.getHtml();
     var courseCoverImg = $('#courseCoverImg')[0].src;
-    alert(courseVideo);
     if (isNull(courseCategoryId)) {
         Swal.fire({
             text: "请选择分类",

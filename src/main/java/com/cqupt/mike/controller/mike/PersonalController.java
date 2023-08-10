@@ -203,7 +203,7 @@ public class PersonalController {
             }
 
             // 邮箱验证码存入session
-            httpServletRequest.getSession().setAttribute("EmailCode",code.toString());
+            httpServletRequest.getSession().setAttribute(Constants.VERIFY_EMAIL_KEY,code.toString());
             try {
                 MailUtils.sendMail(email,code.toString());
             } catch (MessagingException e) {
@@ -238,7 +238,7 @@ public class PersonalController {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_NULL.getResult());
         }
 //        获取session中验证码的值
-        String vCode = httpSession.getAttribute("EmailCode") + "";
+        String vCode = httpSession.getAttribute(Constants.VERIFY_EMAIL_KEY) + "";
         //判断验证码是否正确
         if (!verifyCode.equals(vCode)) {
             return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
