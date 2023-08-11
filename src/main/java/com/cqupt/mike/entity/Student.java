@@ -23,8 +23,9 @@ public class Student {
     private Integer status;  //状态：0-锁定/1-正常/-1-注销
 
 
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;  //创建时间
+    private Date creatTime;  //创建时间
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateTime;  //更改时间
@@ -94,11 +95,11 @@ public class Student {
     }
 
     public Date getCreateTime() {
-        return createTime;
+        return creatTime;
     }
 
     public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+        this.creatTime = createTime;
     }
 
     public Date getUpdateTime() {
@@ -120,7 +121,7 @@ public class Student {
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", status=" + status +
-                ", createTime=" + createTime +
+                ", createTime=" + creatTime +
                 ", updateTime=" + updateTime +
                 '}';
     }

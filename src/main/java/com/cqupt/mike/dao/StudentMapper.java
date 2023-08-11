@@ -1,11 +1,13 @@
 package com.cqupt.mike.dao;
 
 import com.cqupt.mike.entity.Student;
+import com.cqupt.mike.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface StudentMapper {
     /**
      * 返回数据列表
@@ -51,12 +53,10 @@ public interface StudentMapper {
      * @param stName
      * @return
      */
+
     Student selectByLoginNameAndPasswd(@Param("stName") String stName, @Param("password") String password);
 
-    /**
-     * 根据id查询记录
-     * @param stId
-     * @return
-     */
-    Student selectById(@Param("stId") int stId);
+    List<Student> findstudentList(PageQueryUtil pageUtil);
+    int getTotalStudent(PageQueryUtil pageUtil);
+    int lockUserBatch(@Param("ids") Integer[] ids, @Param("lockStatus") int lockStatus);
 }
