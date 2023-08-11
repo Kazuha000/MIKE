@@ -254,6 +254,21 @@
         </if>
     </select>
 
+    <select id="selectByPrimaryKeys" resultMap="BaseResultMap">
+        select *
+<!--        <include refid="Base_Column_List"/>-->
+        from course_info
+        where course_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        order by field(course_id,
+        <foreach item="id" collection="list" separator=",">
+            #{id}
+        </foreach>
+        );
+    </select>
+
     <select id="getTotalCourseBySearch" parameterType="Map" resultType="int">
         select count(*) from course_info
         <where>

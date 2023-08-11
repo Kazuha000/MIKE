@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqupt.mike.dao.CartItemMapper">
+    <resultMap id="BaseResultMap" type="com.cqupt.mike.entity.CartItem">
+        <id column="cart_item_id" jdbcType="BIGINT" property="cartItemId"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="course_id" jdbcType="BIGINT" property="courseId"/>
+        <result column="course_count" jdbcType="INTEGER" property="courseCount"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        cart_item_id, user_id, course_id, course_count, is_deleted, create_time, update_time
+    </sql>
+
+    <select id="selectByUserIdAndCourseId" resultMap="BaseResultMap">
+        select *
+<!--        <include refid="Base_Column_List"/>-->
+        from cart_item
+        where user_id = #{userId,jdbcType=INTEGER} and course_id=#{courseId,jdbcType=BIGINT} and is_deleted = 0
+        limit 1
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap">
+        select *
+<!--        <include refid="Base_Column_List"/>-->
+        from cart_item
+        where user_id = #{userId,jdbcType=INTEGER} and is_deleted = 0
+        limit #{number}
+    </select>
+
+    <select id="selectCountByUserId" resultType="int">
+        select
+            count(*)
+        from cart_item
+        where user_id = #{userId,jdbcType=INTEGER} and is_deleted = 0
+    </select>
+
+    <insert id="insertSelective" parameterType="com.cqupt.mike.entity.CartItem">
+        insert into cart_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cartItemId != null">
+                cart_item_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="courseId != null">
+                course_id,
+            </if>
+            <if test="courseCount != null">
+                course_count,
+            </if>
+            <if test="isDeleted != null">
+                is_deleted,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cartItemId != null">
+                #{cartItemId,jdbcType=BIGINT},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="courseId != null">
+                #{courseId,jdbcType=BIGINT},
+            </if>
+            <if test="courseCount != null">
+                #{courseCount,jdbcType=INTEGER},
+            </if>
+            <if test="isDeleted != null">
+                #{isDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+<!--        <include refid="Base_Column_List"/>-->
+        from cart_item
+        where cart_item_id = #{cartItemId,jdbcType=BIGINT} and is_deleted = 0
+    </select>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.cqupt.mike.entity.CartItem">
+        update cart_item
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="courseId != null">
+                course_id = #{courseId,jdbcType=BIGINT},
+            </if>
+            <if test="courseCount != null">
+                course_count = #{courseCount,jdbcType=INTEGER},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where cart_item_id = #{cartItemId,jdbcType=BIGINT}
+    </update>
+
+    <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        update cart_item set is_deleted = 1
+        where cart_item_id = #{cartItemId,jdbcType=BIGINT} and is_deleted = 0
+    </update>
+</mapper>

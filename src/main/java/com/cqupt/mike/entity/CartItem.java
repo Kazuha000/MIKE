@@ -5,11 +5,11 @@ import java.util.Date;
 public class CartItem {
     private Long cartItemId;
 
-    private Long userId;
+    private Integer userId;
 
-    private Long coursesId;
+    private Long courseId;
 
-    private Integer coursesCount;
+    private Integer courseCount;
 
     private Byte isDeleted;
 
@@ -25,28 +25,28 @@ public class CartItem {
         this.cartItemId = cartItemId;
     }
 
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public Long getCoursesId() {
-        return coursesId;
+    public Long getCourseId() {
+        return courseId;
     }
 
-    public void setCoursesId(Long coursesId) {
-        this.coursesId = coursesId;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
-    public Integer getCoursesCount() {
-        return coursesCount;
+    public Integer getCourseCount() {
+        return courseCount;
     }
 
-    public void setCoursesCount(Integer coursesCount) {
-        this.coursesCount = coursesCount;
+    public void setCourseCount(Integer courseCount) {
+        this.courseCount = courseCount;
     }
 
     public Byte getIsDeleted() {
@@ -81,8 +81,8 @@ public class CartItem {
         sb.append("Hash = ").append(hashCode());
         sb.append(", cartItemId=").append(cartItemId);
         sb.append(", userId=").append(userId);
-        sb.append(", coursesId=").append(coursesId);
-        sb.append(", coursesCount=").append(coursesCount);
+        sb.append(", coursesId=").append(courseId);
+        sb.append(", coursesCount=").append(courseCount);
         sb.append(", isDeleted=").append(isDeleted);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mike/header::head-fragment('Mike教育平台-课程详情','detail')">
+</head>
+<body>
+<header th:replace="mike/header::header-fragment"></header>
+
+<div id="detail">
+  <!-- nav -->
+  <nav th:replace="mike/header::nav-fragment"></nav>
+
+  <div class="dc">
+    <div class="content w">
+      <div class="title fl">商品详情</div>
+      <div class="clear"></div>
+    </div>
+  </div>
+
+  <div class="intro mt20 w clearfix">
+    <div class="left fl" style="position: relative;">
+      <div class="swiper-container fl">
+        <img th:src="@{${courseDetail.courseCoverImg}}">
+      </div>
+    </div>
+    <div class="right fr">
+      <div class="h3 ml20 mt20" th:text="${courseDetail.courseName}">Mike</div>
+      <div class="sub_title mr40 ml20 mt10" th:text="${courseDetail.courseIntro}">Mike</div>
+      <div class="item_price mr40 ml20 mt10">
+        <th:block th:text="${courseDetail.sellingPrice}+'.00 元'"></th:block>
+        <del>
+          <th:block th:text="${courseDetail.originalPrice}+'.00 元'"></th:block>
+        </del>
+      </div>
+
+      <div class="order">
+        <input class="car" type="button" th:onclick="'saveAndGoCart('+${courseDetail.courseId}+')'" value="立即选购"/>
+        <input class="car" type="button" th:onclick="'saveToCart('+${courseDetail.courseId}+')'" value="加入购物车"/>
+      </div>
+      <div class="tb-extra ml20" id="J_tbExtra">
+        <dl>
+          <dt>承诺</dt>
+          <dd><a class="J_Cont" title="满足7天无理由退换货申请的前提下，包邮商品需要买家承担退货邮费，非包邮商品需要买家承担发货和退货邮费。" href="#"
+                 target="_blank"><img th:src="@{/mike/image/7d.jpg}">7天无理由</a></dd>
+        </dl>
+        <dl>
+          <dt>支付</dt>
+          <dd><a href="##" target="_blank"><img th:src="@{/mike/image/hua.png}">蚂蚁花呗</a><a href="##"
+                                                                                               target="_blank"><img
+                  th:src="@{/mike/image/card.png}">信用卡支付</a><a href="##" target="_blank"><img
+                  th:src="@{/mike/image/ji.png}">集分宝</a></dd>
+        </dl>
+        <dl>
+          <dt>支持</dt>
+          <dd>折旧变现，买新更省钱。<a style="float:none;text-decoration: underline;" href="##">详情</a></dd>
+        </dl>
+
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <!-- 这里使用的是 th:utext 标签，用 th:text 不会解析 html，用 th:utext 会解析 html -->
+  <div class="course mt20 w clearfix" th:utext="${courseDetail.courseDetailContent}">
+  </div>
+</div>
+
+<div th:replace="mike/footer::footer-fragment"></div>
+
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/plugins/sweetalert2/sweetalert2.all.min.js}"></script>
+<script th:src="@{/mike/js/search.js}" type="text/javascript"></script>
+<script type="text/javascript">
+  /**
+   * 添加到购物车
+   */
+  function saveToCart(id) {
+    var courseCount = 1;
+    var data = {
+      "courseId": id,
+      "courseCount": courseCount
+    };
+    $.ajax({
+      type: 'POST',
+      url: '/shop-cart',
+      contentType: 'application/json',
+      data: JSON.stringify(data),
+      success: function (result) {
+        if (result.resultCode == 200) {
+          Swal.fire({
+            title: "确认框",
+            text: "添加成功",
+            icon: "success",iconColor:"#1d953f",
+            showCancelButton: true,
+            confirmButtonText: '确认',
+            cancelButtonText: '取消'
+          }).then((flag) => {
+                    if (flag.value) {
+                      window.location.reload();
+                    }
+                  }
+          );
+        } else {
+          Swal.fire({
+            text: result.message,
+            icon: "error",iconColor:"#f05b72",
+          });
+        }
+      },
+      error: function () {
+        Swal.fire({
+          text: "操作失败",
+          icon: "error",iconColor:"#f05b72",
+        });
+      }
+    });
+  }
+
+  /**
+   * 添加到购物车并跳转至购物车页面
+   */
+  function saveAndGoCart(id) {
+    var courseCount = 1;
+    var data = {
+      "courseId": id,
+      "courseCount": courseCount
+    };
+    $.ajax({
+      type: 'POST',
+      url: '/shop-cart',
+      contentType: 'application/json',
+      data: JSON.stringify(data),
+      success: function (result) {
+        if (result.resultCode == 200) {
+          Swal.fire({
+            title: "确认框",
+            text: "已将课程加入购物车",
+            icon: "success",iconColor:"#1d953f",
+            showCancelButton: true,
+            confirmButtonText: '去购物车结算',
+            cancelButtonText: '留在当前页'
+          }).then((flag) => {
+                    if (flag.value) {
+                      window.location.href = '/shop-cart';
+                    }
+                  }
+          );
+        } else {
+          Swal.fire({
+            text: result.message,
+            icon: "error",iconColor:"#f05b72",
+          });
+        }
+      },
+      error: function () {
+        Swal.fire({
+          text: "操作失败",
+          icon: "error",iconColor:"#f05b72",
+        });
+      }
+    });
+  }
+</script>
+</body>
+</html>

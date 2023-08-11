@@ -54,6 +54,8 @@ public interface CourseMapper {
      */
     List<Course> findCourseListBySearch(PageQueryUtil pageUtil);
 
+    List<Course> selectByPrimaryKeys(List<Long> courseIds);
+
     /**
      * 根据搜索字段查询总数
      * @param pageUtil

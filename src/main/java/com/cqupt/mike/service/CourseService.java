@@ -14,7 +14,7 @@ public interface CourseService {
     String saveCourse(Course course);
 
     /**
-     * 修改商品信息
+     * 修改课程信息
      *
      * @param course
      * @return

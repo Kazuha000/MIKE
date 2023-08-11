@@ -9,38 +9,38 @@ public class CartItemVO implements Serializable {
 
     private Long cartItemId;
 
-    private Long coursesId;
+    private Long courseId;
 
-    private Integer coursesCount;
+    private Integer courseCount;
 
-    private String coursesName;
+    private String courseName;
 
-    private String coursesCoverImg;
+    private String courseCoverImg;
 
     private Integer sellingPrice;
 
-    public Long getCoursesId() {
-        return coursesId;
+    public Long getCourseId() {
+        return courseId;
     }
 
-    public void setCoursesId(Long coursesId) {
-        this.coursesId = coursesId;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
-    public String getCoursesName() {
-        return coursesName;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setCoursesName(String coursesName) {
-        this.coursesName = coursesName;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
-    public String getCoursesCoverImg() {
-        return coursesCoverImg;
+    public String getCourseCoverImg() {
+        return courseCoverImg;
     }
 
-    public void setCoursesCoverImg(String coursesCoverImg) {
-        this.coursesCoverImg = coursesCoverImg;
+    public void setCourseCoverImg(String courseCoverImg) {
+        this.courseCoverImg = courseCoverImg;
     }
 
     public Integer getSellingPrice() {
@@ -59,11 +59,11 @@ public class CartItemVO implements Serializable {
         this.cartItemId = cartItemId;
     }
 
-    public Integer getCoursesCount() {
-        return coursesCount;
+    public Integer getCourseCount() {
+        return courseCount;
     }
 
-    public void setCoursesCount(Integer coursesCount) {
-        this.coursesCount = coursesCount;
+    public void setCourseCount(Integer courseCount) {
+        this.courseCount = courseCount;
     }
 }
