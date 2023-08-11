@@ -10,8 +10,8 @@
         <result property="phone" column="phone" jdbcType="VARCHAR"/>
         <result property="email" column="email" jdbcType="VARCHAR"/>
         <result property="status" column="status" jdbcType="INTEGER"/>
-        <result property="creatTime" column="creat_time" jdbcType="TIMESTAMP"/>
-        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <select id="findstudentList" resultMap="StudentResult">
@@ -23,10 +23,24 @@
     <select id="getTotalStudent" parameterType="Map" resultType="int">
         select count(*) from student
         where 1=1
-        <if test="loginName!=null and loginName!=''">
-            and login_name = #{loginName}
+        <if test="stName!=null and stName!=''">
+            and st_name = #{stName}
         </if>
     </select>
+
+    <select id="findAllStudents" resultMap="StudentResult">
+        select *
+        from student
+        order by st_id desc
+    </select>
+
+    <update id="lockUserBatch">
+        update student
+        set status=#{status} where st_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 
     <!--<insert id="insertStudent" parameterType="com.cqupt.mike.entity.Student">
         insert into student
@@ -91,10 +105,32 @@
 
     <update id="updStudent" parameterType="com.cqupt.mike.entity.Student">
         update student
-        set
-            account_no=#{accountNo},st_name=#{stName},password=#{password}
-        where st_id=#{stId}
+        <set>
+            <if test="accountNo != null">
+                account_no = #{accountNo,jdbcType=INTEGER},
+            </if>
+            <if test="stName != null">
+                st_name = #{stName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where st_id = #{stId,jdbcType=INTEGER}
     </update>
+
 
     <delete id="delStudent" parameterType="int">
         delete from student where st_id=#{stId}
@@ -104,7 +140,7 @@
     <select id="selectByLoginName" parameterType="java.lang.String" resultMap="StudentResult">
         select*
         from student
-        where st_name = #{stName}
+        where st_name = #{stName} and status != -1
     </select>
 
     <select id="selectByLoginNameAndPasswd" resultMap="StudentResult">
@@ -113,11 +149,9 @@
         where st_name = #{stName} and password = #{password} and status != -1
     </select>
 
-    <update id="lockUserBatch">
-        update student
-        set status=#{lockStatus} where st_id in
-        <foreach item="id" collection="ids" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </update>
+    <select id="selectById" resultMap="StudentResult">
+        select*
+        from student
+        where st_id = #{stId}  and status != -1
+    </select>
 </mapper>
