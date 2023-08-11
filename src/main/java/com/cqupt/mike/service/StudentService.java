@@ -7,6 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public interface StudentService {
+    /**
+     * 后台分页
+     *
+     * @param pageUtil
+     * @return
+     */
     PageResult getstudentPage(PageQueryUtil pageUtil);
     /**
      * 用户注册
@@ -38,5 +44,11 @@ public interface StudentService {
      */
     String forgetpassword(String stName, String email, HttpSession httpSession, HttpServletRequest httpServletRequest);
 
+    /**
+     ** 用户禁用与解除禁用(0-未锁定 1-已锁定)
+     * @param ids
+     * @param lockStatus
+     * @return
+     */
     Boolean lockUsers(Integer[] ids, int lockStatus);
 }

@@ -4,9 +4,9 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: 'id', name: 'stId', index: 'stId', width: 50, key: true, hidden: true},
-            {label: '账号', name: 'accountNo', index: 'accountNo', width: 120},
+            {label: '账号', name: 'accountNo', index: 'accountNo', width: 120,},
             {label: '学生姓名', name: 'stName', index: 'stName', width: 120},
-            {label: '性别', name: 'sex', index: 'sex', width: 120},
+            {label: '性别', name: 'sex', index: 'sex', width: 120,formatter: sex},
             {label: '电话', name: 'phone', index: 'phone', width: 120},
             {label: '邮箱', name: 'email', index: 'email', width: 120},
             {label: '身份状态', name: 'status', index: 'status', width: 80, formatter: lockedFormatter},
@@ -50,7 +50,17 @@ $(function () {
             return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">正常</button>";
         }
         else if (cellvalue == -1) {
-            return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">注销</button>";
+            return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 50%;\">注销</button>";
+        }
+    }
+    function sex(cellvalue) {
+        if (cellvalue == 0) {
+            return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 50%;\">未知</button>";
+        } else if (cellvalue == 1) {
+            return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">男</button>";
+        }
+        else if (cellvalue == 2) {
+            return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">女</button>";
         }
     }
 
