@@ -13,11 +13,34 @@
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
+
+    <select id="findstudentList" resultMap="StudentResult">
+        select *
+        from student
+        order by st_id desc
+    </select>
+
+    <select id="getTotalStudent" parameterType="Map" resultType="int">
+        select count(*) from student
+        where 1=1
+        <if test="stName!=null and stName!=''">
+            and st_name = #{stName}
+        </if>
+    </select>
+
     <select id="findAllStudents" resultMap="StudentResult">
         select *
         from student
         order by st_id desc
     </select>
+
+    <update id="lockUserBatch">
+        update student
+        set status=#{status} where st_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 
     <!--<insert id="insertStudent" parameterType="com.cqupt.mike.entity.Student">
         insert into student

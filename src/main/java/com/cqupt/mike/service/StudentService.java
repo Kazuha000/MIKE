@@ -10,6 +10,20 @@ import com.cqupt.mike.util.PageResult;
 
 public interface StudentService {
     /**
+     * 列表
+     * @param pageUtil
+     * @return
+     */
+    PageResult getstudentPage (PageQueryUtil pageUtil);
+
+    /**
+     * 用户锁定控制
+     * @param ids
+     * @param lockStatus
+     * @return
+     */
+    Boolean lockUsers(Integer[] ids, int lockStatus);
+    /**
      * 用户注册
      *
      * @param stName 用户名

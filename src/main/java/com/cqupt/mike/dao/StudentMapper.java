@@ -1,6 +1,7 @@
 package com.cqupt.mike.dao;
 
 import com.cqupt.mike.entity.Student;
+import com.cqupt.mike.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -59,4 +60,26 @@ public interface StudentMapper {
      * @return
      */
     Student selectById(@Param("stId") int stId);
+
+    /**
+     * 列表
+     * @param pageUtil
+     * @return
+     */
+    List<Student> findstudentList(PageQueryUtil pageUtil);
+
+    /**
+     * 查询学生总数
+     * @param pageUtil
+     * @return
+     */
+    int getTotalStudent(PageQueryUtil pageUtil);
+
+    /**
+     * 锁定学生
+     * @param ids
+     * @param status
+     * @return
+     */
+    int lockUserBatch(@Param("ids") Integer[] ids, @Param("status") int status);
 }

@@ -6,20 +6,39 @@ import com.cqupt.mike.dao.StudentMapper;
 import com.cqupt.mike.entity.Student;
 import com.cqupt.mike.service.StudentService;
 import com.cqupt.mike.util.BeanUtil;
+import com.cqupt.mike.util.PageQueryUtil;
+import com.cqupt.mike.util.PageResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {
     @Resource
     private StudentMapper studentMapper;
+
+    @Override
+    public  PageResult getstudentPage (PageQueryUtil pageUtil) {
+        List<Student> students = studentMapper.findstudentList(pageUtil);
+        int total = studentMapper.getTotalStudent(pageUtil);
+        PageResult pageResult = new PageResult(students, total, pageUtil.getLimit(), pageUtil.getPage());
+        return pageResult;
+    }
+
+    public Boolean lockUsers(Integer[] ids, int lockStatus) {
+        if (ids.length < 1) {
+            return false;
+        }
+        return studentMapper.lockUserBatch(ids, lockStatus) > 0;
+    }
+
     /**
      * 注册
-     *
-     * @param stName   用户名
+     * @param stName 用户名
      * @param password 密码
      * @return
      */
