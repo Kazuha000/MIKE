@@ -54,7 +54,6 @@ public interface CourseMapper {
      */
     List<Course> findCourseListBySearch(PageQueryUtil pageUtil);
 
-
     /**
      * 根据搜索字段查询总数
      * @param pageUtil
@@ -79,10 +78,10 @@ public interface CourseMapper {
 
     /**
      * 通过id列表查询课程列表
-     * @param courseId
+     * @param courseIds
      * @return
      */
-    List<Course> selectByPrimaryKeys(List<Long> courseId);
+    List<Course> selectByPrimaryKeys(List<Long> courseIds);
 
     /**
      * 通过课程分类id与课程名查询课程
