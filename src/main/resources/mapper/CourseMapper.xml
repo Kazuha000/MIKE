@@ -310,9 +310,12 @@
     <update id="updateStockNum">
         <foreach collection="stockNumDTOS" item="stockNumDTO">
             update course_info set stock_num = stock_num-#{stockNumDTO.courseCount}
-            where course_id = #{stockNumDTO.courseId} and stock_num>=#{stockNumDTO.courseCount} and course_sell_status = 0;
+            where course_id = #{stockNumDTO.courseId}
+              and stock_num>=#{stockNumDTO.courseCount}
+              and course_sell_status = 0;
         </foreach>
     </update>
+
     <update id="recoverStockNum">
         <foreach collection="stockNumDTOS" item="stockNumDTO">
             update course_info set stock_num = stock_num+#{stockNumDTO.courseCount}

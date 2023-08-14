@@ -44,9 +44,9 @@ $(function () {
     });
 
     function lockedFormatter(cellvalue) {
-        if (cellvalue == 1) {
+        if (cellvalue == 0) {
             return "<button type=\"button\" class=\"btn btn-block btn-secondary btn-sm\" style=\"width: 50%;\">锁定</button>";
-        } else if (cellvalue == 0) {
+        } else if (cellvalue == 1) {
             return "<button type=\"button\" class=\"btn btn-block btn-success btn-sm\" style=\"width: 50%;\">正常</button>";
         }
         else if (cellvalue == -1) {
