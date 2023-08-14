@@ -123,4 +123,12 @@
         update cart_item set is_deleted = 1
         where cart_item_id = #{cartItemId,jdbcType=BIGINT} and is_deleted = 0
     </update>
+
+    <update id="deleteBatch">
+        update cart_item
+        set is_deleted=1 where cart_item_id in
+        <foreach item="id" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
 </mapper>

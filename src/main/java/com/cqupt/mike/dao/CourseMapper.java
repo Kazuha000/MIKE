@@ -2,6 +2,7 @@ package com.cqupt.mike.dao;
 
 import com.cqupt.mike.entity.Carousel;
 import com.cqupt.mike.entity.Course;
+import com.cqupt.mike.entity.StockNumDTO;
 import com.cqupt.mike.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Param;
 
@@ -90,6 +91,10 @@ public interface CourseMapper {
      * @return
      */
     Course selectByCategoryIdAndName(@Param("courseName") String courseName, @Param("courseCategoryId") Long courseCategoryId);
+
+    int updateStockNum(@Param("stockNumDTOS") List<StockNumDTO> stockNumDTOS);
+
+    int recoverStockNum(@Param("stockNumDTOS") List<StockNumDTO> stockNumDTOS);
 
 
 

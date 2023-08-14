@@ -1,6 +1,7 @@
 package com.cqupt.mike.controller.mike;
 
 import com.cqupt.mike.common.Constants;
+import com.cqupt.mike.common.MikeException;
 import com.cqupt.mike.common.ServiceResultEnum;
 import com.cqupt.mike.controller.vo.CartItemVO;
 import com.cqupt.mike.controller.vo.MikeStudentVo;
@@ -97,5 +98,28 @@ public class CartController {
         }
         //删除失败
         return ResultGenerator.genFailResult(ServiceResultEnum.OPERATE_ERROR.getResult());
+    }
+
+    @GetMapping("/shop-cart/settle")
+    public String settlePage(HttpServletRequest request,
+                             HttpSession httpSession) {
+        int priceTotal = 0;
+        MikeStudentVo user = (MikeStudentVo) httpSession.getAttribute(Constants.MIKE_STUDENT_SESSION_KEY);
+        List<CartItemVO> myCartItems = CartService.getMyShoppingCartItems(user.getStId());
+        if (CollectionUtils.isEmpty(myCartItems)) {
+            //无数据则不跳转至结算页
+            return "/shop-cart";
+        } else {
+            //总价
+            for (CartItemVO CartItemVO : myCartItems) {
+                priceTotal += CartItemVO.getCourseCount() * CartItemVO.getSellingPrice();
+            }
+            if (priceTotal < 1) {
+                MikeException.fail("购课项价格异常");
+            }
+        }
+        request.setAttribute("priceTotal", priceTotal);
+        request.setAttribute("myCartItems", myCartItems);
+        return "mike/order-settle";
     }
 }
