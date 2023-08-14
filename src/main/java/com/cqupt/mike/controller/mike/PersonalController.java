@@ -2,6 +2,7 @@ package com.cqupt.mike.controller.mike;
 
 import com.cqupt.mike.common.ServiceResultEnum;
 import com.cqupt.mike.common.Constants;
+import com.cqupt.mike.controller.vo.MikeStudentVo;
 import com.cqupt.mike.entity.Student;
 import com.cqupt.mike.service.StudentService;
 import com.cqupt.mike.util.MailUtils;
@@ -9,10 +10,7 @@ import com.cqupt.mike.util.Result;
 import com.cqupt.mike.util.ResultGenerator;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
@@ -55,6 +53,18 @@ public class PersonalController {
      */
     @GetMapping({"/forgetpassword","forgetpassword.html"})
     public String forgetpasswordPage() {return "mike/forgetpassword";}
+
+    @GetMapping("/personal")
+    public String personalPage(HttpServletRequest request,
+                               HttpSession httpSession) {
+        request.setAttribute("path", "personal");
+        return "mike/personal";
+    }
+
+    @GetMapping("/personal/email")
+    public String addressesPage() {
+        return "mike/email";
+    }
 
     /**
      * 成功发送邮箱验证码后
@@ -145,6 +155,19 @@ public class PersonalController {
         return ResultGenerator.genFailResult(registerResult);
     }
 
+    @PostMapping("/personal/updateInfo")
+    @ResponseBody
+    public Result updateInfo(@RequestBody Student User, HttpSession httpSession) {
+        MikeStudentVo mallUserTemp = studentService.updateUserInfo(User, httpSession);
+        if (mallUserTemp == null) {
+            Result result = ResultGenerator.genFailResult("修改失败");
+            return result;
+        } else {
+            //返回成功
+            Result result = ResultGenerator.genSuccessResult();
+            return result;
+        }
+    }
 
 
     /**
@@ -287,4 +310,6 @@ public class PersonalController {
         httpSession.removeAttribute(Constants.MIKE_STUDENT_SESSION_KEY);
         return "mike/login";
     }
+
+
 }

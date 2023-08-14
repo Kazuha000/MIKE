@@ -62,6 +62,8 @@ public interface StudentMapper {
      */
     Student selectById(@Param("stId") int stId);
 
+    Student selectByPrimaryKey(Integer userId);
+
     /**
      * 列表
      * @param pageUtil
@@ -83,4 +85,8 @@ public interface StudentMapper {
      * @return
      */
     int lockUserBatch(@Param("ids") Integer[] ids, @Param("status") int status);
+
+    int updateByPrimaryKeySelective(Student record);
+
+
 }

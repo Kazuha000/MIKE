@@ -58,4 +58,12 @@ public interface StudentService {
      * @return
      */
     String resetpassword(int stId,String newpassword);
+
+    /**
+     * 用户信息修改并返回最新的用户信息
+     *
+     * @param User
+     * @return
+     */
+    MikeStudentVo updateUserInfo(Student User, HttpSession httpSession);
 }

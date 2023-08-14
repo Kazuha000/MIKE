@@ -1,15 +1,18 @@
 package com.cqupt.mike.service.impl;
 
+import com.cqupt.mike.common.Constants;
 import com.cqupt.mike.common.ServiceResultEnum;
 import com.cqupt.mike.controller.vo.MikeStudentVo;
 import com.cqupt.mike.dao.StudentMapper;
 import com.cqupt.mike.entity.Student;
 import com.cqupt.mike.service.StudentService;
 import com.cqupt.mike.util.BeanUtil;
+import com.cqupt.mike.util.MikeUtils;
 import com.cqupt.mike.util.PageQueryUtil;
 import com.cqupt.mike.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -127,6 +130,27 @@ public class StudentServiceImpl implements StudentService {
             return ServiceResultEnum.SUCCESS.getResult();
         }
         return ServiceResultEnum.DB_ERROR.getResult();
+    }
+
+    @Override
+    public MikeStudentVo updateUserInfo(Student mallUser, HttpSession httpSession) {
+        MikeStudentVo userTemp = (MikeStudentVo) httpSession.getAttribute(Constants.MIKE_STUDENT_SESSION_KEY);
+        Student userFromDB = studentMapper.selectByPrimaryKey(userTemp.getStId());
+        if (userFromDB != null) {
+            if (StringUtils.hasText(mallUser.getStName())) {
+                userFromDB.setStName(MikeUtils.cleanString(mallUser.getStName()));
+            }
+            if (StringUtils.hasText(mallUser.getEmail())) {
+                userFromDB.setEmail(MikeUtils.cleanString(mallUser.getEmail()));
+            }
+            if (studentMapper.updateByPrimaryKeySelective(userFromDB) > 0) {
+                MikeStudentVo UserVO = new MikeStudentVo();
+                BeanUtil.copyProperties(userFromDB, UserVO);
+                httpSession.setAttribute(Constants.MIKE_STUDENT_SESSION_KEY, UserVO);
+                return UserVO;
+            }
+        }
+        return null;
     }
 }
 
