@@ -154,4 +154,15 @@
         from student
         where st_id = #{stId}  and status != -1
     </select>
+
+    <update id="updateByPrimaryKey" parameterType="com.cqupt.mike.entity.Student">
+        update user
+        set st_name = #{stName,jdbcType=VARCHAR},
+            password = #{password,jdbcType=VARCHAR},
+            email = #{email,jdbcType=VARCHAR},
+--             is_deleted = #{isDeleted,jdbcType=TINYINT},
+--             locked_flag = #{lockedFlag,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP}
+        where st_id = #{stId,jdbcType=INTEGER}
+    </update>
 </mapper>
