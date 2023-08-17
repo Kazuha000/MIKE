@@ -83,7 +83,7 @@ function lockUser(lockStatus) {
     if (ids == null) {
         return;
     }
-    if (lockStatus != 0 && lockStatus != 1) {
+    if (lockStatus != 0 && lockStatus != 1 ) {
         Swal.fire({
             text: '非法操作',
             icon: "error",iconColor:"#f05b72",

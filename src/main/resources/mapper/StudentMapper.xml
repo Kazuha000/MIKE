@@ -155,6 +155,12 @@
         where st_id = #{stId}  and status != -1
     </select>
 
+    <select id="selectByPrimaryKey" parameterType="com.cqupt.mike.entity.Student" resultMap="StudentResult">
+        select*
+        from student
+        where st_id = #{stId,jdbcType=BIGINT} and status != -1
+    </select>
+
     <update id="updateByPrimaryKey" parameterType="com.cqupt.mike.entity.Student">
         update user
         set st_name = #{stName,jdbcType=VARCHAR},
@@ -164,5 +170,27 @@
 --             locked_flag = #{lockedFlag,jdbcType=TINYINT},
             create_time = #{createTime,jdbcType=TIMESTAMP}
         where st_id = #{stId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.cqupt.mike.entity.Student">
+        update student
+        <set>
+            <if test="stName != null">
+                st_name = #{stName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=TINYINT},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where st_id = #{stId,jdbcType=BIGINT}
     </update>
 </mapper>

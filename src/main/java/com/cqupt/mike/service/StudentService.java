@@ -62,8 +62,8 @@ public interface StudentService {
     /**
      * 用户信息修改并返回最新的用户信息
      *
-     * @param User
+     * @param student
      * @return
      */
-    MikeStudentVo updateUserInfo(Student User, HttpSession httpSession);
+    MikeStudentVo updateUserInfo(Student student, HttpSession httpSession);
 }

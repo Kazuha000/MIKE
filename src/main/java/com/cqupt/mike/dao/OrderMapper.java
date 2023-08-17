@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface OrderMapper {
+
+    List<Order> selectByUserId(int userId);
     int deleteByPrimaryKey(Long orderId);
 
     int insert(Order record);
