@@ -133,15 +133,18 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public MikeStudentVo updateUserInfo(Student mallUser, HttpSession httpSession) {
+    public MikeStudentVo updateUserInfo(Student student, HttpSession httpSession) {
         MikeStudentVo userTemp = (MikeStudentVo) httpSession.getAttribute(Constants.MIKE_STUDENT_SESSION_KEY);
         Student userFromDB = studentMapper.selectByPrimaryKey(userTemp.getStId());
         if (userFromDB != null) {
-            if (StringUtils.hasText(mallUser.getStName())) {
-                userFromDB.setStName(MikeUtils.cleanString(mallUser.getStName()));
+            if (StringUtils.hasText(student.getStName())) {
+                userFromDB.setStName(MikeUtils.cleanString(student.getStName()));
             }
-            if (StringUtils.hasText(mallUser.getEmail())) {
-                userFromDB.setEmail(MikeUtils.cleanString(mallUser.getEmail()));
+            if (StringUtils.hasText(student.getPhone())) {
+                userFromDB.setPhone(MikeUtils.cleanString(student.getPhone()));
+            }
+            if (StringUtils.hasText(student.getEmail())) {
+                userFromDB.setEmail(MikeUtils.cleanString(student.getEmail()));
             }
             if (studentMapper.updateByPrimaryKeySelective(userFromDB) > 0) {
                 MikeStudentVo UserVO = new MikeStudentVo();

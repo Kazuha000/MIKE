@@ -107,7 +107,7 @@ public class TeacherStatusController {
                 || StringUtils.isEmpty(teacher.getPassword())
                 || StringUtils.isEmpty(teacher.getPhone())
                 || StringUtils.isEmpty(teacher.getEmail()))  {
-            return ResultGenerator.genFailResult("参数异常！");
+            return ResultGenerator.genFailResult("参数不能为空！");
         }
         String result = teacherService.updateTeacher(teacher);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {

@@ -106,4 +106,12 @@ public interface OrderService {
     String paySuccess(String orderNo, int payType);
 
     List<OrderItemVO> getOrderItems(Long id);
+
+    /**
+     *
+     * @param user_id
+     * @return
+     */
+     boolean checkoutPaySuccess(int user_id,Long course_id);
+
 }

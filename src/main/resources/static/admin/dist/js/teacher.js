@@ -79,12 +79,6 @@ $(function () {
             page: page
         }).trigger("reloadGrid");
     }
-    function  transformsex(sex){
-        if (sex == 0){ sex = "未知"}
-        if (sex == 1){ sex = "男"}
-        else if (sex == 2){ sex = "女"}
-        return sex;
-    }
 
     function teacherAdd(){
         reset();
@@ -95,12 +89,32 @@ $(function () {
 //绑定modal上的保存按钮
 $('#saveButton').click(function () {
     var name = $("#teacherName").val();
+    if (!validUserName(name)) {
+        Swal.fire({
+            text: "请输入符合规范的用户名",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return false;
+    }
     var accountNo = $("#teacherAccountNo").val();
     var password = $("#teacherPassword").val();
+    if (!validPassword(password)) {
+        Swal.fire({
+            text: "请输入正确的密码格式(6-20位字符和数字组合)",
+            icon: "error",iconColor:"#f05b72",
+        });
+        return false;
+    }
     var sex = $("#teacherSex").val();
     var phone = $("#teacherPhone").val();
     var email = $("#teacherEmail").val();
-
+    if (!validEmail(email)) {
+        Swal.fire({
+            text: "请输入符合规范的邮箱",
+            icon: "error", iconColor: "#f05b72",
+        });
+        return ;
+    }
     var data = {
         "name": name,
         "accountNo":accountNo,

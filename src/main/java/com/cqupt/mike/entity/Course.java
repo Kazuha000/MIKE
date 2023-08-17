@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class Course{
 
+
     private Long courseId;//课程表主键
 
     private String courseName;//课程名

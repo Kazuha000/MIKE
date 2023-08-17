@@ -418,4 +418,22 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    public boolean checkoutPaySuccess(int userId,Long courseId){
+        List<Order> orderList = OrderMapper.selectByUserId(userId);
+        for (Order order : orderList) {
+            if (order.getOrderStatus() == 4) {
+                List<OrderItem> orderItemList = OrderItemMapper.selectByOrderId(order.getOrderId());
+                for (OrderItem orderItem : orderItemList) {
+                    if (Objects.equals(orderItem.getCourseId(), courseId)) {
+                        return true;
+                    }
+
+                }
+            }
+        }
+        return false;
+
+    }
+
+
 }

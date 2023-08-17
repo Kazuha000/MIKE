@@ -54,6 +54,12 @@ public class PersonalController {
     @GetMapping({"/forgetpassword","forgetpassword.html"})
     public String forgetpasswordPage() {return "mike/forgetpassword";}
 
+    /**
+     * 个人信息页面跳转
+     * @param request
+     * @param httpSession
+     * @return
+     */
     @GetMapping("/personal")
     public String personalPage(HttpServletRequest request,
                                HttpSession httpSession) {
@@ -62,7 +68,7 @@ public class PersonalController {
     }
 
     @GetMapping("/personal/email")
-    public String addressesPage() {
+    public String emailsPage() {
         return "mike/email";
     }
 
@@ -157,8 +163,8 @@ public class PersonalController {
 
     @PostMapping("/personal/updateInfo")
     @ResponseBody
-    public Result updateInfo(@RequestBody Student User, HttpSession httpSession) {
-        MikeStudentVo mallUserTemp = studentService.updateUserInfo(User, httpSession);
+    public Result updateInfo(@RequestBody Student student, HttpSession httpSession) {
+        MikeStudentVo mallUserTemp = studentService.updateUserInfo(student, httpSession);
         if (mallUserTemp == null) {
             Result result = ResultGenerator.genFailResult("修改失败");
             return result;

@@ -18,13 +18,19 @@
     </resultMap>
     <sql id="Base_Column_List">
         order_id, order_no, user_id, total_price, pay_status, pay_type, pay_time, order_status,
-    extra_info, user_name, user_phone, user_email, is_deleted, create_time, update_time
+    extra_info, user_id, user_name, user_phone, user_email, is_deleted, create_time, update_time
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from mike_order
         where order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+    <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mike_order
+        where user_id = #{userId,jdbcType=INTEGER}
     </select>
     <select id="selectByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
