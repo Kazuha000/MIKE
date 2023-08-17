@@ -8,6 +8,10 @@ import com.cqupt.mike.util.PageResult;
 
 import java.util.List;
 
+/**
+ * 课程分类
+ */
+
 public interface CategoryService {
         /**
          * 查询后台管理系统分类分页数据
