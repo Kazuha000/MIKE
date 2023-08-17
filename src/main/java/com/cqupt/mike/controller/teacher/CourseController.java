@@ -20,6 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
+/**
+ * 课程添加、修改
+ */
 @Controller
 @RequestMapping("/teacher")
 public class CourseController {

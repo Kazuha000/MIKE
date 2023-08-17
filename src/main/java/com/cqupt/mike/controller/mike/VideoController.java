@@ -25,17 +25,8 @@ public class VideoController {
 
 
 
-
-    //点击播放按钮，开始播放视频
-//    @GetMapping(value = "/video")
-
-//    ModelMap用于传递控制方法存储数据到展示页面（JSP页面），通过EL表达式对对象的key进行取值。
-//    存储数据主要在HttpServletRequest中，即request作用域中。
-
-//    public String videoPlayByIdAndAdmin(@PathVariable("courseId") long id, ModelMap model) {
     @RequestMapping(value = "/videoPlayByIdAndAdmin",method = RequestMethod.GET)
     public String videoPlayByIdAndAdmin(@RequestParam(value = "id" ,required = false) String id, ModelMap model, HttpServletRequest httpServletRequest, HttpSession httpSession) {
-//        Video video = videoService.getVideoById(id);
         MikeStudentVo user = (MikeStudentVo) httpSession.getAttribute(Constants.MIKE_STUDENT_SESSION_KEY);
         boolean checkResult = orderService.checkoutPaySuccess(user.getStId(),Long.valueOf(id));
         //若返回信息为登陆成功，则登陆成功

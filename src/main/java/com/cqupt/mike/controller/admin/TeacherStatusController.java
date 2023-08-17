@@ -55,7 +55,7 @@ public class TeacherStatusController {
     @ResponseBody
     public Result delete(@RequestBody Integer[] ids, @PathVariable int lockStatus) {
         if (ids.length < 1) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return ResultGenerator.genFailResult("参数不可为空！");
         }
         if (lockStatus != 0 && lockStatus != 1) {
             return ResultGenerator.genFailResult("操作非法！");
@@ -84,7 +84,7 @@ public class TeacherStatusController {
                 || StringUtils.isEmpty(teacher.getSex())
                 || StringUtils.isEmpty(teacher.getPhone())
                 || StringUtils.isEmpty(teacher.getEmail())) {
-            return ResultGenerator.genFailResult("参数异常！");
+            return ResultGenerator.genFailResult("参数不可为空！");
         }
         String result = teacherService.saveTeacher(teacher);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
