@@ -3,7 +3,7 @@ package com.cqupt.mike.controller.mike;
 
 import com.cqupt.mike.common.Constants;
 import com.cqupt.mike.controller.vo.MikeStudentVo;
-import com.cqupt.mike.dao.OrderMapper;
+
 import com.cqupt.mike.entity.Course;
 import com.cqupt.mike.service.CourseService;
 import com.cqupt.mike.service.OrderService;
@@ -38,7 +38,7 @@ public class VideoController {
         }
 
         //注册失败
-        return "mike/index";
+        return "mike/error";
     }
 
     }

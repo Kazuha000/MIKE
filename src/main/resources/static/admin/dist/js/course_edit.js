@@ -219,7 +219,7 @@ $('#saveButton').click(function () {
         });
         return;
     }
-    if (isNull(stockNum) || sellingPrice < 0) {
+    if (isNull(stockNum) || stockNum < 1) {
         Swal.fire({
             text: "请输入课程库存数",
             icon: "error",iconColor:"#f05b72",

@@ -4,7 +4,6 @@
     <title>在线视频播放</title>
     <link rel="shortcut icon" th:href="@{/admin/dist/img/favicon.ico}"/>
     <link rel="stylesheet" th:href="@{/admin/plugins/bootstrap/css/bootstrap.css}">
-    <link rel="stylesheet" th:href="@{/mike/styles/video.css}">
     <script type="text/javascript" th:src="@{/admin/plugins/jquery/jquery.js}"></script>
     <script type="text/javascript" th:src="@{/admin/plugins/bootstrap/js/bootstrap.js}"></script>
 </head>
@@ -13,10 +12,14 @@
 <!--controlsList="nodownload" 下载按钮隐藏 controls属性用于向浏览器指明页面制作者没有使用脚本生成播放控制器，需要浏览器启用本身的播放控制栏。
 
 控制栏须包括播放暂停控制，播放进度控制，音量控制等等-->
-<div class = "v">
-    <video  width="1200" height="720"  id="video" type="video/mp4" muted controlsList="nodownload" controls>
-        <source th:src="@{${path}} " ><!--th:src="@{${path}}"-->
-    </video>
-</div>
+<input type="button" class="back" name="Submit" onclick="history.back()" value="返回上一页">
+<video width="1300" height="700"  id="video" type="video/mp4" muted controlsList="nodownload" controls>
+    <source th:src="@{${path}} " ><!--th:src="@{${path}}"-->
+</video>
 </body>
+<style>
+    .back{
+        float: right;
+    }
+</style>
 </html>
