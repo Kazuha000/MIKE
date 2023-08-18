@@ -15,7 +15,7 @@
   <div class="banner_x center">
     <a th:href="@{/index}" target="_blank">
       <div class="logo fl">
-        <img src="mike/image/new-bee-logo-3.png"/>
+        <img src="/mike/image/mike-logo-2.png">
       </div>
     </a>
 
@@ -47,7 +47,7 @@
             <div class="sub_content fl ">
             </div>
             <div class="sub_content cover fl"><img th:src="@{${item.courseCoverImg}}"></div>
-            <div class="sub_content fl ft20" th:text="${item.courseName}">商品名称</div>
+            <div class="sub_content fl ft20" th:text="${item.courseName}">课程名称</div>
             <div class="sub_content fl" th:text="${item.sellingPrice+'元'}">1299元</div>
             <div class="sub_content fl">
               <input class="course_count" th:id="${'courseCount'+item.cartItemId}" type="number"
@@ -68,7 +68,7 @@
         <ul>
           <li><a th:href="@{/index}">继续购物</a></li>
           <li>|</li>
-          <li>共<span th:text="${itemsTotal}">13</span>件商品</li>
+          <li>共<span th:text="${itemsTotal}">13</span>件课程</li>
           <div class="clear"></div>
         </ul>
       </div>

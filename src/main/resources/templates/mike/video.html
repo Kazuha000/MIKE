@@ -3,45 +3,23 @@
 <head>
     <title>在线视频播放</title>
     <link rel="shortcut icon" th:href="@{/admin/dist/img/favicon.ico}"/>
-    <link rel="stylesheet" th:href="@{/static/admin/plugins/bootstrap/css/bootstrap.min.css}">
-    <script th:src="@{/static/admin/plugins/jquery/jquery.min.js}"></script>
-    <script th:src="@{/static/admin/plugins/bootstrap/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/admin/plugins/bootstrap/css/bootstrap.css}">
+    <script type="text/javascript" th:src="@{/admin/plugins/jquery/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{/admin/plugins/bootstrap/js/bootstrap.js}"></script>
 </head>
 <body>
 
 <!--controlsList="nodownload" 下载按钮隐藏 controls属性用于向浏览器指明页面制作者没有使用脚本生成播放控制器，需要浏览器启用本身的播放控制栏。
 
 控制栏须包括播放暂停控制，播放进度控制，音量控制等等-->
-
-<video width="320" height="240"  id="video" type="video/mp4" muted controlsList="nodownload" controls>
+<input type="button" class="back" name="Submit" onclick="history.back()" value="返回上一页">
+<video width="1300" height="700"  id="video" type="video/mp4" muted controlsList="nodownload" controls>
     <source th:src="@{${path}} " ><!--th:src="@{${path}}"-->
 </video>
-<!--<div class="wrapper">-->
-<!--    <div class="js-video">-->
-<!--        <video class="js-media" poster="&lt;!&ndash;vedio/sintel.jpg&ndash;&gt;">-->
-<!--            <source src="@{${path}}" type="video/mp4" />-->
-<!--            <p>你的浏览器不支持 HTML5 Video。</p>-->
-<!--        </video>-->
-<!--        <i data-playPause class="playPause fa fa-play ui-icon"><span></span></i>-->
-<!--        <div class="ui">-->
-<!--            <div>-->
-<!--                <div data-progress class="progress">-->
-<!--                    <div data-buffer class="progress-buffer"></div>-->
-<!--                    <div data-time class="progress-time"></div>-->
-<!--                </div>&lt;!&ndash; progress &ndash;&gt;-->
-<!--            </div>-->
-<!--            <div>-->
-<!--                <span class="timeDisplay"><i data-currentTime>0:00</i> / <i data-duration>0:00</i></span>-->
-<!--            </div>-->
-<!--            <div>-->
-<!--                <i data-mute class="fa fa-volume-up ui-icon"></i>-->
-<!--            </div>-->
-<!--            <div>-->
-<!--                <div data-volume="100" class="volumeControl"><span class="ui-slider-handle"></span></div>-->
-<!--            </div>-->
-<!--        </div>&lt;!&ndash; ui &ndash;&gt;-->
-<!--        <i data-fullscreen class="fullscreen iconicfill-fullscreen" title="fullscreen"></i>-->
-<!--    </div>&lt;!&ndash; js-video &ndash;&gt;-->
-<!--</div>&lt;!&ndash; wrapper &ndash;&gt;-->
 </body>
+<style>
+    .back{
+        float: right;
+    }
+</style>
 </html>
