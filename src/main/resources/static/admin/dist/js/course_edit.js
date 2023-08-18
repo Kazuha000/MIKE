@@ -165,21 +165,21 @@ $('#saveButton').click(function () {
     }
     if (isNull(courseName)) {
         Swal.fire({
-            text: "请输入商品名称",
+            text: "请输入课程名称",
             icon: "error",iconColor:"#f05b72",
         });
         return;
     }
     if (!validLength(courseName, 100)) {
         Swal.fire({
-            text: "商品名称过长",
+            text: "课程名称过长",
             icon: "error",iconColor:"#f05b72",
         });
         return;
     }
     if (isNull(tag)) {
         Swal.fire({
-            text: "请输入商品小标签",
+            text: "请输入课程小标签",
             icon: "error",iconColor:"#f05b72",
         });
         return;
@@ -193,7 +193,7 @@ $('#saveButton').click(function () {
     }
     if (isNull(courseIntro)) {
         Swal.fire({
-            text: "请输入商品简介",
+            text: "请输入课程简介",
             icon: "error",iconColor:"#f05b72",
         });
         return;
@@ -207,21 +207,21 @@ $('#saveButton').click(function () {
     }
     if (isNull(originalPrice) || originalPrice < 1) {
         Swal.fire({
-            text: "请输入商品价格",
+            text: "请输入课程价格",
             icon: "error",iconColor:"#f05b72",
         });
         return;
     }
     if (isNull(sellingPrice) || sellingPrice < 1) {
         Swal.fire({
-            text: "请输入商品售卖价",
+            text: "请输入课程售卖价",
             icon: "error",iconColor:"#f05b72",
         });
         return;
     }
     if (isNull(stockNum) || sellingPrice < 0) {
         Swal.fire({
-            text: "请输入商品库存数",
+            text: "请输入课程库存数",
             icon: "error",iconColor:"#f05b72",
         });
         return;
@@ -229,14 +229,14 @@ $('#saveButton').click(function () {
 
     if (isNull(courseDetailContent)) {
         Swal.fire({
-            text: "请输入商品介绍",
+            text: "请输入课程介绍",
             icon: "error",iconColor:"#f05b72",
         });
         return;
     }
     if (!validLength(courseDetailContent, 50000)) {
         Swal.fire({
-            text: "商品介绍内容过长",
+            text: "课程介绍内容过长",
             icon: "error",iconColor:"#f05b72",
         });
         return;

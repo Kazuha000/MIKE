@@ -1,4 +1,4 @@
-<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
+<!-- 搜索页面 -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="mike/header::head-fragment('MIKE教育-搜索','search')">
@@ -55,7 +55,7 @@
   </div>
 </div>
 
-<div class="course_item center">
+<div class="goods_item center">
   <div class="main center">
     <th:block th:if="${#lists.isEmpty(pageResult.list)}">
       <img style="margin-top: 16px;padding: 16px 20px;" th:src="@{/mike/image/null-content.png}">
